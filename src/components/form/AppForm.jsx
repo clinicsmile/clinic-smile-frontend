@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import AppButton from "../ui/button/AppButton";
-import { formContentStyle, formInputStyle } from "./form-styles";
+import { formContentStyle } from "./form-styles";
+import AppInputForm from "../ui/inputForm/AppInputForm";
 
 export default function Form({ form, onSubmit, loading = false }) {
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -15,21 +15,10 @@ export default function Form({ form, onSubmit, loading = false }) {
     onSubmit(formData);
   };
 
-  const FormInput = ({ label, input }) => {
-    return (
-      <div className="w-1/3">
-        <label className="flex mb-1" {...label}>
-          {label.name}
-        </label>
-          <input {...input} className={formInputStyle} />
-      </div>
-    );
-  };
-
   const Form = () => (
     <>
       {form.fields.map((field, index) => (
-        <FormInput
+        <AppInputForm
           key={"" + field.label + index}
           label={field.label}
           input={field.input}
@@ -49,8 +38,10 @@ export default function Form({ form, onSubmit, loading = false }) {
   );
 
   return (
-    <form className={formContentStyle} onSubmit={handleSubmit} >
-      <Form />
-    </form>
+    <div className=" flex h-screen">
+      <form className={formContentStyle} onSubmit={handleSubmit}>
+        <Form />
+      </form>
+    </div>
   );
 }

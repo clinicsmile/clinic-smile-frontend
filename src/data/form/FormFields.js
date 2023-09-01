@@ -10,7 +10,7 @@ const registerForm = {
         name: "name",
         type: "text",
         required: true,
-        placeholder: "Nombre del paciente",
+        placeholder: "",
       },
     },
     {
@@ -23,7 +23,7 @@ const registerForm = {
         name: "lastName",
         type: "text",
         required: true,
-        placeholder: "Apellido del paciente",
+        placeholder: "",
       },
     },
     {
@@ -36,7 +36,7 @@ const registerForm = {
         name: "cellphone",
         type: "text",
         required: true,
-        placeholder: "Celular",
+        placeholder: "",
       },
     },
     {
@@ -46,7 +46,7 @@ const registerForm = {
         name: "email",
         type: "email",
         required: true,
-        placeholder: "Correo electrónico",
+        placeholder: "",
       },
     },
     {
@@ -56,7 +56,7 @@ const registerForm = {
         name: "password",
         type: "password",
         required: true,
-        placeholder: "Contraseña",
+        placeholder: "",
       },
     },
   ],
@@ -81,7 +81,7 @@ const login = {
         name: "username",
         type: "text",
         required: true,
-        placeholder: "Usuario",
+        placeholder: "",
         validations: {
           required: {
             value: true,
@@ -100,7 +100,7 @@ const login = {
         name: "password",
         type: "password",
         required: true,
-        placeholder: "Contraseña",
+        placeholder: "",
         validations: {
           required: {
             value: true,
