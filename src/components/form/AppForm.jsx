@@ -36,14 +36,14 @@ export default function Form({ form, onSubmit, loading = false }) {
       ))}
     </>
   );
-  let columnas=0;
+  let clase="";
   if(form.fields.length > 2){
-    columnas="2";
+    clase="grid grid-cols-2 gap-4";
   }else{
-    columnas="1";
+    clase="grid grid-cols-1 gap-4";
   }
   return (
-      <form className={`grid grid-cols-${columnas} gap-4`} onSubmit={handleSubmit}>
+      <form className={clase} onSubmit={handleSubmit}>
         <Form />
       </form>
   );

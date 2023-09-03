@@ -1,13 +1,25 @@
+'use client';
+
 import { Sidebar } from 'flowbite-react';
+import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from 'react-icons/hi';
 
-
-export default function DefaultSidebar() {
+export default function SideBar() {
   return (
-    <Sidebar aria-label="Default sidebar example">
+    <Sidebar aria-label="Sidebar with logo branding example">
+      <Sidebar.Logo
+        href="#"
+        img="/favicon.svg"
+        imgAlt="Flowbite logo"
+      >
+        <p>
+          Flowbite
+        </p>
+      </Sidebar.Logo>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item
             href="#"
+            icon={HiChartPie}
           >
             <p>
               Dashboard
@@ -15,8 +27,7 @@ export default function DefaultSidebar() {
           </Sidebar.Item>
           <Sidebar.Item
             href="#"
-            label="Pro"
-            labelColor="dark"
+            icon={HiViewBoards}
           >
             <p>
               Kanban
@@ -24,7 +35,7 @@ export default function DefaultSidebar() {
           </Sidebar.Item>
           <Sidebar.Item
             href="#"
-            label="3"
+            icon={HiInbox}
           >
             <p>
               Inbox
@@ -32,6 +43,7 @@ export default function DefaultSidebar() {
           </Sidebar.Item>
           <Sidebar.Item
             href="#"
+            icon={HiUser}
           >
             <p>
               Users
@@ -39,6 +51,7 @@ export default function DefaultSidebar() {
           </Sidebar.Item>
           <Sidebar.Item
             href="#"
+            icon={HiShoppingBag}
           >
             <p>
               Products
@@ -46,14 +59,24 @@ export default function DefaultSidebar() {
           </Sidebar.Item>
           <Sidebar.Item
             href="#"
+            icon={HiArrowSmRight}
           >
             <p>
               Sign In
             </p>
           </Sidebar.Item>
-         
+          <Sidebar.Item
+            href="#"
+            icon={HiTable}
+          >
+            <p>
+              Sign Up
+            </p>
+          </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
   )
 }
+
+
