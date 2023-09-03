@@ -11,16 +11,3 @@ body {
   font-family: 'Montserrat';
   background-color: #eee;
 }
-
-input {
-  border: none;
-  background-color: #fafafa;
-}
-
-*:focus {
-  outline: 0;
-}
-
-textarea:focus, input:focus{
-  outline: 0;
-}

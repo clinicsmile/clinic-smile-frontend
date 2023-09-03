@@ -1,4 +1,4 @@
-import Login from './login'
-import Cites from './cites'
+import Login from './login/Login.jsx'
+import Register from './register/Register.jsx'
 
-export { Login, Cites }
+export { Login, Register }

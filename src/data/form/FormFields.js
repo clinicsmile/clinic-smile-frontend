@@ -2,6 +2,19 @@ const registerForm = {
   fields: [
     {
       label: {
+        name: "Documento",
+        htmlFor: "document",
+      },
+      input: {
+        id: "document",
+        name: "document",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
         name: "Nombre",
         htmlFor: "name",
       },
@@ -45,6 +58,32 @@ const registerForm = {
         id: "email",
         name: "email",
         type: "email",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
+        name: "Direccion",
+        htmlFor: "address",
+      },
+      input: {
+        id: "address",
+        name: "address",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
+        name: "Fecha de Nacimiento",
+        htmlFor: "birthdate",
+      },
+      input: {
+        id: "birthdate",
+        name: "birthdate",
+        type: "date",
         required: true,
         placeholder: "",
       },
@@ -119,7 +158,7 @@ const login = {
       type: "primaryClass",
       title: "Iniciar sesión",
       action: "loginAction",
-      submit: true
+      submit: true,
     },
   ],
 };

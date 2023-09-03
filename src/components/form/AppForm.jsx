@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AppButton from "../ui/button/AppButton";
-import { formContentStyle } from "./form-styles";
+
 import AppInputForm from "../ui/inputForm/AppInputForm";
 
 export default function Form({ form, onSubmit, loading = false }) {
@@ -36,12 +36,15 @@ export default function Form({ form, onSubmit, loading = false }) {
       ))}
     </>
   );
-
+  let columnas=0;
+  if(form.fields.length > 2){
+    columnas=2;
+  }else{
+    columnas=1;
+  }
   return (
-    <div className=" flex h-screen">
-      <form className={formContentStyle} onSubmit={handleSubmit}>
+      <form className={`grid grid-cols-${columnas} gap-4`} onSubmit={handleSubmit}>
         <Form />
       </form>
-    </div>
   );
 }

@@ -26,13 +26,15 @@ export default ({
   const handleClick = () => !loading && action && action();
 
   return (
-    <button
-      type={submit ? "submit" : ""}
-      onClick={handleClick}
-      className={decideButtonClass()}
-    >
-      {loading && <Spinner color="warning" size="md" />}
-      <span className="ml-2">{loading ? "Cargando..." : title}</span>
-    </button>
+    <div>
+      <button
+        type={submit ? "submit" : ""}
+        onClick={handleClick}
+        className={decideButtonClass()}
+      >
+        {loading && <Spinner color="warning" size="md" />}
+        <span className="ml-2">{loading ? "Cargando..." : title}</span>
+      </button>
+    </div>
   );
 };
