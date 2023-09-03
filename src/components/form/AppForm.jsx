@@ -38,9 +38,9 @@ export default function Form({ form, onSubmit, loading = false }) {
   );
   let columnas=0;
   if(form.fields.length > 2){
-    columnas=2;
+    columnas="2";
   }else{
-    columnas=1;
+    columnas="1";
   }
   return (
       <form className={`grid grid-cols-${columnas} gap-4`} onSubmit={handleSubmit}>

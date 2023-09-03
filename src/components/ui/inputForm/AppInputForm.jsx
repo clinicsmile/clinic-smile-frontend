@@ -2,7 +2,6 @@ import { Label, TextInput } from "flowbite-react";
 
 
 export default ({ label, input }) => {
-  console.log(label);
   return (
     <>
       <div>

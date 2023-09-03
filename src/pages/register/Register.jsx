@@ -27,7 +27,7 @@ function Register() {
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-[url('/src/assets/backGround.png')] bg-cover bg-center">
       <div className="m-auto w-1/3 h-3/4 p-6 rounded-lg bg-white shadow-2xl container columns-1 hover:scale-105">
-        <div className="grid-rows-3 h-full">
+        <div className="h-full">
           <div className="flex h-1/3 justify-center">
             <img src="/src/assets/logo.svg" />
           </div>
