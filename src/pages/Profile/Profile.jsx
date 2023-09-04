@@ -1,5 +1,6 @@
 import { SideBar } from "../../components/sidebar/SideBar";
-function Home() {
+import { AppProfile } from "../../components/profile/Profile";
+function Profile() {
     return (
         <>
       <div className=" flex w-sceen h-screen items-center bg-[#1783B0]">
@@ -7,11 +8,11 @@ function Home() {
           <SideBar />
         </div>
         <div className="w-4/5 h-5/6 m-6 bg-white rounded-3xl p-6">
-        <h1 className="text-6xl h-full	w-full text-center text-[#1783B0]">Hola Usuario, Bienvenido a ClinicSmile</h1>
+          <AppProfile />
         </div>
       </div>
     </>
     );
 }
 
-export default Home;
+export default Profile;

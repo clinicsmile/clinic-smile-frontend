@@ -163,4 +163,104 @@ const login = {
   ],
 };
 
-export { login, registerForm };
+const profileForm ={
+  fields: [
+    {
+      label: {
+        name: "Documento",
+        htmlFor: "document",
+      },
+      input: {
+        id: "document",
+        name: "document",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
+        name: "Nombre",
+        htmlFor: "name",
+      },
+      input: {
+        id: "name",
+        name: "name",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
+        name: "Apellido",
+        htmlFor: "lastName",
+      },
+      input: {
+        id: "lastName",
+        name: "lastName",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
+        name: "Celular",
+        htmlFor: "cellphone",
+      },
+      input: {
+        id: "cellphone",
+        name: "cellphone",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: { name: "Correo", htmlFor: "email" },
+      input: {
+        id: "email",
+        name: "email",
+        type: "email",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
+        name: "Direccion",
+        htmlFor: "address",
+      },
+      input: {
+        id: "address",
+        name: "address",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
+    },
+    {
+      label: {
+        name: "Fecha de Nacimiento",
+        htmlFor: "birthdate",
+      },
+      input: {
+        id: "birthdate",
+        name: "birthdate",
+        type: "date",
+        required: true,
+        placeholder: "",
+      },
+    }
+  ],
+  buttons: [
+    {
+      type: "primaryClass",
+      title: "Actualizar",
+      action: "signupAction",
+    },
+  ],
+}
+
+export { login, registerForm,profileForm };

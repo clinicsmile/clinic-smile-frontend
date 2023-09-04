@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AppForm from "../../components/form/AppForm";
+import {AppForm} from "../../components/form/AppForm";
 import {registerForm} from "../../data/form/FormFields";
 
 function Register() {

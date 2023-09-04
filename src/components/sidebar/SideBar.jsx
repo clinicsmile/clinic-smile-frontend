@@ -1,82 +1,33 @@
-'use client';
-
-import { Sidebar } from 'flowbite-react';
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from 'react-icons/hi';
-
-export default function SideBar() {
+import { infoMenu } from "../../data/sideBar/SideBarItems";
+import { Sidebar } from "flowbite-react";
+function SideBar() {
   return (
-    <Sidebar aria-label="Sidebar with logo branding example">
-      <Sidebar.Logo
-        href="#"
-        img="/favicon.svg"
-        imgAlt="Flowbite logo"
-      >
-        <p>
-          Flowbite
-        </p>
-      </Sidebar.Logo>
-      <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          <Sidebar.Item
-            href="#"
-            icon={HiChartPie}
-          >
-            <p>
-              Dashboard
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiViewBoards}
-          >
-            <p>
-              Kanban
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiInbox}
-          >
-            <p>
-              Inbox
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiUser}
-          >
-            <p>
-              Users
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiShoppingBag}
-          >
-            <p>
-              Products
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiArrowSmRight}
-          >
-            <p>
-              Sign In
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiTable}
-          >
-            <p>
-              Sign Up
-            </p>
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
-      </Sidebar.Items>
-    </Sidebar>
-  )
+    <>
+      <Sidebar className="w-full h-full">
+        <div className="h-4/5 align-middle">
+          <div className="w-auto my-5 h-1/4">
+            <img src="/src/assets/logo.svg" />
+          </div>
+          <div className="h-3/4">
+            <Sidebar.Items>
+              <Sidebar.ItemGroup>
+                {infoMenu.map((e) => (
+                  <Sidebar.Item
+                    key={e.name}
+                    item={e.name}
+                    href={e.path}
+                    icon={e.icon}
+                  >
+                    {e.name}
+                  </Sidebar.Item>
+                ))}
+              </Sidebar.ItemGroup>
+            </Sidebar.Items>
+          </div>
+        </div>
+      </Sidebar>
+    </>
+  );
 }
 
-
+export { SideBar };

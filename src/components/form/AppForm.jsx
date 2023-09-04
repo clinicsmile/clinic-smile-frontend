@@ -3,7 +3,7 @@ import AppButton from "../ui/button/AppButton";
 
 import AppInputForm from "../ui/inputForm/AppInputForm";
 
-export default function Form({ form, onSubmit, loading = false }) {
+function AppForm({ form, onSubmit, loading = false }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const target = e.target;
@@ -48,3 +48,5 @@ export default function Form({ form, onSubmit, loading = false }) {
       </form>
   );
 }
+
+export {AppForm}
