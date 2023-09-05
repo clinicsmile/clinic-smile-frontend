@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppButton from "../ui/button/AppButton";
 
 import AppInputForm from "../ui/inputForm/AppInputForm";
@@ -6,7 +6,11 @@ import AppInputForm from "../ui/inputForm/AppInputForm";
 import AppSelectForm from "../ui/selectForm/AppSelectForm";
 import { Label } from "flowbite-react";
 
-function AppForm({ form, onSubmit, loading = false }) {
+function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
+  useEffect(() => {
+    console.log(loadedData)
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const target = e.target;

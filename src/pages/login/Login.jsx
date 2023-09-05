@@ -13,7 +13,7 @@ function Login() {
     try {
       // await signIn(formData);
       console.log(formData);
-      navigate("/cites");
+      navigate("/home");
     } catch (error) {
       console.log(error);
     } finally {

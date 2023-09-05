@@ -1,8 +1,12 @@
 import { SideBar } from "../../components/sidebar/SideBar";
-import { Table, Button, Modal, Pagination } from 'flowbite-react';
-import { useState } from 'react';
+import { Table, Button, Modal, Pagination } from "flowbite-react";
+import { useState } from "react";
 import { AppForm } from "../../components/form/AppForm";
-import { profileForm, registerForm, EditProfile } from "../../data/form/FormFields";
+import {
+  profileForm,
+  registerForm,
+  EditProfile,
+} from "../../data/form/FormFields";
 import { LiaExclamationCircleSolid } from "react-icons/lia";
 
 let personas = [
@@ -43,12 +47,13 @@ let personas = [
   },
 ];
 
-
 function Users() {
   const [openModal, setOpenModal] = useState(false);
   const [email, setEmail] = useState("");
   const props = { openModal, setOpenModal, email, setEmail };
   const [loading, setLoading] = useState(false);
+
+  const [currentUser, setCurrentUser] = useState({})
 
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
@@ -73,26 +78,39 @@ function Users() {
         </div>
         <div className="w-4/5 h-5/6 m-6 bg-white rounded-3xl p-6">
           <div className="justify-between flex">
-            <h1 className="text-4xl text-center w-1/2 my-3">GESTION DE USUARIOS</h1>
+            <h1 className="text-4xl text-center w-1/2 my-3">
+              GESTION DE USUARIOS
+            </h1>
             <div className="w-1/2">
               <Button
-                pill color="warning"
+                pill
+                color="warning"
                 className="mx-auto w-32"
-                onClick={() => props.setOpenModal('form-elements')}>
+                onClick={() => props.setOpenModal("form-elements")}
+              >
                 Crear
               </Button>
-              <Modal show={props.openModal === 'form-elements'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+              <Modal
+                show={props.openModal === "form-elements"}
+                size="md"
+                popup
+                onClose={() => props.setOpenModal(undefined)}
+              >
                 <Modal.Header />
                 <Modal.Body>
                   <div className="space-y-6">
-                    <AppForm form={EditProfile} onSubmit={(e) => toLogin(e)} loading={loading} />
+                    <AppForm
+                      form={EditProfile}
+                      onSubmit={(e) => toLogin(e)}
+                      loading={loading}
+                      loadedData={currentUser}
+                    />
                   </div>
                 </Modal.Body>
               </Modal>
             </div>
           </div>
           <div>
-
             <Table>
               <Table.Head className="text-center">
                 <Table.HeadCell>Documento</Table.HeadCell>
@@ -104,7 +122,6 @@ function Users() {
               </Table.Head>
 
               <Table.Body className="divide-y">
-
                 {personas.map((e) => (
                   <Table.Row
                     key={e.document}
@@ -118,16 +135,33 @@ function Users() {
                     <Table.Cell>
                       <div className="flex text-center justify-center">
                         <Button
-                          size="xs" pill color="warning" className="mx-2"
-                          onClick={() => props.setOpenModal('form-elements')}>
+                          size="xs"
+                          pill
+                          color="warning"
+                          className="mx-2"
+                          onClick={() => {
+                            setCurrentUser(e)
+                            console.log({e});
+                            props.setOpenModal("form-elements");
+                          }}
+                        >
                           Editar
                         </Button>
                         <Button
-                          size="xs" pill color="failure" className="mx-2"
-                          onClick={() => props.setOpenModal('pop-up')}>
+                          size="xs"
+                          pill
+                          color="failure"
+                          className="mx-2"
+                          onClick={() => props.setOpenModal("pop-up")}
+                        >
                           Eliminar
                         </Button>
-                        <Modal show={props.openModal === 'pop-up'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+                        <Modal
+                          show={props.openModal === "pop-up"}
+                          size="md"
+                          popup
+                          onClose={() => props.setOpenModal(undefined)}
+                        >
                           <Modal.Header />
                           <Modal.Body>
                             <div className="text-center">
@@ -136,10 +170,16 @@ function Users() {
                                 Esta seguro que quiere eliminar este registro?
                               </h3>
                               <div className="flex justify-center gap-4">
-                                <Button color="failure" onClick={() => props.setOpenModal(undefined)}>
+                                <Button
+                                  color="failure"
+                                  onClick={() => props.setOpenModal(undefined)}
+                                >
                                   Si, continuar
                                 </Button>
-                                <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+                                <Button
+                                  color="gray"
+                                  onClick={() => props.setOpenModal(undefined)}
+                                >
                                   No, cancelar
                                 </Button>
                               </div>
@@ -151,9 +191,7 @@ function Users() {
                   </Table.Row>
                 ))}
               </Table.Body>
-
             </Table>
-
           </div>
         </div>
       </div>
