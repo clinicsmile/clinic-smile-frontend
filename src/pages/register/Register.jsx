@@ -29,7 +29,7 @@ function Register() {
       <div className="m-auto w-1/3 h-3/4 p-6 rounded-lg bg-white shadow-2xl container columns-1 hover:scale-105">
         <div className="h-full">
           <div className="flex h-1/3 justify-center">
-            <img src="/src/assets/logo.svg" />
+            <img src="./logo.svg" />
           </div>
           <div className="h-1/2 justify-center">
           <AppForm form={registerForm} onSubmit={(e) => toLogin(e)} loading={loading} />
