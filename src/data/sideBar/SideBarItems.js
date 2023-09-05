@@ -2,28 +2,28 @@ import { LiaUserSolid,LiaUsersSolid,LiaCalendarDaySolid,LiaArchiveSolid,LiaSignO
 
 const infoMenu = [
   {
-    path: "profile",
+    path: "/profile",
     name: "Mi Perfil",
     icon: LiaUserSolid,
   },
   {
-    path: "users",
+    path: "/users",
     name: "Usuarios",
     icon: LiaUsersSolid,
   },
   {
-    path: "appointment",
+    path: "/appointment",
     name: "Citas",
     icon: LiaCalendarDaySolid,
   },
   {
-    path: "medicalRecords",
+    path: "/medicalRecords",
     name: "Historias clinicas",
     icon: LiaArchiveSolid,
   },
 
   {
-    path: "logout",
+    path: "/logout",
     name: "Cerrar Sesion",
     icon: LiaSignOutAltSolid,
   },

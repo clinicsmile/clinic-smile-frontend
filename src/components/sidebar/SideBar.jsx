@@ -1,6 +1,9 @@
 import { infoMenu } from "../../data/sideBar/SideBarItems";
 import { Sidebar } from "flowbite-react";
+// import { useNavigate } from "react-router-dom";
+
 function SideBar() {
+  // let navigate = useNavigate();
   return (
     <>
       <Sidebar className="w-full h-full">
@@ -16,6 +19,7 @@ function SideBar() {
                     key={e.name}
                     item={e.name}
                     href={e.path}
+                    // onClick={() => console.log(e.path)}
                     icon={e.icon}
                   >
                     {e.name}
