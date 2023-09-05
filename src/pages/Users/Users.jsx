@@ -1,6 +1,10 @@
 import { SideBar } from "../../components/sidebar/SideBar";
-import { AppProfile } from "../../components/profile/Profile";
-import { Table, Button } from "flowbite-react";
+import { Table, Button, Modal } from 'flowbite-react';
+import { useState } from 'react';
+import { AppForm } from "../../components/form/AppForm";
+import {profileForm, registerForm} from "../../data/form/FormFields";
+import { LiaExclamationCircleSolid } from "react-icons/lia";
+
 let personas = [
   {
     document: "12345",
@@ -74,7 +78,28 @@ let personas = [
   },
 ];
 
+function modale(){
+  
+}
+
 function Users() {
+  const [openModal, setOpenModal] = useState(false);
+  const [email, setEmail] = useState("");
+  const props = { openModal, setOpenModal, email, setEmail };
+  const [loading, setLoading] = useState(false);
+
+  const toLogin = async (formData) => {
+    setLoading(true);
+    try {
+      // await signIn(formData);
+      // navigate("/cites");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className=" flex w-sceen h-screen items-center bg-[#1783B0]">
@@ -82,8 +107,24 @@ function Users() {
           <SideBar />
         </div>
         <div className="w-4/5 h-5/6 m-6 bg-white rounded-3xl p-6">
-          <div>
-            <h1 className="text-3xl text-center my-3">GESTION DE USUARIOS</h1>
+          <div className="justify-between flex">
+            <h1 className="text-3xl text-center w-1/2 my-3">GESTION DE USUARIOS</h1>
+            <div className="w-1/2">
+            <Button 
+              pill color="warning" 
+              className="mx-auto w-32" 
+              onClick={() => props.setOpenModal('form-elements')}>
+              Crear            
+            </Button>           
+            <Modal show={props.openModal === 'form-elements'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+              <Modal.Header />
+              <Modal.Body>
+                <div className="space-y-6">
+                  <AppForm form={registerForm} onSubmit={(e) => toLogin(e)} loading={loading} />
+                </div>
+              </Modal.Body>
+            </Modal>
+            </div>
           </div>
           <div>
             <Table>
@@ -109,12 +150,35 @@ function Users() {
                     <Table.Cell>{e.email}</Table.Cell>
                     <Table.Cell>
                       <div className="flex text-center justify-center">
-                        <Button size="xs" pill color="warning" className="mx-2">
+                        <Button 
+                        size="xs" pill color="warning" className="mx-2"
+                        onClick={() => props.setOpenModal('form-elements')}>
                           Editar
                         </Button>
-                        <Button size="xs" pill color="failure" className="mx-2">
-                          Eliminar
+                        <Button 
+                          size="xs" pill color="failure" className="mx-2"
+                          onClick={() => props.setOpenModal('pop-up')}>
+                            Eliminar
                         </Button>
+                        <Modal show={props.openModal === 'pop-up'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+                          <Modal.Header />
+                          <Modal.Body>
+                          <div className="text-center">
+                            <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                Esta seguro que quiere eliminar este registro?
+                              </h3>
+                              <div className="flex justify-center gap-4">
+                              <Button color="failure" onClick={() => props.setOpenModal(undefined)}>
+                                Si, continuar
+                              </Button>
+                              <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+                                No, cancelar
+                              </Button>
+                              </div>
+                            </div>
+                          </Modal.Body>
+                        </Modal>
                       </div>
                     </Table.Cell>
                   </Table.Row>
