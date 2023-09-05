@@ -3,6 +3,9 @@ import AppButton from "../ui/button/AppButton";
 
 import AppInputForm from "../ui/inputForm/AppInputForm";
 
+import AppSelectForm from "../ui/selectForm/AppSelectForm";
+import { Label } from "flowbite-react";
+
 function AppForm({ form, onSubmit, loading = false }) {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,6 +28,21 @@ function AppForm({ form, onSubmit, loading = false }) {
         />
       ))}
 
+      {form.select?.map((select, index) => (
+
+        <div>
+          <div>
+            <Label htmlFor={select.label.htmlFor} value={select.label.name} />
+          </div>
+          <AppSelectForm
+            key={select.field.name + index}
+            title={select.field.name}
+            items={select.field.items}
+          />
+        </div>
+
+      ))}
+
       {form.buttons?.map((button, index) => (
         <AppButton
           key={button.title + index}
@@ -34,19 +52,20 @@ function AppForm({ form, onSubmit, loading = false }) {
           loading={loading}
         />
       ))}
+
     </>
   );
-  let clase="";
-  if(form.fields.length > 2){
-    clase="grid grid-cols-2 gap-4";
-  }else{
-    clase="grid grid-cols-1 gap-4";
+  let clase = "";
+  if (form.fields.length > 2) {
+    clase = "grid grid-cols-2 gap-4";
+  } else {
+    clase = "grid grid-cols-1 gap-4";
   }
   return (
-      <form className={clase} onSubmit={handleSubmit}>
-        <Form />
-      </form>
+    <form className={clase} onSubmit={handleSubmit}>
+      <Form />
+    </form>
   );
 }
 
-export {AppForm}
+export { AppForm }
