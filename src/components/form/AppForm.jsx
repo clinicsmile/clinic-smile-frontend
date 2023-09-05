@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppButton from "../ui/button/AppButton";
-import { formContentStyle, formInputStyle } from "./form-styles";
 
-export default function Form({ form, onSubmit, loading = false }) {
+import AppInputForm from "../ui/inputForm/AppInputForm";
+
+import AppSelectForm from "../ui/selectForm/AppSelectForm";
+import { Label } from "flowbite-react";
+
+function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
+  useEffect(() => {
+    console.log(loadedData)
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,25 +22,29 @@ export default function Form({ form, onSubmit, loading = false }) {
     onSubmit(formData);
   };
 
-  const FormInput = ({ label, input }) => {
-    return (
-      <div className="w-1/3">
-        <label className="flex mb-1" {...label}>
-          {label.name}
-        </label>
-          <input {...input} className={formInputStyle} />
-      </div>
-    );
-  };
-
   const Form = () => (
     <>
       {form.fields.map((field, index) => (
-        <FormInput
+        <AppInputForm
           key={"" + field.label + index}
           label={field.label}
           input={field.input}
         />
+      ))}
+
+      {form.select?.map((select, index) => (
+
+        <div>
+          <div>
+            <Label htmlFor={select.label.htmlFor} value={select.label.name} />
+          </div>
+          <AppSelectForm
+            key={select.field.name + index}
+            title={select.field.name}
+            items={select.field.items}
+          />
+        </div>
+
       ))}
 
       {form.buttons?.map((button, index) => (
@@ -45,12 +56,20 @@ export default function Form({ form, onSubmit, loading = false }) {
           loading={loading}
         />
       ))}
+
     </>
   );
-
+  let clase = "";
+  if (form.fields.length > 2) {
+    clase = "grid grid-cols-2 gap-4";
+  } else {
+    clase = "grid grid-cols-1 gap-4";
+  }
   return (
-    <form className={formContentStyle} onSubmit={handleSubmit} >
+    <form className={clase} onSubmit={handleSubmit}>
       <Form />
     </form>
   );
 }
+
+export { AppForm }
