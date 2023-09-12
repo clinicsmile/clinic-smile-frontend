@@ -4,6 +4,27 @@ import {AppForm} from "../../components/form/AppForm";
 import { login } from "../../data/form/FormFields";
 import { Label } from "flowbite-react";
 
+async function signIn(formData){
+  try {
+    let response = await fetch("http://192.168.1.102:5000/Auth",{
+      method:"post",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(formData)
+    });
+    if(response.ok){
+      return true;
+    }else{
+      return false;
+    }
+
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 function Login() {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -11,9 +32,13 @@ function Login() {
   const toLogin = async (formData) => {
     setLoading(true);
     try {
-      // await signIn(formData);
-      console.log(formData);
-      navigate("/home");
+      let validacion = await signIn(formData);
+      if(validacion){
+        navigate("/home");
+      }else{
+        navigate("/login")
+      }
+
     } catch (error) {
       console.log(error);
     } finally {
