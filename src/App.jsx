@@ -1,21 +1,40 @@
-import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
-import { Home, Login, Register,Profile,Users} from './pages'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
+import { Home, Login, Register, Profile, Users } from "./pages";
+
+import AuthLayout from "./components/layouts/AuthLayout";
 
 function App() {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route>
-					<Route path='/register' element={<Register />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/' element={<Login />} />
-					<Route path='/home' element={<Home />} />
-					<Route path='/profile' element={<Profile/>} />
-					<Route path='/users' element={<Users/>} />
-					<Route path='/*' element={<Navigate to='/'/>} />
-				</Route>
-			</Routes>
-		</BrowserRouter>
-	)
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route>
+          <Route
+            element={
+              <AuthLayout>
+                <Outlet />
+              </AuthLayout>
+            }
+          >
+            <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/users" element={<Users />} />
+          </Route>
+
+          <Route>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
+          </Route>
+          
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-export default App
+export default App;

@@ -7,10 +7,18 @@ import AppSelectForm from "../ui/selectForm/AppSelectForm";
 import { Label } from "flowbite-react";
 
 function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
-  const [formClassName, setFormClassName] = useState('');
+  const [formClassName, setFormClassName] = useState("");
 
   useEffect(() => {
-    setFormClassName(`grid grid-cols-${form.fields.length > 2 ? '2' : '1'} gap-4`)
+    setFormClassName(
+      `grid grid-cols-${form.fields.length > 2 ? "2" : "1"} gap-4`
+    );
+
+    if (loadedData) {
+      form.fields.map((field) => {
+        field.input.value = loadedData[field.input.name];
+      });
+    }
   }, []);
 
   const handleSubmit = (e) => {
@@ -27,6 +35,7 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
     <>
       {form.fields.map((field, index) => (
         <AppInputForm
+          value={field.input.value}
           key={"" + field.label + index}
           label={field.label}
           input={field.input}
