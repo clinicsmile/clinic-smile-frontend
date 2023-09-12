@@ -29,11 +29,11 @@ const registerForm = {
     {
       label: {
         name: "Apellido",
-        htmlFor: "lastName",
+        htmlFor: "lastname",
       },
       input: {
-        id: "lastName",
-        name: "lastName",
+        id: "lastname",
+        name: "lastname",
         type: "text",
         required: true,
         placeholder: "",
@@ -194,11 +194,11 @@ const profileForm ={
     {
       label: {
         name: "Apellido",
-        htmlFor: "lastName",
+        htmlFor: "lastname",
       },
       input: {
-        id: "lastName",
-        name: "lastName",
+        id: "lastname",
+        name: "lastname",
         type: "text",
         required: true,
         placeholder: "",
@@ -294,11 +294,11 @@ const EditProfile ={
     {
       label: {
         name: "Apellido",
-        htmlFor: "lastName",
+        htmlFor: "lastname",
       },
       input: {
-        id: "lastName",
-        name: "lastName",
+        id: "lastname",
+        name: "lastname",
         type: "text",
         required: true,
         placeholder: "",

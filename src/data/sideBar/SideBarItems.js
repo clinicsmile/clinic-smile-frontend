@@ -1,4 +1,10 @@
-import { LiaUserSolid,LiaUsersSolid,LiaCalendarDaySolid,LiaArchiveSolid,LiaSignOutAltSolid } from "react-icons/lia";
+import {
+  LiaUserSolid,
+  LiaUsersSolid,
+  LiaCalendarDaySolid,
+  LiaArchiveSolid,
+  LiaSignOutAltSolid,
+} from "react-icons/lia";
 
 const infoMenu = [
   {
@@ -27,6 +33,5 @@ const infoMenu = [
     name: "Cerrar Sesion",
     icon: LiaSignOutAltSolid,
   },
-  
 ];
 export { infoMenu };
