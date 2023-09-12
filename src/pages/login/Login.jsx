@@ -47,7 +47,7 @@ function Login() {
 
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-[url('/src/assets/backGround.png')] bg-cover bg-center">
-      <div className="m-auto justify-center items-center flex w-1/3 h-3/4 rounded-lg bg-white shadow-2xl container">
+      <div className="m-auto justify-center items-center flex w-1/3 h-3/4 p-6 rounded-lg bg-white shadow-2xl container">
         <div className="flex flex-col">
           <img src="./logo.svg" className="flex mb-6" />
           <div className="justify-center flex flex-col">
