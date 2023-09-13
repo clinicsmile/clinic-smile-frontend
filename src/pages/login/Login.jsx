@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { login } from "../../data/form/FormFields";
+import getBrand from "../../services/clinics";
 
 async function signIn(formData){
   try {
@@ -26,7 +27,26 @@ async function signIn(formData){
 
 function Login() {
   let navigate = useNavigate();
+  const url = window.location.href;
+
   const [loading, setLoading] = useState(false);
+
+  function setColor(newColor) {
+    document.documentElement.style.setProperty("--primary", newColor);
+  }
+
+  useEffect(() => {
+    async function getConfigBrand() {
+      try {
+        let data = { location: "url" };
+        const response = await getBrand(data);
+        setColor(response.primaryColor);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getConfigBrand();
+  }, []);
 
   const toLogin = async (formData) => {
     setLoading(true);

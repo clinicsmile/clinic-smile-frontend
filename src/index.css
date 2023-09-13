@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+:root {
+  --primary: #c6ebbe;
+  --secondary: #2c6e49;
+}
+
 html,
 body {
   padding: 0;
