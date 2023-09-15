@@ -182,7 +182,7 @@ const registerFormPatient = {
         type: "tel",
         required: true,
         placeholder: "",
-        pattern:"[3]{1}[0-4]{2}[0-9]{3}[0-9]{4}|[3]{1}[0-9]{2}[0-9]{4}"
+        pattern: "[3]{1}[0-4]{2}[0-9]{3}[0-9]{4}|[3]{1}[0-9]{2}[0-9]{4}",
       },
     },
     {
@@ -230,8 +230,9 @@ const registerFormPatient = {
         type: "password",
         required: true,
         placeholder: "",
-        pattern:"^.*$",
-        title:"La contraseña debe contener al menos 8 caracteres, incluyendo al menos un número, una mayúscula y una minúscula."
+        pattern: "^.*$",
+        title:
+          "La contraseña debe contener al menos 8 caracteres, incluyendo al menos un número, una mayúscula y una minúscula.",
       },
     },
   ],
@@ -677,4 +678,10 @@ const EditProfile = {
   ],
 };
 
-export { login, registerFormPatient,registerFormDoctor, profileForm, EditProfile };
+export {
+  login,
+  registerFormPatient,
+  registerFormDoctor,
+  profileForm,
+  EditProfile,
+};
