@@ -4,7 +4,8 @@ import AppButton from "../ui/button/AppButton";
 import AppInputForm from "../ui/inputForm/AppInputForm";
 
 import AppSelectForm from "../ui/selectForm/AppSelectForm";
-import { Label } from "flowbite-react";
+
+import AppTextAreaForm from "../ui/textAreaForm/AppTextAreaForm";
 
 function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
   const [formClassName, setFormClassName] = useState("");
@@ -16,7 +17,12 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
 
     if (loadedData) {
       form.fields.map((field) => {
-        field.input.value = loadedData[field.input.name];
+        field.input
+          ? (field.input.value = loadedData[field.input.name])
+          : field.select
+          ? (field.select.value = loadedData[field.select.name])
+          : (field.textarea.value = loadedData[field.textarea.name]);
+        // field.input.value = loadedData[field.input.name];
       });
     }
   }, []);
@@ -24,25 +30,49 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const target = e.target;
+    console.log(target);
     let formData = {};
-    form.fields.map((f) => {
-      formData[f.input.name] = target[f.input.name].value;
+    form.fields.forEach((f) => {
+      f.input
+        ? (formData[f.input.name] = target[f.input.name].value)
+        : f.select
+        ? (formData[f.select.name] = target[f.select.name].value)
+        : (formData[f.textarea.name] = target[f.textarea.name].value);
+
+      //console.log(f);
+      //formData[f.input.name] = target[f.input.name].value;
     });
     onSubmit(formData);
   };
 
   const Form = () => (
     <>
-      {form.fields.map((field, index) => (
-        <AppInputForm
-          value={field.input.value}
-          key={"" + field.label + index}
-          label={field.label}
-          input={field.input}
-        />
-      ))}
+      {form.fields.map((field, index) =>
+        field.input ? (
+          <AppInputForm
+            value={field.input.value}
+            key={"" + field.label + index}
+            label={field.label}
+            input={field.input}
+          />
+        ) : field.select ? (
+          <AppSelectForm
+            key={field.select.name + index}
+            title={field.select.name}
+            items={field.select.items}
+            label={field.label}
+            select={field.select}
+          />
+        ) : (
+          <AppTextAreaForm
+            key={field.textarea.name + index}
+            label={field.label}
+            textarea={field.textarea}
+          />
+        )
+      )}
 
-      {form.select?.map((select, index) => (
+      {/* {form.select?.map((select, index) => (
         <div key={select.field.name + index}>
           <div>
             <Label htmlFor={select.label.htmlFor} value={select.label.name} />
@@ -53,7 +83,7 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
             items={select.field.items}
           />
         </div>
-      ))}
+      ))} */}
 
       {form.buttons?.map((button, index) => (
         <AppButton
@@ -68,7 +98,7 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
   );
 
   return (
-    <form className={formClassName} onSubmit={handleSubmit}>
+    <form className={`${formClassName} p-6`} onSubmit={handleSubmit}>
       <Form />
     </form>
   );

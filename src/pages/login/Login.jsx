@@ -2,22 +2,29 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { login } from "../../data/form/FormFields";
+import axios from "axios";
 
-async function signIn(formData){
+async function signIn(formData) {
   try {
-    let response = await fetch("http://192.168.1.102:5000/Auth",{
-      method:"post",
-      headers:{
-        "Content-Type":"application/json"
+    let response = await axios.get("http://192.168.1.102:5000/Auth", {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Basic ${btoa(
+          formData.username + ":" + formData.password
+        )}`,
       },
-      body:JSON.stringify(formData)
     });
-    if(response.ok){
+    console.log(response);
+    if (response.data.ok) {
+      document.cookie = `token=${response.data.token}; max-age=${
+        60 * 3
+      }; path=/; samesite=strict`;
+      window.localStorage.setItem('username',response.data.username);
+      console.log(response.data);
       return true;
-    }else{
+    } else {
       return false;
     }
-
   } catch (error) {
     console.log(error);
     return false;
@@ -32,12 +39,12 @@ function Login() {
     setLoading(true);
     try {
       let validacion = await signIn(formData);
-      if(validacion){
+      console.log(validacion);
+      if (validacion) {
         navigate("/home");
-      }else{
-        navigate("/login")
+      } else {
+        navigate("/login");
       }
-
     } catch (error) {
       console.log(error);
     } finally {

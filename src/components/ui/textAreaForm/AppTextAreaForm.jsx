@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
-import { Select, Label } from "flowbite-react";
+import { Textarea, Label } from "flowbite-react";
 
 // eslint-disable-next-line react-refresh/only-export-components, react/display-name
-export default ({ items, label, select }) => {
+export default ({ label, textarea }) => {
   return (
     <div>
       <div className="mb-2 block">
         <Label htmlFor={label.htmlFor} value={label.name} />
       </div>
-      <Select id={select.id}>
-        {items.map((e) => (
-          <option key={e.option.name} value={e.option.value}>{e.option.name}</option>
-        ))}
-      </Select>
+      <Textarea
+        id={textarea.name}
+        placeholder={textarea.placeholder}
+        rows={4}
+      />
     </div>
   );
 };
