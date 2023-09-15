@@ -19,7 +19,6 @@ export const get = async (endPoint, req) => {
 const execHttpMethod = async (method, endPoint, params) => {
   setToken();
   params = method == "post" ? params : { params };
-  endPoint = "api/v1/" + endPoint;
   try {
     const { data } = await fetch[method](endPoint, params);
     return data;
