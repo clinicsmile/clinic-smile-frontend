@@ -5,7 +5,7 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
-import { Home, Login, Register, Profile, Users } from "./pages";
+import { Home, Login, Register, Profile, Users,Logout } from "./pages";
 
 import AuthLayout from "./components/layouts/AuthLayout";
 
@@ -24,6 +24,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/logout" element={<Logout/>} />
           </Route>
 
           <Route>
@@ -31,7 +32,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Login />} />
           </Route>
-          
         </Route>
       </Routes>
     </BrowserRouter>
