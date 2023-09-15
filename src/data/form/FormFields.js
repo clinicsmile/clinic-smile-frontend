@@ -61,7 +61,7 @@ const registerFormPatient = {
         type: "text",
         required: true,
         placeholder: "",
-        // items: await selectList("documentTypes"),
+        items: await selectList("documentTypes"),
       },
     },
     {
@@ -127,7 +127,7 @@ const registerFormPatient = {
         type: "text",
         required: true,
         placeholder: "",
-        // items: await selectList("genders"),
+        items: await selectList("genders"),
       },
     },
     {
@@ -141,7 +141,7 @@ const registerFormPatient = {
         type: "text",
         required: true,
         placeholder: "",
-        // items: await selectList("bloodTypes"),
+        items: await selectList("bloodTypes"),
       },
     },
     {
@@ -257,7 +257,7 @@ const registerFormDoctor = {
         type: "text",
         required: true,
         placeholder: "",
-        // items: await selectList("documentTypes"),
+        items: await selectList("documentTypes"),
       },
     },
     {
@@ -359,7 +359,7 @@ const registerFormDoctor = {
         type: "text",
         required: true,
         placeholder: "",
-        // items: await selectList("genders"),
+        items: await selectList("genders"),
       },
     },
     {
