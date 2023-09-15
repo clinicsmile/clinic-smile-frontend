@@ -12,6 +12,8 @@ export default ({ label, input, value }) => {
         placeholder={input.placeholder}
         required={input.required}
         type={input.type}
+        pattern={input.pattern}
+        title={input.title}
       />
     </div>
   );

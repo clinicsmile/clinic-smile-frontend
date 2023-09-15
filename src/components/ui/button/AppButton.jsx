@@ -26,6 +26,7 @@ export default ({
   const handleClick = () => !loading && action && action();
 
   return (
+    <div className="p-4">
       <button
         type={submit ? "submit" : ""}
         onClick={handleClick}
@@ -34,5 +35,6 @@ export default ({
         {loading && <Spinner color="warning" size="md" />}
         <span className="ml-2">{loading ? "Cargando..." : title}</span>
       </button>
+    </div>
   );
 };
