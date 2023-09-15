@@ -2,8 +2,34 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { login } from "../../data/form/FormFields";
-import getBrand from "../../services/clinics";
-import signIn from "../../services/auth";
+import axios from "axios";
+
+async function signIn(formData) {
+  try {
+    let response = await axios.get("http://192.168.1.102:5000/Auth", {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Basic ${btoa(
+          formData.username + ":" + formData.password
+        )}`,
+      },
+    });
+    console.log(response);
+    if (response.data.ok) {
+      document.cookie = `token=${response.data.token}; max-age=${
+        60 * 3
+      }; path=/; samesite=strict`;
+      window.localStorage.setItem('username',response.data.username);
+      console.log(response.data);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
 
 function Login() {
   let navigate = useNavigate();
@@ -31,12 +57,13 @@ function Login() {
   const toLogin = async (formData) => {
     setLoading(true);
     try {
-      let userLogged = await signIn(formData);
-      document.cookie = `token=${userLogged.token}; max-age=${
-        60 * 3
-      }; path=/; samesite=strict`;
-      window.localStorage.setItem('user', userLogged);
-      navigate("/home");
+      let validacion = await signIn(formData);
+      console.log(validacion);
+      if (validacion) {
+        navigate("/home");
+      } else {
+        navigate("/login");
+      }
     } catch (error) {
       // alert("Usuario o contraseña incorrectos");
       // navigate("/login");
