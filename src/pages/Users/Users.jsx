@@ -1,11 +1,12 @@
-import { SideBar } from "../../components/sidebar/SideBar";
-import { Table, Button, Modal, Pagination } from "flowbite-react";
+import { Table, Button, Modal } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { AppForm } from "../../components/form/AppForm";
-import { EditProfile } from "../../data/form/FormFields";
+import { Forms } from "../../data/form/Forms";
 import { LiaExclamationCircleSolid } from "react-icons/lia";
 import axios from "axios";
 import { API } from "../../common/config";
+import { validate } from "../../middlewares/validateLogin";
+
 function Users() {
   const [openModal, setOpenModal] = useState(false);
   const [email, setEmail] = useState("");
@@ -35,7 +36,7 @@ function Users() {
     const res = await axios.get(`${API.url}/Users`);
     setUser(res.data);
   };
-  if (window.localStorage.getItem("username") != null) {
+  if (validate) {
     return (
       <>
         <div className="flex h-screen items-center ">
@@ -54,7 +55,7 @@ function Users() {
                   Crear
                 </Button>
 
-                <Modal
+                <Modal //este modal es el de editar y crear
                   show={openModal === "form-elements"}
                   size="md"
                   popup
@@ -67,7 +68,11 @@ function Users() {
                   <Modal.Body>
                     <div className="space-y-6">
                       <AppForm
-                        form={EditProfile}
+                        form={
+                          currentUser.rolId == 2
+                            ? Forms.editDoctor()
+                            : Forms.editPatient()
+                        }
                         onSubmit={(e) => toLogin(e)}
                         loading={loading}
                         loadedData={currentUser}
@@ -123,7 +128,7 @@ function Users() {
                             >
                               Eliminar
                             </Button>
-                            <Modal
+                            <Modal //este modal es el de eliminar
                               show={openModal === "pop-up"}
                               size="md"
                               popup
