@@ -2,31 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { Forms } from "../../data/form/Forms";
-import axios from "axios";
-import { API } from "../../common/config";
-
-async function signIn(formData) {
-  try {
-    let response = await axios.get(`${API.url}/auth`, {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Basic ${btoa(
-          formData.username + ":" + formData.password
-        )}`,
-      },
-    });
-    if (response.data.ok) {
-      document.cookie = `token=${response.data.token}; path=/; samesite=strict`;
-      window.localStorage.setItem("user", JSON.stringify(response.data.user));
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-}
+import { services } from "../../services/services";
 
 function Login() {
   let navigate = useNavigate();
@@ -53,20 +29,14 @@ function Login() {
 
   const toLogin = async (formData) => {
     setLoading(true);
-    try {
-      let validacion = await signIn(formData);
-      if (validacion) {
+    await services.login(formData).then((value) => {
+      if (value) {
         navigate("/home");
       } else {
         navigate("/login");
       }
-    } catch (error) {
-      // alert("Usuario o contraseña incorrectos");
-      // navigate("/login");
-      console.log(error);
-    } finally {
       setLoading(false);
-    }
+    });
   };
 
   return (

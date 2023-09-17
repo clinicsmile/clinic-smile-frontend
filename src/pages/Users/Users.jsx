@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { AppForm } from "../../components/form/AppForm";
 import { Forms } from "../../data/form/Forms";
 import { LiaExclamationCircleSolid } from "react-icons/lia";
-import axios from "axios";
-import { API } from "../../common/config";
 import { validate } from "../../middlewares/validateLogin";
+import { services } from "../../services/services";
 
 function Users() {
   const [openModal, setOpenModal] = useState(false);
@@ -33,8 +32,8 @@ function Users() {
   }, []);
 
   const getUsers = async () => {
-    const res = await axios.get(`${API.url}/Users`);
-    setUser(res.data);
+    const res = await services.usersList();
+    setUser(res);
   };
   if (validate) {
     return (
