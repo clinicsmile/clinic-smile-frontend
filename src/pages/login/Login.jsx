@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
-import { login } from "../../data/form/FormFields";
+import { Forms } from "../../data/form/Forms";
 import axios from "axios";
+import { API } from "../../common/config";
 
 async function signIn(formData) {
   try {
-    let response = await axios.get("http://192.168.1.102:5000/Auth", {
+    let response = await axios.get(`${API.url}/auth`, {
       headers: {
         "Content-Type": "application/json",
         authorization: `Basic ${btoa(
@@ -14,13 +15,9 @@ async function signIn(formData) {
         )}`,
       },
     });
-    console.log(response);
     if (response.data.ok) {
-      document.cookie = `token=${response.data.token}; max-age=${
-        60 * 3
-      }; path=/; samesite=strict`;
-      window.localStorage.setItem('username',response.data.username);
-      console.log(response.data);
+      document.cookie = `token=${response.data.token}; path=/; samesite=strict`;
+      window.localStorage.setItem("user", JSON.stringify(response.data.user));
       return true;
     } else {
       return false;
@@ -39,7 +36,6 @@ function Login() {
     setLoading(true);
     try {
       let validacion = await signIn(formData);
-      console.log(validacion);
       if (validacion) {
         navigate("/home");
       } else {
@@ -59,7 +55,7 @@ function Login() {
           <img src="./logo.svg" className="flex mb-6" />
           <div className="justify-center flex flex-col">
             <AppForm
-              form={login}
+              form={Forms.login}
               onSubmit={(e) => toLogin(e)}
               loading={loading}
             />

@@ -1,5 +1,4 @@
 import { SideBar } from "../sidebar/SideBar";
-
 const LayoutWrapper = ({ children }) => (
   <div className={"flex flex-row"}>
     <div className="hidden sm:block">

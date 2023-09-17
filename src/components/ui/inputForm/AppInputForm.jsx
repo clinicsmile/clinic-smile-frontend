@@ -14,6 +14,7 @@ export default ({ label, input, value }) => {
         type={input.type}
         pattern={input.pattern}
         title={input.title}
+        disabled={input.disabled}
       />
     </div>
   );
