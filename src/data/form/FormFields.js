@@ -1,92 +1,5 @@
-import axios from "axios";
-import { API } from "../../common/config";
+import { services } from "../../services/services";
 
-const selectList = async (name) => {
-  let response;
-  let options = [];
-  switch (name) {
-    case "genders": {
-      response = await axios.get(`${API.url}/gendersList`);
-      response = response.data;
-      response.forEach((element) => {
-        options.push({
-          option: {
-            name: element.name,
-            value: element.id,
-          },
-        });
-      });
-      break;
-    }
-    case "documentTypes": {
-      response = await axios.get(`${API.url}/documentTypeList`);
-      response = response.data;
-      response.forEach((element) => {
-        options.push({
-          option: {
-            name: element.name,
-            value: element.id,
-          },
-        });
-      });
-      break;
-    }
-    case "bloodTypes": {
-      response = await axios.get(`${API.url}/bloodTypeList`);
-      response = response.data;
-      response.forEach((element) => {
-        options.push({
-          option: {
-            name: element.acronym,
-            value: element.id,
-          },
-        });
-      });
-      break;
-    }
-    case "academicLevels": {
-      response = await axios.get(`${API.url}/academicLevelList`);
-      response = response.data;
-      response.forEach((element) => {
-        options.push({
-          option: {
-            name: element.name,
-            value: element.id,
-          },
-        });
-      });
-      break;
-    }
-    case "specialties": {
-      response = await axios.get(`${API.url}/specialtiesList`);
-      response = response.data;
-      response.forEach((element) => {
-        options.push({
-          option: {
-            name: element.name,
-            value: element.id,
-          },
-        });
-      });
-      break;
-    }
-    case "rolList": {
-      response = await axios.get(`${API.url}/rolList`);
-      response = response.data;
-      response.forEach((element) => {
-        options.push({
-          option: {
-            name: element.name,
-            value: element.id,
-          },
-        });
-      });
-      console.log(response);
-      break;
-    }
-  }
-  return options;
-};
 const rolField = [
   {
     label: {
@@ -99,7 +12,7 @@ const rolField = [
       type: "text",
       required: true,
       placeholder: "",
-      items: await selectList("rolList"),
+      items: await services.Appselect("rolList"),
     },
   },
 ];
@@ -146,7 +59,7 @@ const basicFields = [
       required: true,
       placeholder: "",
       disabled: false,
-      items: await selectList("documentTypes"),
+      items: await services.Appselect("documentTypes"),
     },
   },
   {
@@ -216,7 +129,7 @@ const basicFields = [
       type: "text",
       required: true,
       placeholder: "",
-      items: await selectList("genders"),
+      items: await services.Appselect("genders"),
       disabled: false,
     },
   },
@@ -231,7 +144,7 @@ const basicFields = [
       type: "text",
       required: true,
       placeholder: "",
-      items: await selectList("bloodTypes"),
+      items: await services.Appselect("bloodTypes"),
       disabled: false,
     },
   },
@@ -322,7 +235,7 @@ const aditionalFieldsDoctor = [
       required: true,
       placeholder: "",
       disabled: false,
-      items: await selectList("academicLevels"),
+      items: await services.Appselect("academicLevels"),
     },
   },
   {
@@ -365,7 +278,7 @@ const aditionalFieldsDoctor = [
       required: true,
       placeholder: "",
       disabled: false,
-      items: await selectList("specialties"),
+      items: await services.Appselect("specialties"),
     },
   },
   {

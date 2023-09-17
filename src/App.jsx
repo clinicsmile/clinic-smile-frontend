@@ -2,8 +2,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Home, Login, Register, Profile, Users, Logout } from "./pages";
 
 import AuthLayout from "./components/layouts/AuthLayout";
-import {InactivityDetector} from "./components/inactivityDetector/InactivityDector";
-import { validate } from "./middlewares/validateLogin";
+import { InactivityDetector } from "./components/inactivityDetector/InactivityDector";
 function App() {
   return (
     <BrowserRouter>

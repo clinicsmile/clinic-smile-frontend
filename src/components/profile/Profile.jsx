@@ -2,8 +2,8 @@ import axios from "axios";
 import { Forms } from "../../data/form/Forms";
 import { AppForm } from "../form/AppForm";
 import Swal from "sweetalert2";
-import { API } from "../../common/config";
 import { useState, useEffect } from "react";
+import { services } from "../../services/services";
 
 const AppProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -11,14 +11,10 @@ const AppProfile = () => {
 
   const getUser = async () => {
     try {
-      const res = await axios.get(
-        `${API.url}/user/${
-          JSON.parse(window.localStorage.getItem("user")).PersonDocument
-        }`
-      );
-      setUser(res.data);
+      const res = await services.getCurrentProfile();
+      setUser(res);
     } catch (error) {
-      Toast.fire({
+      Swal.fire({
         title: "Ocurrio un error al obtener los datos del perfil",
         icon: "error",
       });
@@ -31,8 +27,7 @@ const AppProfile = () => {
 
   const update = async (formData) => {
     try {
-      await axios.put(`${API.url}/profile/${formData.document}`, formData);
-      return true;
+      await services.updateProfile(formData);
     } catch (error) {
       return false;
     }
