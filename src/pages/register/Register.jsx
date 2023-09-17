@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
-import { registerFormPatient } from "../../data/form/FormFields";
+import { Forms } from "../../data/form/Forms";
 import axios from "axios";
 import { API } from "../../common/config";
 
@@ -10,11 +10,11 @@ function Register() {
   const [loading, setLoading] = useState(false);
 
   const toRegister = async (formData) => {
-    console.log(formData);
     setLoading(true);
     try {
+      formData.rolId = "3";
       await axios.post(`${API.url}/Register`, formData);
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       console.log(error);
     } finally {
@@ -31,7 +31,7 @@ function Register() {
           </div>
           <div className="h-4/5 overflow-y-scroll overflow-x-hidden">
             <AppForm
-              form={registerFormPatient}
+              form={Forms.registerFormPatient}
               onSubmit={(e) => toRegister(e)}
               loading={loading}
             />

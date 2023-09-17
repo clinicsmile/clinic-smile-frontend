@@ -1,14 +1,9 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
-import { Home, Login, Register, Profile, Users,Logout } from "./pages";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { Home, Login, Register, Profile, Users, Logout } from "./pages";
 
 import AuthLayout from "./components/layouts/AuthLayout";
-
+import {InactivityDetector} from "./components/inactivityDetector/InactivityDector";
+import { validate } from "./middlewares/validateLogin";
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +12,7 @@ function App() {
           <Route
             element={
               <AuthLayout>
+                <InactivityDetector />
                 <Outlet />
               </AuthLayout>
             }
@@ -24,7 +20,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/logout" element={<Logout/>} />
+            <Route path="/logout" element={<Logout />} />
           </Route>
 
           <Route>

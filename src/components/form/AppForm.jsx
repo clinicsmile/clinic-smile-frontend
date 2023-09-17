@@ -7,22 +7,22 @@ import AppSelectForm from "../ui/selectForm/AppSelectForm";
 
 import AppTextAreaForm from "../ui/textAreaForm/AppTextAreaForm";
 
+import AppDatePickerForm from "../ui/datePicker/AppDatePickerForm";
 function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
   const [formClassName, setFormClassName] = useState("");
-
   useEffect(() => {
     setFormClassName(
       `grid grid-cols-${form.fields.length > 2 ? "2" : "1"} gap-4`
     );
-
     if (loadedData) {
       form.fields.map((field) => {
         field.input
           ? (field.input.value = loadedData[field.input.name])
           : field.select
           ? (field.select.value = loadedData[field.select.name])
-          : (field.textarea.value = loadedData[field.textarea.name]);
-        // field.input.value = loadedData[field.input.name];
+          : field.textarea
+          ? (field.textarea.value = loadedData[field.textarea.name])
+          : (field.date.value = loadedData[field.date.name]);
       });
     }
   }, []);
@@ -30,17 +30,15 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const target = e.target;
-    console.log(target);
     let formData = {};
     form.fields.forEach((f) => {
       f.input
         ? (formData[f.input.name] = target[f.input.name].value)
         : f.select
         ? (formData[f.select.name] = target[f.select.name].value)
-        : (formData[f.textarea.name] = target[f.textarea.name].value);
-
-      //console.log(f);
-      //formData[f.input.name] = target[f.input.name].value;
+        : f.textarea
+        ? (formData[f.textarea.name] = target[f.textarea.name].value)
+        : (formData[f.date.name] = target[f.date.name].value);
     });
     onSubmit(formData);
   };
@@ -62,28 +60,24 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
             items={field.select.items}
             label={field.label}
             select={field.select}
+            value={field.select.value}
           />
-        ) : (
+        ) : field.textarea ? (
           <AppTextAreaForm
             key={field.textarea.name + index}
             label={field.label}
             textarea={field.textarea}
+            value={field.textarea.value}
+          />
+        ) : (
+          <AppDatePickerForm
+            key={field.date.name + index}
+            label={field.label}
+            date={field.date}
+            value={field.date.value}
           />
         )
       )}
-
-      {/* {form.select?.map((select, index) => (
-        <div key={select.field.name + index}>
-          <div>
-            <Label htmlFor={select.label.htmlFor} value={select.label.name} />
-          </div>
-          <AppSelectForm
-            key={select.field.name + index}
-            title={select.field.name}
-            items={select.field.items}
-          />
-        </div>
-      ))} */}
 
       {form.buttons?.map((button, index) => (
         <AppButton

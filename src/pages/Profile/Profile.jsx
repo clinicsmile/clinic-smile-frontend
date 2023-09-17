@@ -1,7 +1,8 @@
 import { AppProfile } from "../../components/profile/Profile";
+import { validate } from "../../middlewares/validateLogin";
 
 function Profile() {
-  if (window.localStorage.getItem("username") != null) {
+  if (validate) {
     return (
       <div className="flex w-sceen h-screen items-center">
         <div className="w-full h-4/5 m-6 bg-white rounded-3xl">
