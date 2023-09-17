@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { Forms } from "../../data/form/Forms";
-import axios from "axios";
-import { API } from "../../common/config";
+import { services } from "../../services/services";
 
 function Register() {
   let navigate = useNavigate();
@@ -13,7 +12,7 @@ function Register() {
     setLoading(true);
     try {
       formData.rolId = "3";
-      await axios.post(`${API.url}/Register`, formData);
+      await services.register(formData);
       navigate("/login");
     } catch (error) {
       console.log(error);
