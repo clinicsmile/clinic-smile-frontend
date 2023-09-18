@@ -5,6 +5,7 @@ import { Forms } from "../../data/form/Forms";
 import { LiaExclamationCircleSolid } from "react-icons/lia";
 import { validate } from "../../middlewares/validateLogin";
 import { services } from "../../services/services";
+import Swal from "sweetalert2";
 
 function Users() {
   const [openModal, setOpenModal] = useState(false);
@@ -25,6 +26,25 @@ function Users() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const toDelete = async (formData) => {
+    await services.deleteUser(formData).then(async()=>{
+      await Swal.fire({
+        title: "Usuario eliminado con exito",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      location.reload();
+    }).catch(async ()=>{
+      await Swal.fire({
+        title: "Ocurrio un error al eliminar el usuario",
+        icon: "error",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    })
   };
   const [users, setUser] = useState([]);
   useEffect(() => {
@@ -144,7 +164,10 @@ function Users() {
                                   <div className="flex justify-center gap-4">
                                     <Button
                                       color="failure"
-                                      onClick={() => setOpenModal(undefined)}
+                                      onClick={() => {
+                                        setOpenModal(undefined);
+                                        toDelete(e);
+                                      }}
                                     >
                                       Si, continuar
                                     </Button>
