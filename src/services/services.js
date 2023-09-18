@@ -1,4 +1,4 @@
-import { get, post } from "../api/apiService";
+import { get, post,put } from "../api/apiService";
 
 const services = {};
 
@@ -79,16 +79,20 @@ services.register = async (formData) => {
 };
 
 services.login = async (formData) => {
-  let response = await post(`/auth`, {
-    authorization: `Basic ${btoa(formData.username + ":" + formData.password)}`,
-  });
-  if (response.ok) {
-    document.cookie = `token=${response.token}; path=/; samesite=strict`;
-    window.localStorage.setItem("user", JSON.stringify(response.user));
-    return true;
-  } else {
+  try {
+    let response = await post(`/auth`, {
+      authorization: `Basic ${btoa(formData.username + ":" + formData.password)}`,
+    });
+    if (response.ok) {
+      document.cookie = `token=${response.token}; path=/; samesite=strict`;
+      window.localStorage.setItem("user", JSON.stringify(response.user));
+      return true;
+    }
+  } catch (error) {
+    console.log(error);
     return false;
   }
+  
 };
 
 services.getCurrentProfile = async () => {
