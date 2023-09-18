@@ -29,22 +29,25 @@ function Users() {
   };
 
   const toDelete = async (formData) => {
-    await services.deleteUser(formData).then(async()=>{
-      await Swal.fire({
-        title: "Usuario eliminado con exito",
-        icon: "success",
-        timer: 1500,
-        showConfirmButton: false,
+    await services
+      .deleteUser(formData)
+      .then(async () => {
+        await Swal.fire({
+          title: "Usuario eliminado con exito",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        location.reload();
+      })
+      .catch(async () => {
+        await Swal.fire({
+          title: "Ocurrio un error al eliminar el usuario",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       });
-      location.reload();
-    }).catch(async ()=>{
-      await Swal.fire({
-        title: "Ocurrio un error al eliminar el usuario",
-        icon: "error",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    })
   };
   const [users, setUser] = useState([]);
   useEffect(() => {
@@ -52,8 +55,17 @@ function Users() {
   }, []);
 
   const getUsers = async () => {
-    const res = await services.usersList();
-    setUser(res);
+    try {
+      const res = await services.usersList();
+      setUser(res);
+    } catch (error) {
+      await Swal.fire({
+        title: "Ocurrio un error al obtener los usuarios",
+        icon: "error",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
   };
   if (validate) {
     return (
