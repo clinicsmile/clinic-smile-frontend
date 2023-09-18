@@ -31,15 +31,6 @@ const AppProfile = () => {
   const update = async (formData) => {
     try {
       await services.updateProfile(formData);
-    } catch (error) {
-      return false;
-    }
-  };
-
-  const toUpdate = async (formData) => {
-    setLoading(true);
-    try {
-      await update(formData);
       await Swal.fire({
         position: "center",
         icon: "success",
@@ -55,9 +46,17 @@ const AppProfile = () => {
         showConfirmButton: false,
         timer: 2000,
       });
+      return false;
+    }
+  };
+
+  const toUpdate = async (formData) => {
+    setLoading(true);
+    try {
+      await update(formData);
+      location.reload();
     } finally {
       setLoading(false);
-      location.reload();
     }
   };
   // Verificar si 'user' es null antes de renderizar
