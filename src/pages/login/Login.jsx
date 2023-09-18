@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { Forms } from "../../data/form/Forms";
 import { services } from "../../services/services";
+import Swal from "sweetalert2";
 
 function Login() {
   let navigate = useNavigate();
@@ -29,14 +30,21 @@ function Login() {
 
   const toLogin = async (formData) => {
     setLoading(true);
-    await services.login(formData).then((value) => {
-      if (value) {
-        navigate("/home");
-      } else {
-        navigate("/login");
-      }
-      setLoading(false);
-    });
+    await services
+      .login(formData)
+      .then((value) => {
+        if (value) {
+          navigate("/home");
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Credenciales invalidas",
+            text: "Por favor intentelo nuevamente",
+          });
+        }
+      })
+      .finally(setLoading(false));
   };
 
   return (

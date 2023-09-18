@@ -16,7 +16,10 @@ const AppProfile = () => {
     } catch (error) {
       Swal.fire({
         title: "Ocurrio un error al obtener los datos del perfil",
+        position: "center",
         icon: "error",
+        showConfirmButton: false,
+        timer: 2000,
       });
     }
   };

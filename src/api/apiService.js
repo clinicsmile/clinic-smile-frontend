@@ -19,7 +19,8 @@ const put = async (endPoint, req) => {
 };
 
 const execHttpMethod = async (method, endPoint, params) => {
-  params = method == "post" ? params : { params };
+  console.log(params);
+  params = method == "post" || "put" ? params : { params };
   setToken();
   try {
     const { data } = await fetch[method](endPoint, params);
@@ -30,4 +31,4 @@ const execHttpMethod = async (method, endPoint, params) => {
   }
 };
 
-export { post, get };
+export { post, get, put };
