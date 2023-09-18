@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Forms } from "../../data/form/Forms";
 import { AppForm } from "../form/AppForm";
 import Swal from "sweetalert2";
@@ -61,7 +60,7 @@ const AppProfile = () => {
   };
   // Verificar si 'user' es null antes de renderizar
   if (user === null) {
-    return <div>Cargando...</div>;
+    return null;
   }
 
   return user.rolId == 2 ? (

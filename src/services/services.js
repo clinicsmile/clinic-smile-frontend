@@ -71,7 +71,11 @@ services.Appselect = async (name) => {
 };
 
 services.usersList = async () => {
-  return await get(`/users`);
+  try {
+    return await get(`/users`);
+  } catch (error) {
+    throw error;
+  }
 };
 
 services.register = async (formData) => {
@@ -110,7 +114,7 @@ services.deleteUser = async (formData) => {
   try {
     await Delete(`/user/${formData.document}`);
   } catch (error) {
-    throw error
+    throw error;
   }
 };
 
