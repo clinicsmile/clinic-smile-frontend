@@ -39,9 +39,9 @@ const authFields = [
       type: "password",
       required: true,
       placeholder: "",
-      pattern: "^.*$",
+      pattern: "^(?=.*[A-Z])(?=.*[0-9]).{8,}$",
       title:
-        "La contraseña debe contener al menos 8 caracteres, incluyendo al menos un número, una mayúscula y una minúscula.",
+        "La contraseña debe contener al menos 8 caracteres, incluyendo al menos un número, una mayúscula y una minúscula",
     },
   },
 ];

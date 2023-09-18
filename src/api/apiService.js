@@ -18,6 +18,10 @@ const put = async (endPoint, req) => {
   return await execHttpMethod("put", endPoint, req);
 };
 
+const Delete = async (endPoint, req) => {
+  return await execHttpMethod("delete", endPoint, req);
+};
+
 const execHttpMethod = async (method, endPoint, params) => {
   console.log(params);
   params = method == "post" || "put" ? params : { params };
@@ -31,4 +35,4 @@ const execHttpMethod = async (method, endPoint, params) => {
   }
 };
 
-export { post, get, put };
+export { post, get, put, Delete };
