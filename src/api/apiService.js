@@ -23,7 +23,6 @@ const Delete = async (endPoint, req) => {
 };
 
 const execHttpMethod = async (method, endPoint, params) => {
-  console.log(params);
   params = method == "post" || "put" ? params : { params };
   setToken();
   try {
