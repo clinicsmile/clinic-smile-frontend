@@ -9,7 +9,7 @@ import {
 const Forms = {};
 
 Forms.registerFormAdmin = {
-  fields: [...basicFields, ...authFields],
+  fields: [...basicFields(), ...authFields()],
   buttons: [
     {
       type: "primaryClass",
@@ -20,7 +20,7 @@ Forms.registerFormAdmin = {
 };
 
 Forms.registerFormPatient = {
-  fields: [...basicFields, ...aditionalFieldsPatient, ...authFields],
+  fields: [...basicFields(), ...aditionalFieldsPatient(), ...authFields()],
   buttons: [
     {
       type: "primaryClass",
@@ -31,7 +31,7 @@ Forms.registerFormPatient = {
 };
 
 Forms.registerFormDoctor = {
-  fields: [...basicFields, ...aditionalFieldsDoctor, ...authFields],
+  fields: [...basicFields(), ...aditionalFieldsDoctor(), ...authFields()],
   buttons: [
     {
       type: "primaryClass",
@@ -97,11 +97,11 @@ Forms.login = {
 };
 
 Forms.editProfilePatient = () => {
-  basicFields[0].select.disabled = true;
-  basicFields[1].input.disabled = true;
+  basicFields()[0].select.disabled = true;
+  basicFields()[1].input.disabled = true;
 
   return {
-    fields: [...basicFields],
+    fields: [...basicFields()],
     buttons: [
       {
         type: "primaryClass",
@@ -113,15 +113,15 @@ Forms.editProfilePatient = () => {
 };
 
 Forms.editProfileDoctor = () => {
-  basicFields[0].select.disabled = true;
-  basicFields[1].input.disabled = true;
-  aditionalFieldsDoctor[0].select.disabled = true;
-  aditionalFieldsDoctor[1].input.disabled = true;
-  aditionalFieldsDoctor[2].input.disabled = true;
-  aditionalFieldsDoctor[3].select.disabled = true;
-  aditionalFieldsDoctor[4].input.disabled = true;
+  basicFields()[0].select.disabled = true;
+  basicFields()[1].input.disabled = true;
+  aditionalFieldsDoctor()[0].select.disabled = true;
+  aditionalFieldsDoctor()[1].input.disabled = true;
+  aditionalFieldsDoctor()[2].input.disabled = true;
+  aditionalFieldsDoctor()[3].select.disabled = true;
+  aditionalFieldsDoctor()[4].input.disabled = true;
   return {
-    fields: [...basicFields, ...aditionalFieldsDoctor],
+    fields: [...basicFields(), ...aditionalFieldsDoctor()],
     buttons: [
       {
         type: "primaryClass",
@@ -134,7 +134,7 @@ Forms.editProfileDoctor = () => {
 
 Forms.editPatient = () => {
   return {
-    fields: [...basicFields, ...aditionalFieldsPatient],
+    fields: [...basicFields(), ...aditionalFieldsPatient()],
     buttons: [
       {
         type: "primaryClass",
@@ -147,7 +147,7 @@ Forms.editPatient = () => {
 
 Forms.editAdmin = () => {
   return {
-    fields: [...basicFields],
+    fields: [...basicFields()],
     buttons: [
       {
         type: "primaryClass",
@@ -160,40 +160,13 @@ Forms.editAdmin = () => {
 
 Forms.rolField = () => {
   return {
-    fields: [...rolField],
+    fields: [...rolField()],
   };
 };
 
 Forms.editDoctor = () => {
   return {
-    fields: [
-      // {
-      //   label: {
-      //     name: "Rol",
-      //     htmlFor: "rolId",
-      //   },
-      //   select: {
-      //     id: "rolId",
-      //     name: "rolId",
-      //     type: "text",
-      //     required: true,
-      //     placeholder: "",
-      //     items: [
-      //       {
-      //         option: "Administrador",
-      //       },
-      //       {
-      //         option: "Doctor",
-      //       },
-      //       {
-      //         option: "Paciente",
-      //       },
-      //     ],
-      //   },
-      // },
-      ...basicFields,
-      ...aditionalFieldsDoctor,
-    ],
+    fields: [...basicFields(), ...aditionalFieldsDoctor()],
     buttons: [
       {
         type: "primaryClass",
