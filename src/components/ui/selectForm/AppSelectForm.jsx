@@ -12,6 +12,7 @@ export default ({ items, label, select, value, onChange }) => {
       </div>
       <Select
         id={select.id}
+        defaultValue={value}
         disabled={select.disabled}
         onChange={select.onChangeAction ? handleChange : undefined}
       >

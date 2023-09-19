@@ -184,11 +184,11 @@ const aditionalFieldsDoctor = [
   {
     label: {
       name: "Nivel Academino",
-      htmlFor: "academicLevel",
+      htmlFor: "academicLevelId",
     },
     select: {
-      id: "academicLevel",
-      name: "academicLevel",
+      id: "academicLevelId",
+      name: "academicLevelId",
       type: "text",
       required: true,
       placeholder: "",
@@ -199,11 +199,11 @@ const aditionalFieldsDoctor = [
   {
     label: {
       name: "Título Universitario",
-      htmlFor: "collegeDegree",
+      htmlFor: "academicTitle",
     },
     input: {
-      id: "collegeDegree",
-      name: "collegeDegree",
+      id: "academicTitle",
+      name: "academicTitle",
       type: "text",
       required: true,
       placeholder: "",
@@ -227,11 +227,11 @@ const aditionalFieldsDoctor = [
   {
     label: {
       name: "Especialidad",
-      htmlFor: "specialty",
+      htmlFor: "specialtyId",
     },
     select: {
-      id: "specialty",
-      name: "specialty",
+      id: "specialtyId",
+      name: "specialtyId",
       type: "text",
       required: true,
       placeholder: "",
@@ -242,11 +242,11 @@ const aditionalFieldsDoctor = [
   {
     label: {
       name: "Tarjeta Profesional",
-      htmlFor: "professionalCard",
+      htmlFor: "profesionalCardNumber",
     },
     input: {
-      id: "professionalCard",
-      name: "professionalCard",
+      id: "profesionalCardNumber",
+      name: "profesionalCardNumber",
       type: "text",
       required: true,
       placeholder: "",

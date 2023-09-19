@@ -8,7 +8,7 @@ import {
 
 const Forms = {};
 
-Forms.registerFormPatient = {
+Forms.registerFormAdmin = {
   fields: [...basicFields, ...authFields],
   buttons: [
     {
@@ -19,8 +19,19 @@ Forms.registerFormPatient = {
   ],
 };
 
+Forms.registerFormPatient = {
+  fields: [...basicFields, ...aditionalFieldsPatient, ...authFields],
+  buttons: [
+    {
+      type: "primaryClass",
+      title: "Registrarme",
+      action: "signupAction",
+    },
+  ],
+};
+
 Forms.registerFormDoctor = {
-  fields: [...basicFields, ...authFields, ...aditionalFieldsDoctor],
+  fields: [...basicFields, ...aditionalFieldsDoctor, ...authFields],
   buttons: [
     {
       type: "primaryClass",
@@ -149,9 +160,9 @@ Forms.editAdmin = () => {
 
 Forms.rolField = () => {
   return {
-    fields: [...rolField]
+    fields: [...rolField],
   };
-}
+};
 
 Forms.editDoctor = () => {
   return {
