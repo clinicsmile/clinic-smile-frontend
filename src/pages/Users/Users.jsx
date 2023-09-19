@@ -7,10 +7,13 @@ import { validate } from "../../middlewares/validateLogin";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import ModalComponent from "../../components/modal/Modal";
+import { Spinner } from "flowbite-react";
 
 function Users() {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingPage, setLoadingPage] = useState(false);
+
   const [currentUser, setCurrentUser] = useState({});
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,25 +23,64 @@ function Users() {
   const [currentForm, setCurrentForm] = useState(Forms.rolField());
   const [currentType, setCurrentType] = useState(null);
 
-  const handleToggleModal = (type) => {
+  const [rolId, setRolId] = useState(null);
+
+  const [users, setUser] = useState([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const handleToggleModal = (type = "") => {
     setCurrentType(type);
     setShowModal(!showModal);
-
-    let formToChange =
-      currentUser.rolId == 2 ? Forms.editDoctor() : Forms.editPatient();
+    let formToChange = {};
 
     if (type === "create") {
+      console.log("create");
+      setCurrentUser({});
       formToChange = Forms.rolField();
+    } else if (type === "edit") {
+      console.log("edit");
+      formToChange =
+        currentUser.rolId == 2 ? Forms.editDoctor() : Forms.editPatient();
     }
 
     setCurrentForm(formToChange);
   };
 
-  const toLogin = async (formData) => {
+  const register = async (formData) => {
+    setLoading(true);
+    formData.rolId = rolId;
+    try {
+      let { message } = await services.register(formData);
+      console.log(message);
+      Swal.fire({
+        title: message,
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      getUsers();
+      handleToggleModal();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const edit = async (formData) => {
     setLoading(true);
     try {
-      // await signIn(formData);
-      // navigate("/cites");
+      let { message } = await services.edit(formData);
+      Swal.fire({
+        title: message,
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      handleToggleModal();
     } catch (error) {
       console.log(error);
     } finally {
@@ -56,7 +98,7 @@ function Users() {
           timer: 1500,
           showConfirmButton: false,
         });
-        location.reload();
+        getUsers();
       })
       .catch(async () => {
         await Swal.fire({
@@ -67,12 +109,9 @@ function Users() {
         });
       });
   };
-  const [users, setUser] = useState([]);
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   const getUsers = async () => {
+    setLoadingPage(true);
     try {
       const res = await services.usersList();
       setUser(res);
@@ -83,17 +122,20 @@ function Users() {
         timer: 1500,
         showConfirmButton: false,
       });
+    } finally {
+      setLoadingPage(false);
     }
   };
 
   const handleSelectChange = (value) => {
     const forms = {
-      1: Forms.editAdmin(),
-      2: Forms.editDoctor(),
-      3: Forms.editPatient(),
+      1: Forms.registerFormAdmin,
+      2: Forms.registerFormDoctor,
+      3: Forms.registerFormPatient,
     };
     const form = forms[value] || Forms.editAdmin();
     setCurrentForm(form);
+    setRolId(value);
   };
 
   const BodyModalComponent = () => {
@@ -101,7 +143,7 @@ function Users() {
       create: (
         <AppForm
           form={currentForm}
-          onSubmit={(e) => toLogin(e)}
+          onSubmit={(e) => register(e)}
           loading={loading}
           onSelectChange={handleSelectChange}
         />
@@ -109,7 +151,7 @@ function Users() {
       edit: (
         <AppForm
           form={currentForm}
-          onSubmit={(e) => toLogin(e)}
+          onSubmit={(e) => edit(e)}
           loading={loading}
           loadedData={currentUser}
         />
@@ -117,6 +159,18 @@ function Users() {
     };
 
     return types[currentType] || null;
+  };
+
+  const SpinnerComponent = () => {
+    return (
+      <div className="flex justify-center items-center m-4 ">
+        <Spinner
+          color="warning"
+          size="lg"
+          className="flex justify-center items-center "
+        />
+      </div>
+    );
   };
 
   if (validate) {
@@ -148,94 +202,95 @@ function Users() {
                 footer={""}
               />
             </div>
-            <div>
-              <div className="overflow-y-scroll">
-                <Table>
-                  <Table.Head className="text-center">
-                    <Table.HeadCell>Documento</Table.HeadCell>
-                    <Table.HeadCell>Nombre</Table.HeadCell>
-                    <Table.HeadCell>Apellido</Table.HeadCell>
-                    <Table.HeadCell>Celular</Table.HeadCell>
-                    <Table.HeadCell>Correo</Table.HeadCell>
-                    <Table.HeadCell>Acciones</Table.HeadCell>
-                  </Table.Head>
 
-                  <Table.Body className="divide-y">
-                    {users.map((e) => (
-                      <Table.Row
-                        key={e.document}
-                        className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
-                      >
-                        <Table.Cell>{e.document}</Table.Cell>
-                        <Table.Cell>{e.name}</Table.Cell>
-                        <Table.Cell>{e.lastName}</Table.Cell>
-                        <Table.Cell>{e.cellPhone}</Table.Cell>
-                        <Table.Cell>{e.email}</Table.Cell>
-                        <Table.Cell>
-                          <div className="flex text-center justify-center">
-                            <Button
-                              size="xs"
-                              pill
-                              color="warning"
-                              className="mx-2"
-                              onClick={() => {
-                                setCurrentUser(e);
-                                handleToggleModal("edit");
-                              }}
-                            >
-                              Editar
-                            </Button>
+            {loadingPage && <SpinnerComponent />}
 
-                            <Button
-                              size="xs"
-                              pill
-                              color="failure"
-                              className="mx-2"
-                              onClick={() => setOpenModal("pop-up")}
-                            >
-                              Eliminar
-                            </Button>
-                            <Modal //este modal es el de eliminar
-                              show={openModal === "pop-up"}
-                              size="md"
-                              popup
-                              onClose={() => setOpenModal(undefined)}
-                            >
-                              <Modal.Header />
-                              <Modal.Body>
-                                <div className="text-center">
-                                  <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                    ¿Está seguro que quiere eliminar este
-                                    registro?
-                                  </h3>
-                                  <div className="flex justify-center gap-4">
-                                    <Button
-                                      color="failure"
-                                      onClick={() => {
-                                        setOpenModal(undefined);
-                                        toDelete(e);
-                                      }}
-                                    >
-                                      Si, continuar
-                                    </Button>
-                                    <Button
-                                      color="gray"
-                                      onClick={() => setOpenModal(undefined)}
-                                    >
-                                      No, cancelar
-                                    </Button>
-                                  </div>
+            <div className="overflow-y-scroll">
+              <Table>
+                <Table.Head className="text-center">
+                  <Table.HeadCell>Documento</Table.HeadCell>
+                  <Table.HeadCell>Nombre</Table.HeadCell>
+                  <Table.HeadCell>Apellido</Table.HeadCell>
+                  <Table.HeadCell>Celular</Table.HeadCell>
+                  <Table.HeadCell>Correo</Table.HeadCell>
+                  <Table.HeadCell>Acciones</Table.HeadCell>
+                </Table.Head>
+
+                <Table.Body className="divide-y">
+                  {users.map((e) => (
+                    <Table.Row
+                      key={e.document}
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
+                    >
+                      <Table.Cell>{e.document}</Table.Cell>
+                      <Table.Cell>{e.name}</Table.Cell>
+                      <Table.Cell>{e.lastName}</Table.Cell>
+                      <Table.Cell>{e.cellPhone}</Table.Cell>
+                      <Table.Cell>{e.email}</Table.Cell>
+                      <Table.Cell>
+                        <div className="flex text-center justify-center">
+                          <Button
+                            size="xs"
+                            pill
+                            color="warning"
+                            className="mx-2"
+                            onClick={() => {
+                              setCurrentUser(e);
+                              handleToggleModal("edit");
+                            }}
+                          >
+                            Editar
+                          </Button>
+
+                          <Button
+                            size="xs"
+                            pill
+                            color="failure"
+                            className="mx-2"
+                            onClick={() => setOpenModal("pop-up")}
+                          >
+                            Eliminar
+                          </Button>
+                          <Modal //este modal es el de eliminar
+                            show={openModal === "pop-up"}
+                            size="md"
+                            popup
+                            onClose={() => setOpenModal(undefined)}
+                          >
+                            <Modal.Header />
+                            <Modal.Body>
+                              <div className="text-center">
+                                <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                  ¿Está seguro que quiere eliminar este
+                                  registro?
+                                </h3>
+                                <div className="flex justify-center gap-4">
+                                  <Button
+                                    color="failure"
+                                    onClick={() => {
+                                      setOpenModal(undefined);
+                                      toDelete(e);
+                                    }}
+                                  >
+                                    Si, continuar
+                                  </Button>
+                                  <Button
+                                    color="gray"
+                                    onClick={() => setOpenModal(undefined)}
+                                  >
+                                    No, cancelar
+                                  </Button>
                                 </div>
-                              </Modal.Body>
-                            </Modal>
-                          </div>
-                        </Table.Cell>
-                      </Table.Row>
-                    ))}
-                  </Table.Body>
-                </Table>
-              </div>
+                              </div>
+                            </Modal.Body>
+                          </Modal>
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
             </div>
           </div>
         </div>

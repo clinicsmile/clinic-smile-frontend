@@ -82,6 +82,10 @@ services.register = async (formData) => {
   return await post(`/register`, formData);
 };
 
+services.edit = async (formData) => {
+  return await post(`/edit`, formData);
+};
+
 services.login = async (formData) => {
   try {
     let response = await post(`/auth`, {
