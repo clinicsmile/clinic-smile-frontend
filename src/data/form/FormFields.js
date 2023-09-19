@@ -20,34 +20,36 @@ const rolField = async () => {
   ];
 };
 
-const authFields = [
-  {
-    label: {
-      name: "Nombre de Usuario",
-      htmlFor: "username",
+const authFields = async () => {
+  return [
+    {
+      label: {
+        name: "Nombre de Usuario",
+        htmlFor: "username",
+      },
+      input: {
+        id: "username",
+        name: "username",
+        type: "text",
+        required: true,
+        placeholder: "",
+      },
     },
-    input: {
-      id: "username",
-      name: "username",
-      type: "text",
-      required: true,
-      placeholder: "",
+    {
+      label: { name: "Contraseña", htmlFor: "password" },
+      input: {
+        id: "password",
+        name: "password",
+        type: "password",
+        required: true,
+        placeholder: "",
+        pattern: "^(?=.*[A-Z])(?=.*[0-9]).{8,}$",
+        title:
+          "La contraseña debe contener al menos 8 caracteres, incluyendo al menos un número, una mayúscula y una minúscula",
+      },
     },
-  },
-  {
-    label: { name: "Contraseña", htmlFor: "password" },
-    input: {
-      id: "password",
-      name: "password",
-      type: "password",
-      required: true,
-      placeholder: "",
-      pattern: "^(?=.*[A-Z])(?=.*[0-9]).{8,}$",
-      title:
-        "La contraseña debe contener al menos 8 caracteres, incluyendo al menos un número, una mayúscula y una minúscula",
-    },
-  },
-];
+  ];
+};
 
 const basicFields = async () => {
   return [
