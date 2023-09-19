@@ -13,6 +13,7 @@ const rolField = [
       required: true,
       placeholder: "",
       items: await services.Appselect("rolList"),
+      onChangeAction: true
     },
   },
 ];
@@ -130,49 +131,6 @@ const basicFields = [
       required: true,
       placeholder: "",
       items: await services.Appselect("genders"),
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Tipo de sangre",
-      htmlFor: "bloodTypeId",
-    },
-    select: {
-      id: "bloodTypeId",
-      name: "bloodTypeId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      items: await services.Appselect("bloodTypes"),
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Alergias",
-      htmlFor: "allergies",
-    },
-    textarea: {
-      id: "allergies",
-      name: "allergies",
-      type: "text-area",
-      required: false,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Enfermedades",
-      htmlFor: "diseases",
-    },
-    textarea: {
-      id: "diseases",
-      name: "diseases",
-      type: "text-area",
-      required: false,
-      placeholder: "",
       disabled: false,
     },
   },
@@ -297,4 +255,56 @@ const aditionalFieldsDoctor = [
   },
 ];
 
-export { authFields, basicFields, aditionalFieldsDoctor, rolField };
+const aditionalFieldsPatient = [
+  {
+    label: {
+      name: "Tipo de sangre",
+      htmlFor: "bloodTypeId",
+    },
+    select: {
+      id: "bloodTypeId",
+      name: "bloodTypeId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      items: await services.Appselect("bloodTypes"),
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Alergias",
+      htmlFor: "allergies",
+    },
+    textarea: {
+      id: "allergies",
+      name: "allergies",
+      type: "text-area",
+      required: false,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Enfermedades",
+      htmlFor: "diseases",
+    },
+    textarea: {
+      id: "diseases",
+      name: "diseases",
+      type: "text-area",
+      required: false,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+];
+
+export {
+  authFields,
+  basicFields,
+  aditionalFieldsDoctor,
+  rolField,
+  aditionalFieldsPatient,
+};

@@ -3,6 +3,7 @@ import {
   aditionalFieldsDoctor,
   authFields,
   rolField,
+  aditionalFieldsPatient,
 } from "./FormFields";
 
 const Forms = {};
@@ -122,7 +123,7 @@ Forms.editProfileDoctor = () => {
 
 Forms.editPatient = () => {
   return {
-    fields: [...rolField, ...basicFields],
+    fields: [...basicFields, ...aditionalFieldsPatient],
     buttons: [
       {
         type: "primaryClass",
@@ -133,33 +134,52 @@ Forms.editPatient = () => {
   };
 };
 
+Forms.editAdmin = () => {
+  return {
+    fields: [...basicFields],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Actualizar",
+        action: "",
+      },
+    ],
+  };
+};
+
+Forms.rolField = () => {
+  return {
+    fields: [...rolField]
+  };
+}
+
 Forms.editDoctor = () => {
   return {
     fields: [
-      {
-        label: {
-          name: "Rol",
-          htmlFor: "rolId",
-        },
-        select: {
-          id: "rolId",
-          name: "rolId",
-          type: "text",
-          required: true,
-          placeholder: "",
-          items: [
-            {
-              option: "Administrador",
-            },
-            {
-              option: "Doctor",
-            },
-            {
-              option: "Paciente",
-            },
-          ],
-        },
-      },
+      // {
+      //   label: {
+      //     name: "Rol",
+      //     htmlFor: "rolId",
+      //   },
+      //   select: {
+      //     id: "rolId",
+      //     name: "rolId",
+      //     type: "text",
+      //     required: true,
+      //     placeholder: "",
+      //     items: [
+      //       {
+      //         option: "Administrador",
+      //       },
+      //       {
+      //         option: "Doctor",
+      //       },
+      //       {
+      //         option: "Paciente",
+      //       },
+      //     ],
+      //   },
+      // },
       ...basicFields,
       ...aditionalFieldsDoctor,
     ],

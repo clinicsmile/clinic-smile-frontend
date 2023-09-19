@@ -6,15 +6,33 @@ import { LiaExclamationCircleSolid } from "react-icons/lia";
 import { validate } from "../../middlewares/validateLogin";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
+import ModalComponent from "../../components/modal/Modal";
 
 function Users() {
   const [openModal, setOpenModal] = useState(false);
-  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
+
+  const [showModal, setShowModal] = useState(false);
+  const [currentForm, setCurrentForm] = useState(Forms.rolField());
+  const [currentType, setCurrentType] = useState(null);
+
+  const handleToggleModal = (type) => {
+    setCurrentType(type);
+    setShowModal(!showModal);
+
+    let formToChange =
+      currentUser.rolId == 2 ? Forms.editDoctor() : Forms.editPatient();
+
+    if (type === "create") {
+      formToChange = Forms.rolField();
+    }
+
+    setCurrentForm(formToChange);
+  };
 
   const toLogin = async (formData) => {
     setLoading(true);
@@ -67,6 +85,40 @@ function Users() {
       });
     }
   };
+
+  const handleSelectChange = (value) => {
+    const forms = {
+      1: Forms.editAdmin(),
+      2: Forms.editDoctor(),
+      3: Forms.editPatient(),
+    };
+    const form = forms[value] || Forms.editAdmin();
+    setCurrentForm(form);
+  };
+
+  const BodyModalComponent = () => {
+    const types = {
+      create: (
+        <AppForm
+          form={currentForm}
+          onSubmit={(e) => toLogin(e)}
+          loading={loading}
+          onSelectChange={handleSelectChange}
+        />
+      ),
+      edit: (
+        <AppForm
+          form={currentForm}
+          onSubmit={(e) => toLogin(e)}
+          loading={loading}
+          loadedData={currentUser}
+        />
+      ),
+    };
+
+    return types[currentType] || null;
+  };
+
   if (validate) {
     return (
       <>
@@ -76,42 +128,25 @@ function Users() {
               <h1 className="text-4xl text-center w-1/2 my-3">
                 Gestión de usuarios
               </h1>
-              <div className="w-1/2">
-                <Button
-                  pill
-                  color="warning"
-                  className="mx-auto w-32"
-                  onClick={() => setOpenModal("form-elements")}
-                >
-                  Crear
-                </Button>
 
-                <Modal //este modal es el de editar y crear
-                  show={openModal === "form-elements"}
-                  size="md"
-                  popup
-                  onClose={() => {
-                    setCurrentUser({});
-                    setOpenModal(undefined);
-                  }}
-                >
-                  <Modal.Header />
-                  <Modal.Body>
-                    <div className="space-y-6">
-                      <AppForm
-                        form={
-                          currentUser.rolId == 2
-                            ? Forms.editDoctor()
-                            : Forms.editPatient()
-                        }
-                        onSubmit={(e) => toLogin(e)}
-                        loading={loading}
-                        loadedData={currentUser}
-                      />
-                    </div>
-                  </Modal.Body>
-                </Modal>
-              </div>
+              <Button
+                pill
+                color="warning"
+                className="mx-auto w-32"
+                onClick={() => handleToggleModal("create")}
+              >
+                Crear
+              </Button>
+
+              <ModalComponent
+                show={showModal}
+                onClose={handleToggleModal}
+                header={`${
+                  currentType == "create" ? "Crear" : "Editar"
+                } Usuario`}
+                body={BodyModalComponent()}
+                footer={""}
+              />
             </div>
             <div>
               <div className="overflow-y-scroll">
@@ -145,11 +180,12 @@ function Users() {
                               className="mx-2"
                               onClick={() => {
                                 setCurrentUser(e);
-                                setOpenModal("form-elements");
+                                handleToggleModal("edit");
                               }}
                             >
                               Editar
                             </Button>
+
                             <Button
                               size="xs"
                               pill
