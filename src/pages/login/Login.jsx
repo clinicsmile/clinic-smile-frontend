@@ -10,22 +10,25 @@ function Login() {
   const url = window.location.href;
 
   const [loading, setLoading] = useState(false);
+  const [logo, setLogo] = useState("./logo.svg");
 
   function setColor(newColor) {
-    document.documentElement.style.setProperty("--primary", newColor);
+    document.querySelector("body").style.setProperty("--primary", newColor);
   }
 
   useEffect(() => {
     async function getConfigBrand() {
       try {
-        let data = { location: "url" };
+        let data = { location: url };
         const response = await getBrand(data);
         setColor(response.primaryColor);
+        setLogo(response.logo);
+        window.localStorage.setItem("brand", JSON.stringify(response));
       } catch (error) {
         console.log(error);
       }
     }
-    getConfigBrand();
+    // getConfigBrand();
   }, []);
 
   const toLogin = async (formData) => {
@@ -51,7 +54,7 @@ function Login() {
     <div className="h-screen w-screen flex justify-center items-center bg-[url('/src/assets/backGround.png')] bg-cover bg-center">
       <div className="m-auto justify-center items-center flex w-fit h-fit p-6 rounded-lg bg-white shadow-2xl container">
         <div className="flex flex-col">
-          <img src="./logo.svg" className="flex mb-6" />
+          <img src={logo} className="flex mb-6" />
           <div className="justify-center flex flex-col">
             <AppForm
               form={Forms.login}

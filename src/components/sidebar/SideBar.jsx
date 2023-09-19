@@ -15,7 +15,7 @@ function SideBar() {
             <Sidebar.ItemGroup>
               {infoMenu.map((e) => (
                 <Sidebar.Item
-                  className="hover:bg-[#1783B0] hover:text-white ease-in-out transition-all duration-100 hover:cursor-pointer"
+                  className="hover:bg-[var(--primary)] hover:text-white ease-in-out transition-all duration-100 hover:cursor-pointer"
                   key={e.name}
                   item={e.name}
                   onClick={() => {
