@@ -122,9 +122,9 @@ function Users() {
 
   const handleSelectChange = (value) => {
     const forms = {
-      1: Forms.registerFormAdmin,
-      2: Forms.registerFormDoctor,
-      3: Forms.registerFormPatient,
+      1: Forms.registerFormAdmin(),
+      2: Forms.registerFormDoctor(),
+      3: Forms.registerFormPatient(),
     };
     const form = forms[value] || Forms.editAdmin();
     setCurrentForm(form);
