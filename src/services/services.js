@@ -78,6 +78,14 @@ services.usersList = async () => {
   }
 };
 
+services.getBrand = async (location) => {
+  try {
+    return await post(`/getBrand`, location);
+  } catch (error) {
+    throw error;
+  }
+};
+
 services.register = async (formData) => {
   return await post(`/register`, formData);
 };
