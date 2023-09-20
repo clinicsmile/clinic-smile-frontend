@@ -91,7 +91,7 @@ services.register = async (formData) => {
 };
 
 services.edit = async (formData) => {
-  return await post(`/edit`, formData);
+  return await put(`/user/${formData.document}`, formData);
 };
 
 services.login = async (formData) => {
