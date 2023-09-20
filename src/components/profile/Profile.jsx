@@ -28,24 +28,18 @@ const AppProfile = () => {
   }, []);
 
   const update = async (formData) => {
+    formData.documentTypeId = 1;
+    formData.genderId = 1;
+    let alert = { position: "center", showConfirmButton: false, timer: 2000 };
     try {
       await services.updateProfile(formData);
-      await Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Se actualizó el perfil satisfactoriamente",
-        showConfirmButton: false,
-        timer: 2000,
-      });
+      alert.icon = "success";
+      alert.title = "Se actualizó el perfil satisfactoriamente";
     } catch (error) {
-      await Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Ocurrio un error al actualizar los datos",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      return false;
+      alert.icon = "error";
+      alert.title = "Ocurrio un error al actualizar los datos";
+    } finally {
+      Swal.fire(alert);
     }
   };
 
@@ -53,7 +47,8 @@ const AppProfile = () => {
     setLoading(true);
     try {
       await update(formData);
-      location.reload();
+      getUser();
+      // location.reload();
     } finally {
       setLoading(false);
     }
