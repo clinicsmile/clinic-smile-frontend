@@ -78,10 +78,13 @@ function AppForm({
           />
         ) : (
           <AppDatePickerForm
+            type={field.date.type}
             key={field.date.name + index}
             label={field.label}
             date={field.date}
             value={field.date.value}
+            min={!!field.date?.min}
+            max={!!field.date?.max}
           />
         )
       )}
