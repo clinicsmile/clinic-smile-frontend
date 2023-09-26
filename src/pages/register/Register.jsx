@@ -30,7 +30,7 @@ function Register() {
           </div>
           <div className="h-4/5 overflow-y-scroll overflow-x-hidden">
             <AppForm
-              form={Forms.registerFormPatient}
+              form={Forms.registerFormPatient()}
               onSubmit={(e) => toRegister(e)}
               loading={loading}
             />

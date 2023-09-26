@@ -17,11 +17,11 @@ const infoMenu = [
     name: "Usuarios",
     icon: LiaUsersSolid,
   },
-  // {
-  //   path: "/appointment",
-  //   name: "Citas",
-  //   icon: LiaCalendarDaySolid,
-  // },
+  {
+    path: "/appointments",
+    name: "Citas",
+    icon: LiaCalendarDaySolid,
+  },
   // {
   //   path: "/medicalRecords",
   //   name: "Historias clinicas",

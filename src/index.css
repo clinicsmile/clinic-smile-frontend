@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+:root {
+  --primary: #0569a0;
+  --secondary: #034a72;
+}
+
 html,
 body {
   padding: 0;
@@ -24,11 +30,11 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #0369a1;
+  background: var(--primary);
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #0284c7;
+  background: var(--primary);
 }

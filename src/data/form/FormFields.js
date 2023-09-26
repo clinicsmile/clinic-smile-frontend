@@ -1,4 +1,13 @@
 import { services } from "../../services/services";
+const list = {};
+list.documentTypes = await services.Appselect("documentTypes");
+list.genders = await services.Appselect("genders");
+list.rolList = await services.Appselect("rolList");
+
+list.specialties = await services.Appselect("specialties");
+list.academicLevels = await services.Appselect("academicLevels");
+
+list.bloodTypes = await services.Appselect("bloodTypes");
 
 const rolField = [
   {
@@ -12,7 +21,8 @@ const rolField = [
       type: "text",
       required: true,
       placeholder: "",
-      items: await services.Appselect("rolList"),
+      items: list.rolList,
+      onChangeAction: true,
     },
   },
 ];
@@ -59,7 +69,7 @@ const basicFields = [
       required: true,
       placeholder: "",
       disabled: false,
-      items: await services.Appselect("documentTypes"),
+      items: list.documentTypes,
     },
   },
   {
@@ -129,50 +139,7 @@ const basicFields = [
       type: "text",
       required: true,
       placeholder: "",
-      items: await services.Appselect("genders"),
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Tipo de sangre",
-      htmlFor: "bloodTypeId",
-    },
-    select: {
-      id: "bloodTypeId",
-      name: "bloodTypeId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      items: await services.Appselect("bloodTypes"),
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Alergias",
-      htmlFor: "allergies",
-    },
-    textarea: {
-      id: "allergies",
-      name: "allergies",
-      type: "text-area",
-      required: false,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Enfermedades",
-      htmlFor: "diseases",
-    },
-    textarea: {
-      id: "diseases",
-      name: "diseases",
-      type: "text-area",
-      required: false,
-      placeholder: "",
+      items: list.genders,
       disabled: false,
     },
   },
@@ -226,26 +193,26 @@ const aditionalFieldsDoctor = [
   {
     label: {
       name: "Nivel Academino",
-      htmlFor: "academicLevel",
+      htmlFor: "academicLevelId",
     },
     select: {
-      id: "academicLevel",
-      name: "academicLevel",
+      id: "academicLevelId",
+      name: "academicLevelId",
       type: "text",
       required: true,
       placeholder: "",
       disabled: false,
-      items: await services.Appselect("academicLevels"),
+      items: list.academicLevels,
     },
   },
   {
     label: {
       name: "Título Universitario",
-      htmlFor: "collegeDegree",
+      htmlFor: "academicTitle",
     },
     input: {
-      id: "collegeDegree",
-      name: "collegeDegree",
+      id: "academicTitle",
+      name: "academicTitle",
       type: "text",
       required: true,
       placeholder: "",
@@ -269,26 +236,26 @@ const aditionalFieldsDoctor = [
   {
     label: {
       name: "Especialidad",
-      htmlFor: "specialty",
+      htmlFor: "specialtyId",
     },
     select: {
-      id: "specialty",
-      name: "specialty",
+      id: "specialtyId",
+      name: "specialtyId",
       type: "text",
       required: true,
       placeholder: "",
       disabled: false,
-      items: await services.Appselect("specialties"),
+      items: list.specialties,
     },
   },
   {
     label: {
       name: "Tarjeta Profesional",
-      htmlFor: "professionalCard",
+      htmlFor: "profesionalCardNumber",
     },
     input: {
-      id: "professionalCard",
-      name: "professionalCard",
+      id: "profesionalCardNumber",
+      name: "profesionalCardNumber",
       type: "text",
       required: true,
       placeholder: "",
@@ -297,4 +264,56 @@ const aditionalFieldsDoctor = [
   },
 ];
 
-export { authFields, basicFields, aditionalFieldsDoctor, rolField };
+const aditionalFieldsPatient = [
+  {
+    label: {
+      name: "Tipo de sangre",
+      htmlFor: "bloodTypeId",
+    },
+    select: {
+      id: "bloodTypeId",
+      name: "bloodTypeId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      items: list.bloodTypes,
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Alergias",
+      htmlFor: "allergies",
+    },
+    textarea: {
+      id: "allergies",
+      name: "allergies",
+      type: "text-area",
+      required: false,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Enfermedades",
+      htmlFor: "diseases",
+    },
+    textarea: {
+      id: "diseases",
+      name: "diseases",
+      type: "text-area",
+      required: false,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+];
+
+export {
+  authFields,
+  basicFields,
+  aditionalFieldsDoctor,
+  rolField,
+  aditionalFieldsPatient,
+};

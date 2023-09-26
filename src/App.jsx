@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import { Home, Login, Register, Profile, Users, Logout } from "./pages";
+import { Home, Login, Register, Profile, Users, Logout, Appointments} from "./pages";
 
 import AuthLayout from "./components/layouts/AuthLayout";
 import { InactivityDetector } from "./components/inactivityDetector/InactivityDector";
@@ -19,6 +19,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/appointments" element={<Appointments/>}/>
             <Route path="/logout" element={<Logout />} />
           </Route>
 

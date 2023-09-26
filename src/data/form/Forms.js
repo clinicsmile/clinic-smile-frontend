@@ -3,30 +3,47 @@ import {
   aditionalFieldsDoctor,
   authFields,
   rolField,
+  aditionalFieldsPatient,
 } from "./FormFields";
 
 const Forms = {};
 
-Forms.registerFormPatient = {
-  fields: [...basicFields, ...authFields],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Registrarme",
-      action: "signupAction",
-    },
-  ],
+Forms.registerFormAdmin = () => {
+  return {
+    fields: [...basicFields, ...authFields],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Registrarme",
+        action: "signupAction",
+      },
+    ],
+  };
+};
+Forms.registerFormPatient = () => {
+  return {
+    fields: [...basicFields, ...aditionalFieldsPatient, ...authFields],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Registrarme",
+        action: "signupAction",
+      },
+    ],
+  };
 };
 
-Forms.registerFormDoctor = {
-  fields: [...basicFields, ...authFields, ...aditionalFieldsDoctor],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Registrarme",
-      action: "signupAction",
-    },
-  ],
+Forms.registerFormDoctor = () => {
+  return {
+    fields: [...basicFields, ...aditionalFieldsDoctor, ...authFields],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Registrarme",
+        action: "signupAction",
+      },
+    ],
+  };
 };
 
 Forms.login = {
@@ -122,7 +139,7 @@ Forms.editProfileDoctor = () => {
 
 Forms.editPatient = () => {
   return {
-    fields: [...rolField, ...basicFields],
+    fields: [...basicFields, ...aditionalFieldsPatient],
     buttons: [
       {
         type: "primaryClass",
@@ -133,36 +150,28 @@ Forms.editPatient = () => {
   };
 };
 
+Forms.editAdmin = () => {
+  return {
+    fields: [...basicFields],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Actualizar",
+        action: "",
+      },
+    ],
+  };
+};
+
+Forms.rolField = () => {
+  return {
+    fields: [...rolField],
+  };
+};
+
 Forms.editDoctor = () => {
   return {
-    fields: [
-      {
-        label: {
-          name: "Rol",
-          htmlFor: "rolId",
-        },
-        select: {
-          id: "rolId",
-          name: "rolId",
-          type: "text",
-          required: true,
-          placeholder: "",
-          items: [
-            {
-              option: "Administrador",
-            },
-            {
-              option: "Doctor",
-            },
-            {
-              option: "Paciente",
-            },
-          ],
-        },
-      },
-      ...basicFields,
-      ...aditionalFieldsDoctor,
-    ],
+    fields: [...basicFields, ...aditionalFieldsDoctor],
     buttons: [
       {
         type: "primaryClass",
