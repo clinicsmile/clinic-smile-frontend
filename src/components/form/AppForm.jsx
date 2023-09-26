@@ -7,7 +7,14 @@ import AppSelectForm from "../ui/selectForm/AppSelectForm";
 
 import AppTextAreaForm from "../ui/textAreaForm/AppTextAreaForm";
 
-function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
+import AppDatePickerForm from "../ui/datePicker/AppDatePickerForm";
+function AppForm({
+  form,
+  onSubmit,
+  loading = false,
+  loadedData = {},
+  onSelectChange,
+}) {
   const [formClassName, setFormClassName] = useState("");
   useEffect(() => {
     setFormClassName(
@@ -54,9 +61,20 @@ function AppForm({ form, onSubmit, loading = false, loadedData = {} }) {
           />
         ) : field.select ? (
           <AppSelectForm
-            key={select.field.name + index}
-            title={select.field.name}
-            items={select.field.items}
+            key={field.select.name + index}
+            title={field.select.name}
+            items={field.select.items}
+            label={field.label}
+            select={field.select}
+            value={field.select.value}
+            onChange={onSelectChange}
+          />
+        ) : field.textarea ? (
+          <AppTextAreaForm
+            key={field.textarea.name + index}
+            label={field.label}
+            textarea={field.textarea}
+            value={field.textarea.value}
           />
         ) : (
           <AppDatePickerForm
