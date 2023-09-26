@@ -4,23 +4,19 @@ import ModalComponent from "../../components/modal/Modal";
 import AppButton from "../ui/button/AppButton";
 import { AppForm } from "../../components/form/AppForm";
 import { createForm } from "../../data/form/appointments";
-import { create } from "../../services/appointments";
+import { update } from "../../services/appointments";
 
-const CreateAppointment = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+const EditAppointment = ({ appointment }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    let person = JSON.parse(localStorage.getItem("user"))?.Person;
-    setCurrentUser(person);
-  }, []);
+  useEffect(() => {}, []);
 
-  const handleCreate = async (formData) => {
+  const handleEdit = async (formData) => {
     setLoading(true);
 
     try {
-      let { message } = await create(formData);
+      let { message } = await update(formData);
       Swal.fire({
         title: message,
         icon: "success",
@@ -38,7 +34,7 @@ const CreateAppointment = () => {
   return (
     <>
       <AppButton
-        title="Crear cita"
+        title="Editar"
         type="primaryClass"
         submit={true}
         action={() => setShowModal(!showModal)}
@@ -46,12 +42,13 @@ const CreateAppointment = () => {
       <ModalComponent
         show={showModal}
         onClose={() => setShowModal(!showModal)}
-        header={`Crear cita - ${currentUser?.name}`}
+        header={`Editar cita`}
         body={
           <AppForm
             form={createForm}
-            onSubmit={(e) => handleCreate(e)}
+            onSubmit={(e) => handleEdit(e)}
             loading={loading}
+            loadedData={appointment}
           />
         }
         footer={""}
@@ -60,4 +57,4 @@ const CreateAppointment = () => {
   );
 };
 
-export default CreateAppointment;
+export default EditAppointment;
