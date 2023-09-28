@@ -1,5 +1,6 @@
 import { services } from "../../services/services";
 const list = {};
+const fecha = new Date();
 list.documentTypes = await services.Appselect("documentTypes");
 list.genders = await services.Appselect("genders");
 list.rolList = await services.Appselect("rolList");
@@ -126,6 +127,7 @@ const basicFields = [
       required: true,
       placeholder: "",
       disabled: false,
+      max: `${fecha.getFullYear()-18}-${(fecha.getMonth()+1).toString().length>1?fecha.getMonth()+1:"0"+(fecha.getMonth()+1)}-${fecha.getDate()}`
     },
   },
   {

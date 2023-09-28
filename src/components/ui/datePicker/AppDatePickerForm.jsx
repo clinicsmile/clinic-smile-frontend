@@ -3,6 +3,7 @@ import { Label, Datepicker } from "flowbite-react";
 
 // eslint-disable-next-line react-refresh/only-export-components, react/display-name
 export default ({ label, date, value }) => {
+  const fecha = new Date();
   return (
     <div>
       <div className="mb-2 block">
@@ -27,7 +28,7 @@ export default ({ label, date, value }) => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Select date"
           disabled={date.disabled}
-          max={new Date().toISOString().split("T")[0]}
+          max={date.max}
         />
       </div>
     </div>

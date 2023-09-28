@@ -7,7 +7,7 @@ import { validate } from "../../middlewares/validateLogin";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import ModalComponent from "../../components/modal/Modal";
-import { Spinner } from "flowbite-react";
+import { Spinner, Tabs } from "flowbite-react";
 
 function Users() {
   const [openModal, setOpenModal] = useState(false);
@@ -21,7 +21,12 @@ function Users() {
   const [currentForm, setCurrentForm] = useState(Forms.rolField());
   const [currentType, setCurrentType] = useState(null);
   const [rolId, setRolId] = useState(null);
+  const [filterRolId, setFilterRolId] = useState(null);
   const [users, setUser] = useState([]);
+
+  const applyFilter = (rolId) => {
+    setFilterRolId(rolId);
+  };
 
   useEffect(() => {
     getUsers();
@@ -211,7 +216,41 @@ function Users() {
                 footer={""}
               />
             </div>
+            <div>
+            <div 
+              className="flex text-center justify-center gap-3.5 my-4">
+            <Button
+              size="xs"
+              className="bg-[var(--primary)]"
+              onClick={() => applyFilter(null)}
+            > 
+            Mostrar Todos
+            </Button>
+            <Button 
+              size="xs"
+              className="bg-[var(--primary)]"
+              onClick={() => applyFilter(1)}
+            >
+            Administrador
+            </Button>
 
+            <Button 
+              size="xs"
+              className="bg-[var(--primary)]"
+              onClick={() => applyFilter(2)}
+            >
+            Doctores
+            </Button>
+            
+            <Button 
+              size="xs"
+              className="bg-[var(--primary)]"
+              onClick={() => applyFilter(3)}
+            >
+            Pacientes
+            </Button>
+
+            </div>
             <div className="overflow-y-scroll">
               {loadingPage ? (
                 <SpinnerComponent />
@@ -228,9 +267,9 @@ function Users() {
                   </Table.Head>
 
                   <Table.Body className="divide-y">
-                    {users.map((e) => (
+                    {users.filter((e) => filterRolId === null || e.rolId === filterRolId).map((e) => (
                       <Table.Row
-                        key={e.document}
+                        key={e.rolId}
                         className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
                       >
                         <Table.Cell>{e.document}</Table.Cell>
@@ -304,6 +343,7 @@ function Users() {
                   </Table.Body>
                 </Table>
               )}
+            </div>
             </div>
           </div>
         </div>
