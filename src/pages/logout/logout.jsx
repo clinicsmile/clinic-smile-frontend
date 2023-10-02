@@ -1,6 +1,8 @@
+import { services } from "../../services/services";
 function Logout() {
-  window.localStorage.clear();
   document.cookie = document.cookie + ";max-age=0";
+  services.logOut(JSON.parse(window.localStorage.getItem("user")).username);
+  window.localStorage.clear();
   location.href = "/login";
 }
 
