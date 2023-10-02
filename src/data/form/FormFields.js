@@ -309,6 +309,67 @@ const aditionalFieldsPatient = [
     },
   },
 ];
+const appointmentBasicFields = [
+  {
+    label: {
+      name: "Motivo de la consulta",
+      htmlFor: "reason",
+    },
+    textarea: {
+      id: "reason",
+      name: "reason",
+      type: "text-area",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Especialidad",
+      htmlFor: "specialtyId",
+    },
+    select: {
+      id: "specialtyId",
+      name: "specialtyId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+      items: list.specialties,
+    },
+  },
+  {
+    label: {
+      name: "Fecha de la consulta",
+      htmlFor: "date",
+    },
+    date: {
+      id: "date",
+      name: "date",
+      type: "date",
+      required: true,
+      placeholder: "",
+      disabled: false,
+      min: true,
+      max: false,
+    },
+  },
+  {
+    label: {
+      name: "Hora de la consulta",
+      htmlFor: "time",
+    },
+    date: {
+      id: "time",
+      name: "time",
+      type: "time",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+]
 
 export {
   authFields,
@@ -316,4 +377,5 @@ export {
   aditionalFieldsDoctor,
   rolField,
   aditionalFieldsPatient,
+  appointmentBasicFields
 };

@@ -4,5 +4,6 @@ import Home from "./home/home.jsx";
 import Profile from "./Profile/Profile.jsx";
 import Users from "./Users/Users.jsx";
 import Logout from "./logout/logout.jsx";
+import CreateAppoimentNoAuth from "./appointment/create-no-auth.jsx";
 
-export { Login, Register, Home, Profile, Users, Logout };
+export { Login, Register, Home, Profile, Users, Logout, CreateAppoimentNoAuth };
