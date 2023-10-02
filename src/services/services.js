@@ -130,4 +130,22 @@ services.deleteUser = async (formData) => {
   }
 };
 
+services.getDoctorAppoiments = async () => {
+  return await get(
+    `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
+  );
+};
+
+services.getPatientAppoiments = async () => {
+  return await get(
+    `/appoiments/paciente/${
+      JSON.parse(window.localStorage.getItem("user")).PersonDocument
+    }`
+  );
+};
+
+services.getAllAppoiments = async () => {
+  return await get(`/appoiments`);
+};
+
 export { services };
