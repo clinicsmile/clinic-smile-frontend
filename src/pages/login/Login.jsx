@@ -101,7 +101,12 @@ function Login() {
             <div className="flex justify-center mt-4">
               <span>¿No estás registrado? </span>
               <span className="text-cyan-600 hover:underline dark:text-cyan-500 hover:scale-105">
-                <a href="/register"> Regístrate AQUI</a>
+                <a href="/register">Regístrate AQUI</a>
+              </span>
+            </div>
+            <div className="flex justify-center mt-4">
+              <span className="text-cyan-600 hover:underline dark:text-cyan-500 hover:scale-105">
+                <a href="/create-appoinment">Solicitar cita sin registro</a>
               </span>
             </div>
           </div>

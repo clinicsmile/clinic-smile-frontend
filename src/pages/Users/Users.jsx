@@ -7,6 +7,7 @@ import { validate } from "../../middlewares/validateLogin";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import ModalComponent from "../../components/modal/Modal";
+import { Spinner } from "flowbite-react";
 
 function Users() {
   const [openModal, setOpenModal] = useState(false);

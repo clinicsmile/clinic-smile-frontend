@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import { Home, Login, Register, Profile, Users, Logout, Appointments} from "./pages";
+import { Home, Login, Register, Profile, Users, Logout, Appointments,CreateAppoimentNoAuth} from "./pages";
 
 import AuthLayout from "./components/layouts/AuthLayout";
 import { InactivityDetector } from "./components/inactivityDetector/InactivityDector";
@@ -27,6 +27,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Login />} />
+            <Route path="/create-appoinment" element={<CreateAppoimentNoAuth />} />
           </Route>
         </Route>
       </Routes>
