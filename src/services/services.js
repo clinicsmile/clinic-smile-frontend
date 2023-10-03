@@ -116,7 +116,7 @@ services.login = async (formData, newSession) => {
 services.logOut = async (username) => {
   try {
     await post("/logOut", { username: username });
-    return
+    return;
   } catch (error) {
     console.log(error);
     return;
@@ -159,4 +159,15 @@ services.getAllAppoiments = async () => {
   return await get(`/appoiments`);
 };
 
+services.getPendingAppoiments = async () => {
+  return await get(`/appoimentsPending`);
+};
+
+services.getDoctors = async () => {
+  return await get("/doctors");
+};
+
+services.assignDoctor = async (id, Doctor) => {
+  return await put(`/appoiment/${id}`, { doctorId: Doctor });
+};
 export { services };

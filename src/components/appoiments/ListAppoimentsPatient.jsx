@@ -35,6 +35,7 @@ function ListAppoimentsPatient(){
         <Table.HeadCell>Razon</Table.HeadCell>
         <Table.HeadCell>Nombre del doctor</Table.HeadCell>
         <Table.HeadCell>Especialidad</Table.HeadCell>
+        <Table.HeadCell>Acciones</Table.HeadCell>
 
       </Table.Head>
 
@@ -47,8 +48,8 @@ function ListAppoimentsPatient(){
             <Table.Cell>{e.date}</Table.Cell>
             <Table.Cell>{e.time}</Table.Cell>
             <Table.Cell>{e.reason}</Table.Cell>
-            <Table.Cell>{e.doctor.Person.name}</Table.Cell> 
-            <Table.Cell>{e.specialty.name}</Table.Cell>
+            <Table.Cell>{e.doctor? `${e.doctor.Person.name} ${e.doctor.Person.lastName}` : 'Sin Asignar'}</Table.Cell>  
+            <Table.Cell>{e.specialty.name}</Table.Cell> 
             <Table.Cell>
               <div className="flex text-center justify-center">
                 <Button

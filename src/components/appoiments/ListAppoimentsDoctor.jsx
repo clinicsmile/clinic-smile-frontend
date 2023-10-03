@@ -1,4 +1,4 @@
-import { Table, Button, Modal } from "flowbite-react";
+import { Table, Button, } from "flowbite-react";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
@@ -45,7 +45,7 @@ function ListAppoimentsDoctor() {
             <Table.Cell>{e.date}</Table.Cell>
             <Table.Cell>{e.time}</Table.Cell>
             <Table.Cell>{e.reason}</Table.Cell>
-            <Table.Cell>{e.Person.name}</Table.Cell>
+            <Table.Cell>{`${e.Person.name} ${e.Person.lastName} `}</Table.Cell>
             <Table.Cell>{e.specialty.name}</Table.Cell>
           </Table.Row>
         ))}
