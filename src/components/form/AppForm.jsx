@@ -85,6 +85,8 @@ function AppForm({
             value={field.date.value}
             min={!!field.date?.min}
             max={!!field.date?.max}
+            minValue={field.date?.minValue}
+            maxValue={field.date?.maxValue}
           />
         )
       )}

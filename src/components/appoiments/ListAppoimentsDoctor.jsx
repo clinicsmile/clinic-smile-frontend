@@ -1,4 +1,4 @@
-import { Table, Button, } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
@@ -23,6 +23,7 @@ function ListAppoimentsDoctor() {
         timer: 1500,
         showConfirmButton: false,
       });
+      getAppoiments();
     }
   };
 
@@ -34,6 +35,7 @@ function ListAppoimentsDoctor() {
         <Table.HeadCell>Razon</Table.HeadCell>
         <Table.HeadCell>Nombre del paciente</Table.HeadCell>
         <Table.HeadCell>Especialidad</Table.HeadCell>
+        <Table.HeadCell>Estado</Table.HeadCell>
       </Table.Head>
 
       <Table.Body className="divide-y">
@@ -45,8 +47,9 @@ function ListAppoimentsDoctor() {
             <Table.Cell>{e.date}</Table.Cell>
             <Table.Cell>{e.time}</Table.Cell>
             <Table.Cell>{e.reason}</Table.Cell>
-            <Table.Cell>{`${e.Person.name} ${e.Person.lastName} `}</Table.Cell>
-            <Table.Cell>{e.specialty.name}</Table.Cell>
+            <Table.Cell>{`${e.Person?.name} ${e.Person?.lastName} `}</Table.Cell>
+            <Table.Cell>{e.specialty?.name}</Table.Cell>
+            <Table.Cell>{e.status}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

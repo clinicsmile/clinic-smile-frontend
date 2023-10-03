@@ -4,9 +4,12 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import { LiaExclamationCircleSolid } from "react-icons/lia";
 
+import { EditAppointment } from "../appointments";
+
 function ListAppoimentsAll() {
   const [appoiments, setAppoiments] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [currentRegister, setCurrentRegister] = useState(false);
 
   useEffect(() => {
     getAppoiments();
@@ -25,10 +28,44 @@ function ListAppoimentsAll() {
         timer: 1500,
         showConfirmButton: false,
       });
+      getAppoiments();
+    }
+  };
+
+  const listDoctor = (list) => {
+    console.log(list);
+    return `<select id="SelectDoctor" class="form-select">${list.map(
+      (element) =>
+        `<option value="${element.id}">${element.Person?.name} ${element.Person.lastName}</option>`
+    )}</select>`;
+  };
+
+  const assignDoctor = async (cita) => {
+    try {
+      const Doctors = await services.getDoctors();
+
+      Swal.fire({
+        title: "Seleccione el doctor a asignar",
+        html: listDoctor(Doctors),
+        preConfirm: async () => {
+          const Doctor = document.getElementById("SelectDoctor").value;
+          await services.assignDoctor(cita.id, Doctor, "En proceso");
+          await Swal.fire({
+            title: "Doctor Asignado correctamente",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          getAppoiments();
+        },
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const toDelete = async (formData) => {
+    console.log(formData);
     await services
       .cancelAppoiment(formData)
       .then(async () => {
@@ -59,6 +96,7 @@ function ListAppoimentsAll() {
         <Table.HeadCell>Nombre del paciente</Table.HeadCell>
         <Table.HeadCell>Nombre del Doctor</Table.HeadCell>
         <Table.HeadCell>Especialidad</Table.HeadCell>
+        <Table.HeadCell>Estado</Table.HeadCell>
         <Table.HeadCell>Acciones</Table.HeadCell>
       </Table.Head>
 
@@ -71,27 +109,34 @@ function ListAppoimentsAll() {
             <Table.Cell>{e.date}</Table.Cell>
             <Table.Cell>{e.time}</Table.Cell>
             <Table.Cell>{e.reason}</Table.Cell>
-            <Table.Cell>{`${e.Person.name} ${e.Person.lastName}`}</Table.Cell>
+            <Table.Cell>{`${e.Person?.name} ${e.Person?.lastName}`}</Table.Cell>
             <Table.Cell>
-              {e.doctor ? `${e.doctor.Person.name} ${e.doctor.Person.lastName}` : "Sin Asignar"}
+              {e.doctor
+                ? `${e.doctor?.Person?.name} ${e.doctor?.Person?.lastName}`
+                : "Sin Asignar"}
             </Table.Cell>
-            <Table.Cell>{e.specialty.name}</Table.Cell>
+            <Table.Cell>{e.specialty?.name}</Table.Cell>
+            <Table.Cell>{e.status}</Table.Cell>
             <Table.Cell>
               <div className="flex text-center justify-center">
-                <Button size="xs" pill color="warning" className="mx-2">
-                  Editar
-                </Button>
+                {(e.status === "En proceso" || e.status === "Pendiente") && (
+                  <>
+                    <EditAppointment appointment={e} />
 
-                <Button
-                  size="xs"
-                  pill
-                  color="failure"
-                  className="mx-2"
-                  onClick={() => setOpenModal("pop-up")}
-                >
-                  Cancelar
-                </Button>
-
+                    <Button
+                      size="xs"
+                      pill
+                      color="failure"
+                      className="mx-2"
+                      onClick={() => {
+                        setOpenModal("pop-up");
+                        setCurrentRegister(e);
+                      }}
+                    >
+                      Cancelar
+                    </Button>
+                  </>
+                )}
                 <Modal //este modal es el de cancelar
                   show={openModal === "pop-up"}
                   size="md"
@@ -110,12 +155,15 @@ function ListAppoimentsAll() {
                           color="failure"
                           onClick={() => {
                             setOpenModal(undefined);
-                            toDelete(e);
+                            toDelete(currentRegister);
                           }}
                         >
                           Si, continuar
                         </Button>
-                        <Button color="gray" onClick={() => setOpenModal(undefined)}>
+                        <Button
+                          color="gray"
+                          onClick={() => setOpenModal(undefined)}
+                        >
                           No, cancelar
                         </Button>
                       </div>
@@ -124,7 +172,15 @@ function ListAppoimentsAll() {
                 </Modal>
 
                 {!e.doctor && (
-                  <Button size="xs" pill color="success" className="mx-2">
+                  <Button
+                    size="xs"
+                    pill
+                    color="success"
+                    className="mx-2"
+                    onClick={() => {
+                      assignDoctor(e);
+                    }}
+                  >
                     Asignar
                   </Button>
                 )}

@@ -5,11 +5,7 @@ const list = {};
 list.specialties = await services.Appselect("specialties");
 
 // TODO -> conectar con el api
-list.doctors = [
-  { option: { name: "Juan", value: 1 } },
-  { option: { name: "Pedro", value: 2 } },
-  { option: { name: "Maria", value: 3 } },
-];
+list.doctors = await services.Appselect("doctors");
 
 // TODO -> conectar con el api
 list.status = [
@@ -19,11 +15,8 @@ list.status = [
 ];
 
 // TODO -> conectar con el api
-list.pacients = [
-  { option: { name: "Andres maya", value: 1 } },
-  { option: { name: "Daniel", value: 2 } },
-  { option: { name: "Pepite Perez", value: 3 } },
-];
+list.patients = await services.Appselect("patients");
+
 
 const transformBasicFields = () => {
   const inputTypes = ["date", "select", "input", "textarea"];
@@ -37,7 +30,8 @@ const transformBasicFields = () => {
   return copyBasicFields;
 };
 
-export const doctorSelect = {
+export const doctorSelect = 
+[{
   label: {
     name: "Odontólogo",
     htmlFor: "doctorId",
@@ -51,7 +45,7 @@ export const doctorSelect = {
     disabled: false,
     items: list.doctors,
   },
-};
+}];
 
 export const statusSelect = {
   label: {
@@ -69,40 +63,39 @@ export const statusSelect = {
   },
 };
 
-export const pacientSelect = {
+export const patientSelect = [{
   label: {
     name: "Paciente",
-    htmlFor: "pacientId",
+    htmlFor: "PersonDocument",
   },
   select: {
-    id: "pacientId",
-    name: "pacientId",
+    id: "PersonDocument",
+    name: "PersonDocument",
     type: "text",
     required: true,
     placeholder: "",
     disabled: false,
-    items: list.pacients,
+    items: list.patients,
   },
-};
+}];
 
 export const createFormAdmin = {
   fields: [
-    pacientSelect,
+    ...patientSelect,
     ...appointmentBasicFields,
-    doctorSelect,
-    statusSelect,
+    ...doctorSelect
   ],
   buttons: [
     {
       type: "primaryClass",
-      title: "Crear Cita",
+      title: "Aceptar",
       action: "createAppointmentAction",
     },
   ],
 };
 
 export const createFormDoctor = {
-  fields: [pacientSelect, ...appointmentBasicFields, statusSelect],
+  fields: [...patientSelect, ...appointmentBasicFields, statusSelect],
   buttons: [
     {
       type: "primaryClass",
@@ -118,7 +111,7 @@ export const createFormPacientAuth = {
   buttons: [
     {
       type: "primaryClass",
-      title: "Crear Cita",
+      title: "Aceptar",
       action: "createAppointmentAction",
     },
   ],

@@ -5,14 +5,12 @@ import AppButton from "../ui/button/AppButton";
 import { AppForm } from "../../components/form/AppForm";
 import {
   createFormAdmin,
-  createFormDoctor,
   createFormPacientAuth,
   createNoAuthForm,
 } from "../../data/form/appointments";
 import { create } from "../../services/appointments";
-import { extraInputs } from "./business-logic/doctorAssignment";
 
-const CreateAppointment = () => {
+const CreateAppointment = ({onComplete}) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,13 +22,16 @@ const CreateAppointment = () => {
     let forms = {
       0: createNoAuthForm,
       1: createFormAdmin,
-      2: createFormDoctor,
       3: createFormPacientAuth,
     };
     setCurrentForm(forms[person.rolId || 0]);
   }, []);
 
   const handleCreate = async (formData) => {
+    formData.status = currentUser?.rolId !== 1 ? "Pendiente" : "En proceso";
+    if(currentUser?.rolId == 3) {
+      formData.PersonDocument = currentUser.document
+    }
     setLoading(true);
 
     try {
@@ -42,6 +43,7 @@ const CreateAppointment = () => {
         showConfirmButton: false,
       });
       setShowModal(!showModal);
+      onComplete && onComplete()
     } catch (error) {
       console.log(error);
     } finally {
@@ -49,8 +51,7 @@ const CreateAppointment = () => {
     }
   };
 
-
-  return (
+  return currentUser?.rolId != 2 ? (
     <>
       <AppButton
         title="Crear cita"
@@ -67,11 +68,14 @@ const CreateAppointment = () => {
             form={currentForm}
             onSubmit={(e) => handleCreate(e)}
             loading={loading}
+            loadedData={currentUser || undefined}
           />
         }
         footer={""}
       />
     </>
+  ) : (
+    <></>
   );
 };
 

@@ -4,6 +4,7 @@ import { AppForm } from "../../components/form/AppForm";
 import { createNoAuthForm } from "../../data/form/appointments";
 import { createNoAuth } from "../../services/appointments";
 import AppButton from "../../components/ui/button/AppButton";
+import Swal from "sweetalert2";
 
 function CreateAppoimentNoAuth() {
   let navigate = useNavigate();
@@ -13,6 +14,12 @@ function CreateAppoimentNoAuth() {
     setLoading(true);
     try {
       await createNoAuth(formData);
+      await Swal.fire({
+        title: "Cita creada correctamente",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
       navigate("/login");
     } catch (error) {
       console.log(error);

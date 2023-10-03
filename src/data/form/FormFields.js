@@ -9,6 +9,13 @@ list.academicLevels = await services.Appselect("academicLevels");
 
 list.bloodTypes = await services.Appselect("bloodTypes");
 
+
+const date18Validation = () => {
+  let minDate = new Date();
+  minDate.setFullYear(new Date().getFullYear() - 18); 
+  return minDate.toISOString().split('T')[0];
+}
+
 const rolField = [
   {
     label: {
@@ -126,6 +133,9 @@ const basicFields = [
       required: true,
       placeholder: "",
       disabled: false,
+      min: false,
+      max: true,
+      maxValue: date18Validation(),
     },
   },
   {

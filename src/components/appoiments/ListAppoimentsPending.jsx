@@ -23,27 +23,26 @@ function ListAppoimentsPending() {
       });
     }
   };
-  const listDoctor = (list) => {
-    return `<select id="SelectDoctor" class="form-select">${list.map(
-      (element) =>
-        `<option value="${element.id}">${element.Person.name} ${element.Person.lastName}</option>`
-    )}</select>`;
-  };
 
   const assignDoctor = async (cita) => {
     try {
-      const Doctors = await services.getDoctors();
-      console.log(Doctors);
+      let doctor = JSON.parse(localStorage.getItem("user"));
+      await services.assignDoctor(cita.id, doctor.id, "En proceso");
       Swal.fire({
-        title: "Seleccione el doctor a asignar",
-        html: listDoctor(Doctors),
-        preConfirm: async () => {
-          const Doctor = document.getElementById("SelectDoctor").value;
-          await services.assignDoctor(cita.id,Doctor);
-        },
+        title: "Cita tomada correctamente",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
       });
+      getAppoiments();
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: "Ocurrio un error al tomar la cita",
+        icon: "error",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -56,6 +55,7 @@ function ListAppoimentsPending() {
         <Table.HeadCell>Razon</Table.HeadCell>
         <Table.HeadCell>Nombre del paciente</Table.HeadCell>
         <Table.HeadCell>Especialidad</Table.HeadCell>
+        <Table.HeadCell>Estado</Table.HeadCell>
         <Table.HeadCell>Acciones</Table.HeadCell>
       </Table.Head>
 
@@ -69,8 +69,9 @@ function ListAppoimentsPending() {
             <Table.Cell>{e.date}</Table.Cell>
             <Table.Cell>{e.time}</Table.Cell>
             <Table.Cell>{e.reason}</Table.Cell>
-            <Table.Cell>{`${e.Person.name} ${e.Person.lastName}`}</Table.Cell>
+            <Table.Cell>{`${e.Person?.name} ${e.Person?.lastName}`}</Table.Cell>
             <Table.Cell>{e.specialty.name}</Table.Cell>
+            <Table.Cell>{e.status}</Table.Cell>
 
             <Table.Cell>
               <div className="flex text-center justify-center">

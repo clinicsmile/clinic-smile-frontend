@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Button } from "flowbite-react";
+
 import Swal from "sweetalert2";
 import ModalComponent from "../../components/modal/Modal";
 import AppButton from "../ui/button/AppButton";
@@ -10,23 +12,27 @@ import {
   createNoAuthForm,
 } from "../../data/form/appointments";
 import { update } from "../../services/appointments";
-import { extraInputs } from "./business-logic/doctorAssignment";
 
-const EditAppointment = ({ appointment }) => {
+const EditAppointment = ({ appointment, onComplete }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentForm, setCurrentForm] = useState(null);
 
   useEffect(() => {
     let person = JSON.parse(localStorage.getItem("user"))?.Person;
-    setCurrentUser(person);
+    let forms = {
+      0: createNoAuthForm,
+      1: createFormAdmin,
+      3: createFormPacientAuth,
+    };
+    setCurrentForm(forms[person.rolId || 0]);
   }, []);
 
   const handleEdit = async (formData) => {
     setLoading(true);
 
     try {
-      let { message } = await update(formData);
+      let { message } = await update(formData, appointment.id);
       Swal.fire({
         title: message,
         icon: "success",
@@ -34,6 +40,7 @@ const EditAppointment = ({ appointment }) => {
         showConfirmButton: false,
       });
       setShowModal(!showModal);
+      onComplete && onComplete()
     } catch (error) {
       console.log(error);
     } finally {
@@ -43,19 +50,16 @@ const EditAppointment = ({ appointment }) => {
 
   return (
     <>
-      <AppButton
-        title="Editar"
-        type="primaryClass"
-        submit={true}
-        action={() => setShowModal(!showModal)}
-      />
+       <Button size="xs" pill color="warning" className="mx-2" onClick={() => setShowModal(!showModal)}>
+          Editar
+       </Button>
       <ModalComponent
         show={showModal}
         onClose={() => setShowModal(!showModal)}
         header={`Editar cita`}
         body={
           <AppForm
-            form={createFormAdmin}
+            form={currentForm}
             onSubmit={(e) => handleEdit(e)}
             loading={loading}
             loadedData={appointment}

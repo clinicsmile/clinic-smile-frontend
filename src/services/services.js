@@ -66,6 +66,28 @@ services.Appselect = async (name) => {
       }));
       break;
     }
+
+    case "patients": {
+      response = await get(`/patients`);
+      options = response.map((element) => ({
+        option: {
+          name: `${element.name} ${element.lastName}`,
+          value: element.document,
+        },
+      }));
+      break;
+    }
+
+    case "doctors": {
+      response = await get(`/doctors`);
+      options = response.map((element) => ({
+        option: {
+          name: `${element?.Person.name} ${element?.Person.lastName}`,
+          value: element.id,
+        },
+      }));
+      break;
+    }
   }
   return options;
 };
@@ -98,7 +120,9 @@ services.login = async (formData, newSession) => {
   try {
     let response = await post(`/auth`, {
       newSession: newSession,
-      authorization: `Basic ${btoa(formData.username + ":" + formData.password)}`,
+      authorization: `Basic ${btoa(
+        formData.username + ":" + formData.password
+      )}`,
     });
     if (response.ok) {
       document.cookie = `token=${response.token}; path=/; samesite=strict`;
@@ -122,7 +146,9 @@ services.logOut = async (username) => {
 };
 
 services.getCurrentProfile = async () => {
-  return await get(`/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`);
+  return await get(
+    `/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
+  );
 };
 
 services.updateProfile = async (formData) => {
@@ -138,12 +164,16 @@ services.deleteUser = async (formData) => {
 };
 
 services.getDoctorAppoiments = async () => {
-  return await get(`/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`);
+  return await get(
+    `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
+  );
 };
 
 services.getPatientAppoiments = async () => {
   return await get(
-    `/appoiments/paciente/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
+    `/appoiments/paciente/${
+      JSON.parse(window.localStorage.getItem("user")).PersonDocument
+    }`
   );
 };
 
@@ -159,8 +189,8 @@ services.getDoctors = async () => {
   return await get("/doctors");
 };
 
-services.assignDoctor = async (id, Doctor) => {
-  return await put(`/appoiment/${id}`, { doctorId: Doctor });
+services.assignDoctor = async (id, Doctor, estado) => {
+  return await put(`/appoiment/${id}`, { doctorId: Doctor, status: estado });
 };
 
 services.cancelAppoiment = async (formData) => {
