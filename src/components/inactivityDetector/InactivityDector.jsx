@@ -2,7 +2,7 @@ import { useIdleTimer } from "react-idle-timer";
 import { Logout } from "../../pages";
 import { useState, useEffect } from "react";
 
-const timeout = 60000*15;
+const timeout = 60000*5;
 
 const InactivityDetector = () => {
   const [showLogout, setShowLogout] = useState(false);
