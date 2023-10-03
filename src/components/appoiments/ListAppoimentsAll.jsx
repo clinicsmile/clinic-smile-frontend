@@ -1,10 +1,12 @@
-import { Table, Button } from "flowbite-react";
+import { Table, Button, Modal } from "flowbite-react";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
+import { LiaExclamationCircleSolid } from "react-icons/lia";
 
 function ListAppoimentsAll() {
   const [appoiments, setAppoiments] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     getAppoiments();
@@ -24,6 +26,28 @@ function ListAppoimentsAll() {
         showConfirmButton: false,
       });
     }
+  };
+
+  const toDelete = async (formData) => {
+    await services
+      .cancelAppoiment(formData)
+      .then(async () => {
+        await Swal.fire({
+          title: "Cita cancelada con exito",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        getAppoiments();
+      })
+      .catch(async () => {
+        await Swal.fire({
+          title: "Ocurrio un error al cancelar la cita",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      });
   };
 
   return (
@@ -49,7 +73,7 @@ function ListAppoimentsAll() {
             <Table.Cell>{e.reason}</Table.Cell>
             <Table.Cell>{`${e.Person.name} ${e.Person.lastName}`}</Table.Cell>
             <Table.Cell>
-              {e.doctor ? `${e.doctor.Person.name} ${e.doctor.Person.lastName}` : "Sin Asignar"} 
+              {e.doctor ? `${e.doctor.Person.name} ${e.doctor.Person.lastName}` : "Sin Asignar"}
             </Table.Cell>
             <Table.Cell>{e.specialty.name}</Table.Cell>
             <Table.Cell>
@@ -58,16 +82,17 @@ function ListAppoimentsAll() {
                   Editar
                 </Button>
 
-                <Button size="xs" pill color="failure" className="mx-2">
-                  Eliminar
+                <Button
+                  size="xs"
+                  pill
+                  color="failure"
+                  className="mx-2"
+                  onClick={() => setOpenModal("pop-up")}
+                >
+                  Cancelar
                 </Button>
-                {!e.doctor && (
-                  <Button size="xs" pill color="success" className="mx-2">
-                    Asignar
-                  </Button>
-                )}
 
-                {/* <Modal //este modal es el de eliminar
+                <Modal //este modal es el de cancelar
                   show={openModal === "pop-up"}
                   size="md"
                   popup
@@ -90,16 +115,19 @@ function ListAppoimentsAll() {
                         >
                           Si, continuar
                         </Button>
-                        <Button
-                          color="gray"
-                          onClick={() => setOpenModal(undefined)}
-                        >
+                        <Button color="gray" onClick={() => setOpenModal(undefined)}>
                           No, cancelar
                         </Button>
                       </div>
                     </div>
                   </Modal.Body>
-                </Modal> */}
+                </Modal>
+
+                {!e.doctor && (
+                  <Button size="xs" pill color="success" className="mx-2">
+                    Asignar
+                  </Button>
+                )}
               </div>
             </Table.Cell>
           </Table.Row>
