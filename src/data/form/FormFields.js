@@ -1,221 +1,153 @@
-const registerForm = {
-  fields: [
-    {
-      label: {
-        name: "Documento",
-        htmlFor: "document",
-      },
-      input: {
-        id: "document",
-        name: "document",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+import { services } from "../../services/services";
+const list = {};
+list.documentTypes = await services.Appselect("documentTypes");
+list.genders = await services.Appselect("genders");
+list.rolList = await services.Appselect("rolList");
+
+list.specialties = await services.Appselect("specialties");
+list.academicLevels = await services.Appselect("academicLevels");
+
+list.bloodTypes = await services.Appselect("bloodTypes");
+
+const rolField = [
+  {
+    label: {
+      name: "Rol",
+      htmlFor: "rolId",
     },
-    {
-      label: {
-        name: "Nombre",
-        htmlFor: "name",
-      },
-      input: {
-        id: "name",
-        name: "name",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
-    },
-    {
-      label: {
-        name: "Apellido",
-        htmlFor: "lastname",
-      },
-      input: {
-        id: "lastname",
-        name: "lastname",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
-    },
-    {
-      label: {
-        name: "Celular",
-        htmlFor: "cellphone",
-      },
-      input: {
-        id: "cellphone",
-        name: "cellphone",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
-    },
-    {
-      label: { name: "Correo", htmlFor: "email" },
-      input: {
-        id: "email",
-        name: "email",
-        type: "email",
-        required: true,
-        placeholder: "",
-      },
-    },
-    {
-      label: {
-        name: "Direccion",
-        htmlFor: "address",
-      },
-      input: {
-        id: "address",
-        name: "address",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
-    },
-    {
-      label: {
-        name: "Fecha de Nacimiento",
-        htmlFor: "birthdate",
-      },
-      input: {
-        id: "birthdate",
-        name: "birthdate",
-        type: "date",
-        required: true,
-        placeholder: "",
-      },
-    },
-    {
-      label: { name: "Contraseña", htmlFor: "password" },
-      input: {
-        id: "password",
-        name: "password",
-        type: "password",
-        required: true,
-        placeholder: "",
-      },
-    },
-  ],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Registrarme",
-      action: "signupAction",
+    select: {
+      id: "rolId",
+      name: "rolId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      items: list.rolList,
+      onChangeAction: true,
     },
   },
 ];
 
-const login = {
-  fields: [
-    {
-      label: {
-        name: "Usuario",
-        htmlFor: "username",
-      },
-      input: {
-        id: "username",
-        name: "username",
-        type: "text",
-        required: true,
-        placeholder: "",
-        validations: {
-          required: {
-            value: true,
-            message: "El usuario es requerido",
-          },
-        },
-      },
+const authFields = [
+  {
+    label: {
+      name: "Nombre de Usuario",
+      htmlFor: "username",
     },
-    {
-      label: {
-        name: "Contraseña",
-        htmlFor: "password",
-      },
-      input: {
-        id: "password",
-        name: "password",
-        type: "password",
-        required: true,
-        placeholder: "",
-        validations: {
-          required: {
-            value: true,
-            message: "La contraseña es requerida",
-          },
-          minLength: {
-            value: 5,
-            message: "Longitud mínima de 5",
-          },
-        },
-      },
+    input: {
+      id: "username",
+      name: "username",
+      type: "text",
+      required: true,
+      placeholder: "",
     },
-  ],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Iniciar sesión",
-      action: "loginAction",
-      submit: true,
+  },
+  {
+    label: { name: "Contraseña", htmlFor: "password" },
+    input: {
+      id: "password",
+      name: "password",
+      type: "password",
+      required: true,
+      placeholder: "",
+      pattern: "^(?=.*[A-Z])(?=.*[0-9]).{8,}$",
+      title:
+        "La contraseña debe contener al menos 8 caracteres, incluyendo al menos un número, una mayúscula y una minúscula",
     },
-  ],
-};
+  },
+];
 
-const profileForm ={
-  fields: [
-    {
-      label: {
-        name: "Documento",
-        htmlFor: "document",
-      },
-      input: {
-        id: "document",
-        name: "document",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+const basicFields = [
+  {
+    label: {
+      name: "Tipo de Documento",
+      htmlFor: "documentTypeId",
     },
-    {
-      label: {
-        name: "Nombre",
-        htmlFor: "name",
-      },
-      input: {
-        id: "name",
-        name: "name",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+    select: {
+      id: "documentTypeId",
+      name: "documentTypeId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+      items: list.documentTypes,
     },
-    {
-      label: {
-        name: "Apellido",
-        htmlFor: "lastname",
-      },
-      input: {
-        id: "lastname",
-        name: "lastname",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+  },
+  {
+    label: {
+      name: "Documento",
+      htmlFor: "document",
     },
-    {
-      label: {
-        name: "Celular",
-        htmlFor: "cellphone",
-      },
-      input: {
-        id: "cellphone",
-        name: "cellphone",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+    input: {
+      id: "document",
+      name: "document",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Nombre",
+      htmlFor: "name",
+    },
+    input: {
+      id: "name",
+      name: "name",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Apellido",
+      htmlFor: "lastName",
+    },
+    input: {
+      id: "lastName",
+      name: "lastName",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Fecha de Nacimiento",
+      htmlFor: "birthDate",
+    },
+    date: {
+      id: "birthDate",
+      name: "birthDate",
+      type: "date",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Genero",
+      htmlFor: "genderId",
+    },
+    select: {
+      id: "genderId",
+      name: "genderId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      items: list.genders,
+      disabled: false,
+    },
+  },
+
+  {
+    label: {
+      name: "Celular o Telefono",
+      htmlFor: "cellPhone",
     },
     input: {
       id: "cellPhone",
@@ -272,135 +204,178 @@ const aditionalFieldsDoctor = [
       disabled: false,
       items: list.academicLevels,
     },
-  ],
-}
+  },
+  {
+    label: {
+      name: "Título Universitario",
+      htmlFor: "academicTitle",
+    },
+    input: {
+      id: "academicTitle",
+      name: "academicTitle",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Universidad",
+      htmlFor: "university",
+    },
+    input: {
+      id: "university",
+      name: "university",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
+      name: "Especialidad",
+      htmlFor: "specialtyId",
+    },
+    select: {
+      id: "specialtyId",
+      name: "specialtyId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+      items: list.specialties,
+    },
+  },
+  {
+    label: {
+      name: "Tarjeta Profesional",
+      htmlFor: "profesionalCardNumber",
+    },
+    input: {
+      id: "profesionalCardNumber",
+      name: "profesionalCardNumber",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+];
 
-const EditProfile ={
-  fields: [
-    {
-      label: {
-        name: "Documento",
-        htmlFor: "document",
-      },
-      input: {
-        id: "document",
-        name: "document",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+const aditionalFieldsPatient = [
+  {
+    label: {
+      name: "Tipo de sangre",
+      htmlFor: "bloodTypeId",
     },
-    {
-      label: {
-        name: "Nombre",
-        htmlFor: "name",
-      },
-      input: {
-        id: "name",
-        name: "name",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+    select: {
+      id: "bloodTypeId",
+      name: "bloodTypeId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      items: list.bloodTypes,
+      disabled: false,
     },
-    {
-      label: {
-        name: "Apellido",
-        htmlFor: "lastname",
-      },
-      input: {
-        id: "lastname",
-        name: "lastname",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+  },
+  {
+    label: {
+      name: "Alergias",
+      htmlFor: "allergies",
     },
-    {
-      label: {
-        name: "Celular",
-        htmlFor: "cellphone",
-      },
-      input: {
-        id: "cellphone",
-        name: "cellphone",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+    textarea: {
+      id: "allergies",
+      name: "allergies",
+      type: "text-area",
+      required: false,
+      placeholder: "",
+      disabled: false,
     },
-    {
-      label: { name: "Correo", htmlFor: "email" },
-      input: {
-        id: "email",
-        name: "email",
-        type: "email",
-        required: true,
-        placeholder: "",
-      },
+  },
+  {
+    label: {
+      name: "Enfermedades",
+      htmlFor: "diseases",
     },
-    {
-      label: {
-        name: "Direccion",
-        htmlFor: "address",
-      },
-      input: {
-        id: "address",
-        name: "address",
-        type: "text",
-        required: true,
-        placeholder: "",
-      },
+    textarea: {
+      id: "diseases",
+      name: "diseases",
+      type: "text-area",
+      required: false,
+      placeholder: "",
+      disabled: false,
     },
-    {
-      label: {
-        name: "Fecha de Nacimiento",
-        htmlFor: "birthdate",
-      },
-      input: {
-        id: "birthdate",
-        name: "birthdate",
-        type: "date",
-        required: true,
-        placeholder: "",
-      },
+  },
+];
+const appointmentBasicFields = [
+  {
+    label: {
+      name: "Motivo de la consulta",
+      htmlFor: "reason",
     },
-  ],
-  
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Actualizar",
-      action: "signupAction",
+    textarea: {
+      id: "reason",
+      name: "reason",
+      type: "text-area",
+      required: true,
+      placeholder: "",
+      disabled: false,
     },
-  ],
-  select:[
-    {
-      label: {
-        name: "Rol",
-        htmlFor: "rol",
-      },
-      field: {
-        id: "rol",
-        name: "rol",
-        type: "text",
-        required: true,
-        placeholder: "",
-        items:[
-          {
-            option:"Administrador"
-          },
-          {
-            option:"Doctor"
-          },
-          {
-            option:"Paciente"
-          }
-        ]
-      },
-    }
-  ],
+  },
+  {
+    label: {
+      name: "Especialidad",
+      htmlFor: "specialtyId",
+    },
+    select: {
+      id: "specialtyId",
+      name: "specialtyId",
+      type: "text",
+      required: true,
+      placeholder: "",
+      disabled: false,
+      items: list.specialties,
+    },
+  },
+  {
+    label: {
+      name: "Fecha de la consulta",
+      htmlFor: "date",
+    },
+    date: {
+      id: "date",
+      name: "date",
+      type: "date",
+      required: true,
+      placeholder: "",
+      disabled: false,
+      min: true,
+      max: false,
+    },
+  },
+  {
+    label: {
+      name: "Hora de la consulta",
+      htmlFor: "time",
+    },
+    date: {
+      id: "time",
+      name: "time",
+      type: "time",
+      required: true,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+]
 
-}
-
-export { login, registerForm,profileForm, EditProfile};
+export {
+  authFields,
+  basicFields,
+  aditionalFieldsDoctor,
+  rolField,
+  aditionalFieldsPatient,
+  appointmentBasicFields
+};
