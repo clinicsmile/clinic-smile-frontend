@@ -98,9 +98,7 @@ services.login = async (formData, newSession) => {
   try {
     let response = await post(`/auth`, {
       newSession: newSession,
-      authorization: `Basic ${btoa(
-        formData.username + ":" + formData.password
-      )}`,
+      authorization: `Basic ${btoa(formData.username + ":" + formData.password)}`,
     });
     if (response.ok) {
       document.cookie = `token=${response.token}; path=/; samesite=strict`;
@@ -124,9 +122,7 @@ services.logOut = async (username) => {
 };
 
 services.getCurrentProfile = async () => {
-  return await get(
-    `/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
-  );
+  return await get(`/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`);
 };
 
 services.updateProfile = async (formData) => {
@@ -142,16 +138,12 @@ services.deleteUser = async (formData) => {
 };
 
 services.getDoctorAppoiments = async () => {
-  return await get(
-    `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
-  );
+  return await get(`/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`);
 };
 
 services.getPatientAppoiments = async () => {
   return await get(
-    `/appoiments/paciente/${
-      JSON.parse(window.localStorage.getItem("user")).PersonDocument
-    }`
+    `/appoiments/paciente/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
   );
 };
 
@@ -170,4 +162,9 @@ services.getDoctors = async () => {
 services.assignDoctor = async (id, Doctor) => {
   return await put(`/appoiment/${id}`, { doctorId: Doctor });
 };
+
+services.cancelAppoiment = async (formData) => {
+  return await put(`/cancelAppoiment/${formData.id}`);
+};
+
 export { services };
