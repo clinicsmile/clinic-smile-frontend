@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 function ListAppoimentsPatient(){
   const [appoiments, setAppoiments] = useState([]);  
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     getAppoiments();
@@ -25,6 +26,28 @@ function ListAppoimentsPatient(){
         showConfirmButton: false,
       });
     } 
+  };
+
+  const toDelete = async (formData) => {
+    await services
+      .cancelAppoiment(formData)
+      .then(async () => {
+        await Swal.fire({
+          title: "Cita cancelada con exito",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        getAppoiments();
+      })
+      .catch(async () => {
+        await Swal.fire({
+          title: "Ocurrio un error al cancelar la cita",
+          icon: "error",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      });
   };
 
   return (
@@ -67,9 +90,10 @@ function ListAppoimentsPatient(){
                   color="failure"
                   className="mx-2"
                 >
-                  Eliminar
+                  Cancelar
                 </Button>
-                {/* <Modal //este modal es el de eliminar
+
+                <Modal //este modal es el de cancelar
                   show={openModal === "pop-up"}
                   size="md"
                   popup
@@ -80,7 +104,7 @@ function ListAppoimentsPatient(){
                     <div className="text-center">
                       <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
                       <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        ¿Está seguro que quiere eliminar este registro?
+                        ¿Está seguro que quiere eliminar su cita?
                       </h3>
                       <div className="flex justify-center gap-4">
                         <Button
@@ -92,16 +116,13 @@ function ListAppoimentsPatient(){
                         >
                           Si, continuar
                         </Button>
-                        <Button
-                          color="gray"
-                          onClick={() => setOpenModal(undefined)}
-                        >
+                        <Button color="gray" onClick={() => setOpenModal(undefined)}>
                           No, cancelar
                         </Button>
                       </div>
                     </div>
                   </Modal.Body>
-                </Modal> */}
+                </Modal>
               </div>
             </Table.Cell>
           </Table.Row>
