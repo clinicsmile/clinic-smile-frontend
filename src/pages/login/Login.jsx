@@ -13,14 +13,18 @@ function Login() {
   const [logo, setLogo] = useState("./logo.svg");
 
   function setColors(brand) {
-    document.querySelector("body").style.setProperty("--primary", brand.primaryColor);
-    document.querySelector("body").style.setProperty("--secondary", brand.secundaryColor);
+    document
+      .querySelector("body")
+      .style.setProperty("--primary", brand.primaryColor);
+    document
+      .querySelector("body")
+      .style.setProperty("--secondary", brand.secundaryColor);
   }
 
   useEffect(() => {
     async function getConfigBrand() {
       try {
-        let data = { location: 'localhost' };
+        let data = { location: "localhost" };
         const response = await services.getBrand(data);
         setColors(response);
         console.log(response);
@@ -33,20 +37,51 @@ function Login() {
     getConfigBrand();
   }, []);
 
-  const toLogin = async (formData) => {
+  const toLogin = async (formData,newSession=false) => {
     setLoading(true);
     await services
-      .login(formData)
-      .then((value) => {
-        if (value) {
-          navigate("/home");
-        } else {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Credenciales invalidas",
-            text: "Por favor intentelo nuevamente",
-          });
+      .login(formData,newSession)
+      .then(async (value) => {
+        console.log(value);
+        switch (value) {
+          case 400: {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Credenciales invalidas",
+              text: "Por favor intentelo nuevamente",
+            });
+            break;
+          }
+          case 409: {
+            Swal.fire({
+              title: "Ya tiene una sesion activa",
+              text: "Desea ingresar con una sesion nueva?",
+              icon: "info",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Si",
+              cancelButtonText: "No",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                toLogin(formData, true);
+              }
+            });
+            break;
+          }
+          case true: {
+            navigate("/home");
+            break;
+          }
+          default: {
+            Swal.fire({
+              position: "center",
+              icon: "error",
+              title: "Ocurrio un error al iniciar sesion",
+            });
+            break;
+          }
         }
       })
       .finally(setLoading(false));

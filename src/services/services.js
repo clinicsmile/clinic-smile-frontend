@@ -94,9 +94,10 @@ services.edit = async (formData) => {
   return await put(`/user/${formData.document}`, formData);
 };
 
-services.login = async (formData) => {
+services.login = async (formData, newSession) => {
   try {
     let response = await post(`/auth`, {
+      newSession: newSession,
       authorization: `Basic ${btoa(
         formData.username + ":" + formData.password
       )}`,
@@ -104,11 +105,21 @@ services.login = async (formData) => {
     if (response.ok) {
       document.cookie = `token=${response.token}; path=/; samesite=strict`;
       window.localStorage.setItem("user", JSON.stringify(response.user));
+      console.log(response);
       return true;
     }
   } catch (error) {
+    return error.response.status;
+  }
+};
+
+services.logOut = async (username) => {
+  try {
+    await post("/logOut", { username: username });
+    return;
+  } catch (error) {
     console.log(error);
-    return false;
+    return;
   }
 };
 
@@ -130,4 +141,33 @@ services.deleteUser = async (formData) => {
   }
 };
 
+services.getDoctorAppoiments = async () => {
+  return await get(
+    `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
+  );
+};
+
+services.getPatientAppoiments = async () => {
+  return await get(
+    `/appoiments/paciente/${
+      JSON.parse(window.localStorage.getItem("user")).PersonDocument
+    }`
+  );
+};
+
+services.getAllAppoiments = async () => {
+  return await get(`/appoiments`);
+};
+
+services.getPendingAppoiments = async () => {
+  return await get(`/appoimentsPending`);
+};
+
+services.getDoctors = async () => {
+  return await get("/doctors");
+};
+
+services.assignDoctor = async (id, Doctor) => {
+  return await put(`/appoiment/${id}`, { doctorId: Doctor });
+};
 export { services };
