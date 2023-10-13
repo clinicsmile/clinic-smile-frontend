@@ -2,7 +2,7 @@ import { Label, TextInput } from "flowbite-react";
 
 export default ({ label, input, value }) => {
   return (
-    <div>
+    <div className="my-3">
       <div className="mb-2 block">
         <Label htmlFor={label.htmlFor} value={label.name} />
       </div>

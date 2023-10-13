@@ -197,4 +197,8 @@ services.cancelAppoiment = async (formData) => {
   return await put(`/cancelAppoiment/${formData.id}`);
 };
 
+services.registerProcedure = async (formdata) => {
+  return await post("/registerProcedure", formdata);
+};
+
 export { services };

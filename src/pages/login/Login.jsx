@@ -39,8 +39,7 @@ function Login() {
 
   const toLogin = async (formData,newSession=false) => {
     setLoading(true);
-    await services
-      .login(formData,newSession)
+    await services.login(formData,newSession)
       .then(async (value) => {
         console.log(value);
         switch (value) {

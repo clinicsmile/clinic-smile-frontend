@@ -4,6 +4,8 @@ import {
   authFields,
   rolField,
   aditionalFieldsPatient,
+  formFieldsProcedures,
+  formFieldsConsultProcedures,
 } from "./FormFields";
 
 const Forms = {};
@@ -176,6 +178,32 @@ Forms.editDoctor = () => {
       {
         type: "primaryClass",
         title: "Actualizar",
+        action: "signupAction",
+      },
+    ],
+  };
+};
+
+Forms.CreateProcedure = () => {
+  return {
+    fields: [...formFieldsProcedures],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Registrar",
+        action: "signupAction",
+      },
+    ],
+  };
+};
+
+Forms.consultProcedures = () => {
+  return {
+    fields: [...formFieldsConsultProcedures],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Consultar",
         action: "signupAction",
       },
     ],

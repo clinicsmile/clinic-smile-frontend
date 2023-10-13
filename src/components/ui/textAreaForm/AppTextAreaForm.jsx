@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
 import { Textarea, Label } from "flowbite-react";
 
 
 export default ({ label, textarea,value }) => {
   return (
-    <div>
+    <div className="my-3">
       <div className="mb-2 block">
         <Label htmlFor={label.htmlFor} value={label.name} />
       </div>

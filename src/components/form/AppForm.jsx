@@ -8,6 +8,9 @@ import AppSelectForm from "../ui/selectForm/AppSelectForm";
 import AppTextAreaForm from "../ui/textAreaForm/AppTextAreaForm";
 
 import AppDatePickerForm from "../ui/datePicker/AppDatePickerForm";
+
+import Checkbox from "../ui/checkbox/Checkbox";
+
 function AppForm({
   form,
   onSubmit,
@@ -15,12 +18,14 @@ function AppForm({
   loadedData = {},
   onSelectChange,
 }) {
+  console.log(form);
   const [formClassName, setFormClassName] = useState("");
   useEffect(() => {
-    setFormClassName(
-      `grid grid-cols-${form.fields.length > 2 ? "2" : "1"} gap-4`
-    );
+    // setFormClassName(
+    //   `grid grid-cols-${form.fields.length > 2 ? "2" : "1"} gap-4`
+    // );
     if (loadedData) {
+      console.log(loadedData);
       form.fields.map((field) => {
         field.input
           ? (field.input.value = loadedData[field.input.name])
@@ -28,7 +33,9 @@ function AppForm({
           ? (field.select.value = loadedData[field.select.name])
           : field.textarea
           ? (field.textarea.value = loadedData[field.textarea.name])
-          : (field.date.value = loadedData[field.date.name]);
+          : field.date
+          ? (field.date.value = loadedData[field.date.name])
+          : (field.checkbox.checked = loadedData[field.checkbox.name]);
       });
     }
   }, []);
@@ -44,7 +51,11 @@ function AppForm({
         ? (formData[f.select.name] = target[f.select.name].value)
         : f.textarea
         ? (formData[f.textarea.name] = target[f.textarea.name].value)
-        : (formData[f.date.name] = target[f.date.name].value);
+        : f.date
+        ? (formData[f.date.name] = target[f.date.name].value)
+        : f.checkbox.items.forEach((e) => {
+            formData[e.check.name] = target[e.check.name].checked;
+          });
     });
     onSubmit(formData);
   };
@@ -76,7 +87,7 @@ function AppForm({
             textarea={field.textarea}
             value={field.textarea.value}
           />
-        ) : (
+        ) : field.date ? (
           <AppDatePickerForm
             type={field.date.type}
             key={field.date.name + index}
@@ -88,6 +99,8 @@ function AppForm({
             minValue={field.date?.minValue}
             maxValue={field.date?.maxValue}
           />
+        ) : (
+          <Checkbox label={field.label} items={field.checkbox.items}></Checkbox>
         )
       )}
 

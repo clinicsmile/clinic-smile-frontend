@@ -22,11 +22,11 @@ const infoMenu = [
     name: "Citas",
     icon: LiaCalendarDaySolid,
   },
-  // {
-  //   path: "/medicalRecords",
-  //   name: "Historias clinicas",
-  //   icon: LiaArchiveSolid,
-  // },
+  {
+    path: "/medicalRecords",
+    name: "Historias clínicas",
+    icon: LiaArchiveSolid,
+  },
 
   {
     path: "/logout",

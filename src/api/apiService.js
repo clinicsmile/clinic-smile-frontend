@@ -18,7 +18,7 @@ const put = async (endPoint, req) => {
   return await execHttpMethod("put", endPoint, req);
 };
 
-const Delete = async (endPoint, req) => {
+const Delete = async (endPoint, req) => {``
   return await execHttpMethod("delete", endPoint, req);
 };
 
