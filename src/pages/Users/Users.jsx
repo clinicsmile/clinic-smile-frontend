@@ -26,10 +26,11 @@ function Users() {
   const applyFilter = (rolId) => {
     setFilterRolId(rolId);
   };
-
+  
   useEffect(() => {
+    setUser([]); // Limpiar el estado de usuarios antes de obtener nuevos datos
     getUsers();
-  }, []);
+  }, [filterRolId]);
 
   const [searchTerm, setSearchTerm] = useState("");
 

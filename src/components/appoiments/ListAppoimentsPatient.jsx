@@ -1,7 +1,8 @@
-import { Table, Button, } from "flowbite-react";
+import { Table, Button, Modal } from "flowbite-react";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
+import { LiaExclamationCircleSolid } from "react-icons/lia";
 
 
 function ListAppoimentsPatient(){
