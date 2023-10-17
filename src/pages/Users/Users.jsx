@@ -28,12 +28,15 @@ function Users() {
   };
 
   useEffect(() => {
-    setUser([]); 
+    setUser([]);
     getUsers();
-}, [filterRolId]);
+  }, [filterRolId]);
 
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [searchTerm,setSearchTerm] = useState("");
+  const limpiarCampo = () => {
+    setTexto("");
+  };
 
   const handleToggleModal = (type = "", user = {}) => {
     setCurrentType(type);
@@ -181,7 +184,11 @@ function Users() {
   const SpinnerComponent = () => {
     return (
       <div className="flex justify-center items-center m-4 ">
-        <Spinner color="warning" size="lg" className="flex justify-center items-center " />
+        <Spinner
+          color="warning"
+          size="lg"
+          className="flex justify-center items-center "
+        />
       </div>
     );
   };
@@ -192,7 +199,9 @@ function Users() {
         <div className="flex h-screen items-center ">
           <div className="w-full h-5/6 m-6 bg-white rounded-3xl p-6">
             <div className="justify-between flex">
-              <h1 className="text-4xl text-center w-1/2 my-3">Gestión de usuarios</h1>
+              <h1 className="text-4xl text-center w-1/2 my-3">
+                Gestión de usuarios
+              </h1>
 
               <Button
                 pill
@@ -206,7 +215,9 @@ function Users() {
               <ModalComponent
                 show={showModal}
                 onClose={() => setShowModal(!showModal)}
-                header={`${currentType == "create" ? "Crear" : "Editar"} Usuario`}
+                header={`${
+                  currentType == "create" ? "Crear" : "Editar"
+                } Usuario`}
                 body={<BodyModalComponent />}
                 footer={""}
               />
@@ -221,19 +232,31 @@ function Users() {
                   >
                     Mostrar Todos
                   </Button>
-                  <Button size="xs" className="bg-[var(--primary)]" onClick={() => applyFilter(1)}>
+                  <Button
+                    size="xs"
+                    className="bg-[var(--primary)]"
+                    onClick={() => applyFilter(1)}
+                  >
                     Administrador
                   </Button>
 
-                  <Button size="xs" className="bg-[var(--primary)]" onClick={() => applyFilter(2)}>
+                  <Button
+                    size="xs"
+                    className="bg-[var(--primary)]"
+                    onClick={() => applyFilter(2)}
+                  >
                     Doctores
                   </Button>
 
-                  <Button size="xs" className="bg-[var(--primary)]" onClick={() => applyFilter(3)}>
+                  <Button
+                    size="xs"
+                    className="bg-[var(--primary)]"
+                    onClick={() => applyFilter(3)}
+                  >
                     Pacientes
                   </Button>
                 </div>
-                <div className="w-1/2 text-right flex text-center justify-center gap-3.5">
+                {/* <div className="w-1/2 text-right flex text-center justify-center gap-3.5">
                   <TextInput
                     sizing="sm"
                     type="text"
@@ -242,12 +265,11 @@ function Users() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                   <Button
-
-                  >
+                  onClick= {limpiarCampo}>
                   pajaro desgraciado
                   </Button>
 
-                </div>
+                </div> */}
               </div>
 
               <div className="">
@@ -266,8 +288,17 @@ function Users() {
                     </Table.Head>
 
                     <Table.Body className="overflow-y-scroll">
-                      {users.filter((user) =>(filterRolId === null || user.rolId === filterRolId) &&
-                            (searchTerm !== "" && user.document.toLowerCase().includes(searchTerm.toLowerCase()))).map((e) => (
+                      {users
+                        .filter(
+                          (user) =>
+                            (filterRolId === null ||
+                              user.rolId === filterRolId) &&
+                            (searchTerm === "" ||
+                              user.document
+                                .toLowerCase()
+                                .includes(searchTerm.toLowerCase()))
+                        )
+                        .map((e) => (
                           <Table.Row
                             key={e.rolId}
                             className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
@@ -299,7 +330,6 @@ function Users() {
                                   color="failure"
                                   className="mx-2"
                                   onClick={() => setOpenModal("pop-up")}
-                                  
                                 >
                                   Eliminar
                                 </Button>
@@ -314,7 +344,8 @@ function Users() {
                                     <div className="text-center">
                                       <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
                                       <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                        ¿Está seguro que quiere eliminar este registro?
+                                        ¿Está seguro que quiere eliminar este
+                                        registro?
                                       </h3>
                                       <div className="flex justify-center gap-4">
                                         <Button
@@ -328,7 +359,9 @@ function Users() {
                                         </Button>
                                         <Button
                                           color="gray"
-                                          onClick={() => setOpenModal(undefined)}
+                                          onClick={() =>
+                                            setOpenModal(undefined)
+                                          }
                                         >
                                           No, cancelar
                                         </Button>

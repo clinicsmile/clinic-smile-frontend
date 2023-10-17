@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Forms } from "../../data/form/Forms";
 import { AppForm } from "../../components/form/AppForm";
 import ModalComponent from "../modal/Modal";
-import CreateAppointment from "../appointments/CreateAppointment";
+import { create } from "../../services/appointments";
 
 function ListAppoimentsDoctor() {
   const [appoiments, setAppoiments] = useState([]);
@@ -39,27 +39,27 @@ function ListAppoimentsDoctor() {
   };
   const registerProcedure = async (formdata) => {
     console.log(formdata);
-    // try {
-    //   await services.registerProcedure(formdata);
-    //   Swal.fire({
-    //     title: "Procedimiento registrado correctamente",
-    //     icon: "success",
-    //     timer: 1500,
-    //     showConfirmButton: false,
-    //   });
-    // } catch (error) {
-    //   Swal.fire({
-    //     title: "Ocurrio un error al registrar el procedimiento",
-    //     icon: "error",
-    //     timer: 1500,
-    //     showConfirmButton: false,
-    //   });
-    // }
+    try {
+      await services.registerProcedure(formdata);
+      Swal.fire({
+        title: "Procedimiento registrado correctamente",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Ocurrio un error al registrar el procedimiento",
+        icon: "error",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
     getAppoiments();
     if (formdata.Procedimiento["SI-PlanTratamiento"]) {
       setSecondForm(true);
-    }else{
-      setShowModal(!showModal)
+    } else {
+      setShowModal(!showModal);
     }
   };
 
@@ -69,7 +69,12 @@ function ListAppoimentsDoctor() {
         <AppForm
           form={Forms.createAppoimentProcedure()}
           onSubmit={(e) =>
-            registerProcedure({ DatosCita: patient, Procedimiento: e })
+            createAppointment({
+              PersonDocument: patient.PersonDocument,
+              doctorId: JSON.parse(window.localStorage.getItem("user")).id,
+              ...e,
+              status: "En proceso",
+            })
           }
           loadedData={{}}
         />
@@ -85,6 +90,25 @@ function ListAppoimentsDoctor() {
         />
       );
     }
+  };
+
+  const createAppointment = async (formData) => {
+    try {
+      let { message } = create(formData);
+      Swal.fire({
+        title: message,
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      setShowModal(!showModal);
+      onComplete && onComplete();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+    console.log(formData);
   };
 
   return (

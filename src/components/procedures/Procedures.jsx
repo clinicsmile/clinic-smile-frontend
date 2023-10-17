@@ -37,29 +37,37 @@ function GetProcedures() {
 
   const BodyModalComponent = () => {
     console.log(procedures);
-    const list = procedures.map((e) => (
-      <div key={e.id}>
-        <div className="">
-          <h3>{`Fecha: ${e.appointment.date} Hora: ${e.appointment.time}`}</h3>
-          <h3>{`Doctor: ${e.appointment.doctor.Person.name} ${e.appointment.doctor.Person.lastName}`}</h3>
-          <h3>{`Especialidad: ${e.appointment.specialty.name}`}</h3>
+    return (
+      <div>
+        <div>
+          <h2 className="text-center font-bold">CITAS</h2>
         </div>
-        <div className="border-2 border-[var(--primary)]">
-          {loading ? (
-            <p>Cargando datos...</p>
-          ) : (
-            e.detail && (
-              <AppForm
-                form={Forms.viewProcedures()}
-                loadedData={JSON.parse(e.detail)}
-                loading={loading}
-              />
-            )
-          )}
+        <div>
+          {procedures.map((e) => (
+            <div key={e.id} className="mb-14">
+              <div>
+                <h3>{`Fecha: ${e.appointment.date} Hora: ${e.appointment.time}`}</h3>
+                <h3>{`Doctor: ${e.appointment.doctor.Person.name} ${e.appointment.doctor.Person.lastName}`}</h3>
+                <h3>{`Especialidad: ${e.appointment.specialty.name}`}</h3>
+              </div>
+              <div className="border-2 border-[var(--primary)]">
+                {loading ? (
+                  <p>Cargando datos...</p>
+                ) : (
+                  e.detail && (
+                    <AppForm
+                      form={Forms.viewProcedures()}
+                      loadedData={JSON.parse(e.detail)}
+                      loading={loading}
+                    />
+                  )
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    ));
-    return list;
+    );
   };
 
   return (

@@ -1,5 +1,5 @@
 import { get, post, put, Delete } from "../api/apiService";
-
+import { Logout } from "../pages";
 const services = {};
 
 services.Appselect = async (name) => {
@@ -96,6 +96,7 @@ services.usersList = async () => {
   try {
     return await get(`/users`);
   } catch (error) {
+    Logout();
     throw error;
   }
 };
@@ -104,16 +105,27 @@ services.getBrand = async (location) => {
   try {
     return await post(`/getBrand`, location);
   } catch (error) {
+    Logout();
     throw error;
   }
 };
 
 services.register = async (formData) => {
-  return await post(`/register`, formData);
+  try {
+    return await post(`/register`, formData);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.edit = async (formData) => {
-  return await put(`/user/${formData.document}`, formData);
+  try {
+    return await put(`/user/${formData.document}`, formData);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.login = async (formData, newSession) => {
@@ -146,13 +158,23 @@ services.logOut = async (username) => {
 };
 
 services.getCurrentProfile = async () => {
-  return await get(
-    `/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
-  );
+  try {
+    return await get(
+      `/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
+    );
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.updateProfile = async (formData) => {
-  return await put(`/profile/${formData.document}`, formData);
+  try {
+    return await put(`/profile/${formData.document}`, formData);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.deleteUser = async (formData) => {
@@ -164,46 +186,90 @@ services.deleteUser = async (formData) => {
 };
 
 services.getDoctorAppoiments = async () => {
-  return await get(
-    `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
-  );
+  try {
+    return await get(
+      `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
+    );
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.getPatientAppoiments = async () => {
-  return await get(
-    `/appoiments/paciente/${
-      JSON.parse(window.localStorage.getItem("user")).PersonDocument
-    }`
-  );
+  try {
+    return await get(
+      `/appoiments/paciente/${
+        JSON.parse(window.localStorage.getItem("user")).PersonDocument
+      }`
+    );
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.getAllAppoiments = async () => {
-  return await get(`/appoiments`);
+  try {
+    return await get(`/appoiments`);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.getPendingAppoiments = async () => {
-  return await get(`/appoimentsPending`);
+  try {
+    return await get(`/appoimentsPending`);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.getDoctors = async () => {
-  return await get("/doctors");
+  try {
+    return await get("/doctors");
+  } catch (error) {
+    throw error;
+  }
 };
 
 services.assignDoctor = async (id, Doctor, estado) => {
-  return await put(`/appoiment/${id}`, { doctorId: Doctor, status: estado });
+  try {
+    return await put(`/appoiment/${id}`, { doctorId: Doctor, status: estado });
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.cancelAppoiment = async (formData) => {
-  return await put(`/cancelAppoiment/${formData.id}`);
+  try {
+    return await put(`/cancelAppoiment/${formData.id}`);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.registerProcedure = async (formdata) => {
-  return await post("/registerProcedure", formdata);
+  try {
+    return await post("/registerProcedure", formdata);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
 };
 
 services.consultPatientProcedures = async (data) => {
-  console.log(data);
-  return await get(`toListAllRegister/${data.document}`);
+  try {
+    return await get(`toListAllRegister/${data.document}`);
+  } catch (error) {
+    Logout();
+    throw error;
+  }
+  c;
 };
 
 export { services };

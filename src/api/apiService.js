@@ -1,8 +1,11 @@
 import fetch from "../libs/axios";
+import { Logout } from "../pages";
 
-let setToken = (user) => {
+let setToken = () => {
+  const user = window.localStorage.getItem("user");
+  console.log(user);
   fetch.defaults.headers.common["Authorization"] = user
-    ? `Bearer ${cookie.replace("token=", "")}`
+    ? `${document.cookie.replace("token=", "")}`
     : "";
 };
 
@@ -18,7 +21,8 @@ const put = async (endPoint, req) => {
   return await execHttpMethod("put", endPoint, req);
 };
 
-const Delete = async (endPoint, req) => {``
+const Delete = async (endPoint, req) => {
+  ``;
   return await execHttpMethod("delete", endPoint, req);
 };
 
@@ -27,10 +31,10 @@ const execHttpMethod = async (method, endPoint, params) => {
   setToken();
   try {
     const { data } = await fetch[method](endPoint, params);
+    console.log(data);
     return data;
   } catch (error) {
-    console.log(error.data);
-    throw error;
+      throw error;
   }
 };
 
