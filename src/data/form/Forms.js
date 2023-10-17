@@ -6,6 +6,7 @@ import {
   aditionalFieldsPatient,
   formFieldsProcedures,
   formFieldsConsultProcedures,
+  appointmentBasicFields,
 } from "./FormFields";
 
 const Forms = {};
@@ -185,8 +186,25 @@ Forms.editDoctor = () => {
 };
 
 Forms.CreateProcedure = () => {
+  const modifiedForm = formFieldsProcedures;
+  modifiedForm.forEach((e) => {
+    if (e.input) {
+      e.input.readOnly = false;
+      e.input.value = "";
+    }
+    if (e.textarea) {
+      e.textarea.readOnly = false;
+      e.textarea.value = "";
+    }
+    if (e.checkbox) {
+      e.checkbox.items.forEach((f) => {
+        f.check.readOnly = false;
+        f.check.checked = false;
+      });
+    }
+  });
   return {
-    fields: [...formFieldsProcedures],
+    fields: [...modifiedForm],
     buttons: [
       {
         type: "primaryClass",
@@ -205,6 +223,37 @@ Forms.consultProcedures = () => {
         type: "primaryClass",
         title: "Consultar",
         action: "signupAction",
+      },
+    ],
+  };
+};
+
+Forms.viewProcedures = () => {
+  const modifiedForm = formFieldsProcedures;
+  modifiedForm.forEach((e) => {
+    if (e.input) {
+      e.input.readOnly = true;
+    }
+    if (e.textarea) {
+      e.textarea.readOnly = true;
+    }
+    if (e.checkbox) {
+      e.checkbox.items.forEach((f) => {
+        f.check.readOnly = true;
+      });
+    }
+  });
+  return { fields: [...modifiedForm] };
+};
+
+Forms.createAppoimentProcedure = () => {
+  return {
+    fields: [...appointmentBasicFields],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Crear Cita",
+        action: "editAppointmentAction",
       },
     ],
   };

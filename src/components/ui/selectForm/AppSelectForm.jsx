@@ -16,9 +16,6 @@ export default ({ items, label, select, value, onChange }) => {
         disabled={select.disabled}
         onChange={select.onChangeAction ? handleChange : undefined}
       >
-        <option key={""} value={null}>
-          selecciona una opción
-        </option>
         {items.map((e) => (
           <option key={e.option.name} value={e.option.value}>
             {e.option.name}

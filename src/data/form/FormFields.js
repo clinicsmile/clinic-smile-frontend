@@ -1735,6 +1735,20 @@ const formFieldsProcedures = [
   },
   {
     label: {
+      name: "Observaciones",
+      htmlFor: "Observaciones",
+    },
+    textarea: {
+      id: "Observaciones",
+      name: "Observaciones",
+      type: "text",
+      required: false,
+      placeholder: "",
+      disabled: false,
+    },
+  },
+  {
+    label: {
       name: "¿Necesita una plan de tratamiento?",
       htmlFor: "PlanTratamiento",
     },
@@ -1791,20 +1805,7 @@ const formFieldsProcedures = [
       disabled: false,
     },
   },
-  {
-    label: {
-      name: "Observaciones",
-      htmlFor: "Observaciones",
-    },
-    textarea: {
-      id: "Observaciones",
-      name: "Observaciones",
-      type: "text",
-      required: false,
-      placeholder: "",
-      disabled: false,
-    },
-  },
+  
 ];
 
 const formFieldsConsultProcedures = [

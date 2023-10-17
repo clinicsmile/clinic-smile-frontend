@@ -201,4 +201,9 @@ services.registerProcedure = async (formdata) => {
   return await post("/registerProcedure", formdata);
 };
 
+services.consultPatientProcedures = async (data) => {
+  console.log(data);
+  return await get(`toListAllRegister/${data.document}`);
+};
+
 export { services };

@@ -84,8 +84,10 @@ export default ({ label, items }) => {
             <Checkbox
               id={`${e.check.id}`}
               name={`${e.check.name}`}
-              checked={checked[e.check.name]}
+              checked={e.check.checked}
               onChange={handleClickCheckbox}
+              readOnly={e.check.readOnly}
+              disabled={e.check.disabled}
             />
           </div>
         ))}

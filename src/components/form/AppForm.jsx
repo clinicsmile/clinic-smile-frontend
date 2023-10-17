@@ -18,27 +18,27 @@ function AppForm({
   loadedData = {},
   onSelectChange,
 }) {
-  console.log(form);
   const [formClassName, setFormClassName] = useState("");
-  useEffect(() => {
-    // setFormClassName(
-    //   `grid grid-cols-${form.fields.length > 2 ? "2" : "1"} gap-4`
-    // );
-    if (loadedData) {
-      console.log(loadedData);
-      form.fields.map((field) => {
-        field.input
-          ? (field.input.value = loadedData[field.input.name])
-          : field.select
-          ? (field.select.value = loadedData[field.select.name])
-          : field.textarea
-          ? (field.textarea.value = loadedData[field.textarea.name])
-          : field.date
-          ? (field.date.value = loadedData[field.date.name])
-          : (field.checkbox.checked = loadedData[field.checkbox.name]);
-      });
-    }
-  }, []);
+  if (loadedData) {
+    form.fields.map((field) => {
+      field.input
+        ? (field.input.value = loadedData[field.input.name])
+        : field.select
+        ? (field.select.value = loadedData[field.select.name])
+        : field.textarea
+        ? (field.textarea.value = loadedData[field.textarea.name])
+        : field.date
+        ? (field.date.value = loadedData[field.date.name])
+        : field.checkbox.items.forEach((e) => {
+            e.check.checked = loadedData[e.check.name];
+          });
+    });
+  }
+  // useEffect(() => {
+  //   // setFormClassName(
+  //   //   `grid grid-cols-${form.fields.length > 2 ? "2" : "1"} gap-4`
+  //   // );
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -117,7 +117,7 @@ function AppForm({
   );
 
   return (
-    <form className={`${formClassName} p-6`} onSubmit={handleSubmit}>
+    <form className={`${formClassName} px-6`} onSubmit={handleSubmit}>
       <Form />
     </form>
   );

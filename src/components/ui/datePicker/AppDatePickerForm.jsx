@@ -37,6 +37,7 @@ export default ({
           disabled={date.disabled}
           max={max ? maxValue : undefined}
           min={min ? minValue : undefined}
+          readOnly={date.readOnly}
         />
       </div>
     </div>

@@ -5,10 +5,13 @@ import { useState, useEffect } from "react";
 import { Forms } from "../../data/form/Forms";
 import { AppForm } from "../../components/form/AppForm";
 import ModalComponent from "../modal/Modal";
+import CreateAppointment from "../appointments/CreateAppointment";
+
 function ListAppoimentsDoctor() {
   const [appoiments, setAppoiments] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [patient, setPatient] = useState(false);
+  const [secondForm, setSecondForm] = useState(false);
 
   const handleToggleModal = (form) => {
     setPatient(form);
@@ -22,7 +25,6 @@ function ListAppoimentsDoctor() {
   const getAppoiments = async () => {
     try {
       const res = await services.getDoctorAppoiments();
-      console.log(res);
       setAppoiments(res);
     } catch (error) {
       console.log(error);
@@ -36,34 +38,53 @@ function ListAppoimentsDoctor() {
     }
   };
   const registerProcedure = async (formdata) => {
-    try {
-      await services.registerProcedure(formdata);
-      Swal.fire({
-        title: "Procedimiento registrado correctamente",
-        icon: "success",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Ocurrio un error al registrar el procedimiento",
-        icon: "error",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    }
+    console.log(formdata);
+    // try {
+    //   await services.registerProcedure(formdata);
+    //   Swal.fire({
+    //     title: "Procedimiento registrado correctamente",
+    //     icon: "success",
+    //     timer: 1500,
+    //     showConfirmButton: false,
+    //   });
+    // } catch (error) {
+    //   Swal.fire({
+    //     title: "Ocurrio un error al registrar el procedimiento",
+    //     icon: "error",
+    //     timer: 1500,
+    //     showConfirmButton: false,
+    //   });
+    // }
     getAppoiments();
-    setShowModal(!showModal);
+    if (formdata.Procedimiento["SI-PlanTratamiento"]) {
+      setSecondForm(true);
+    }else{
+      setShowModal(!showModal)
+    }
   };
+
   const BodyModalComponent = () => {
-    return (
-      <AppForm
-        form={Forms.CreateProcedure()}
-        onSubmit={(e) =>
-          registerProcedure({ DatosCita: patient, Procedimiento: e })
-        }
-      />
-    );
+    if (secondForm) {
+      return (
+        <AppForm
+          form={Forms.createAppoimentProcedure()}
+          onSubmit={(e) =>
+            registerProcedure({ DatosCita: patient, Procedimiento: e })
+          }
+          loadedData={{}}
+        />
+      );
+    } else {
+      return (
+        <AppForm
+          form={Forms.CreateProcedure()}
+          onSubmit={(e) =>
+            registerProcedure({ DatosCita: patient, Procedimiento: e })
+          }
+          loadedData={{}}
+        />
+      );
+    }
   };
 
   return (
@@ -107,7 +128,10 @@ function ListAppoimentsDoctor() {
 
               <ModalComponent
                 show={showModal}
-                onClose={() => setShowModal(!showModal)}
+                onClose={() => {
+                  setShowModal(!showModal);
+                  setSecondForm(false);
+                }}
                 header={`Registro Procedimiento`}
                 body={<BodyModalComponent />}
                 footer={""}

@@ -2,70 +2,81 @@ import { useEffect, useState } from "react";
 import { AppForm } from "../../components/form/AppForm";
 import { Forms } from "../../data/form/Forms";
 import { services } from "../../services/services";
+import ModalComponent from "../modal/Modal";
 import Swal from "sweetalert2";
 
 function GetProcedures() {
   const [loading, setLoading] = useState(false);
+  const [procedures, setProcedures] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [form, setForm] = useState({});
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await services.consultPatientProcedures(form);
+        console.log(response);
+        setProcedures(response);
+      } catch (error) {
+        console.log("No se pudieron obtener los procedimientos");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const consultProcedures = async (formData) => {
-    setLoading(true);
-    await services
-      .login(formData, newSession)
-      .then(async (value) => {
-        console.log(value);
-        switch (value) {
-          case 400: {
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Credenciales invalidas",
-              text: "Por favor intentelo nuevamente",
-            });
-            break;
-          }
-          case 409: {
-            Swal.fire({
-              title: "Ya tiene una sesion activa",
-              text: "Desea ingresar con una sesion nueva?",
-              icon: "info",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Si",
-              cancelButtonText: "No",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                toLogin(formData, true);
-              }
-            });
-            break;
-          }
-          case true: {
-            navigate("/home");
-            break;
-          }
-          default: {
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: "Ocurrio un error al iniciar sesion",
-            });
-            break;
-          }
-        }
-      })
-      .finally(setLoading(false));
+    if (showModal) {
+      fetchData();
+    }
+  }, [showModal]); // Ejecutar solo cuando showModal cambia
+
+  const consultProcedures = (formData) => {
+    setForm(formData);
+    setShowModal(true);
+  };
+
+  const BodyModalComponent = () => {
+    console.log(procedures);
+    const list = procedures.map((e) => (
+      <div key={e.id}>
+        <div className="">
+          <h3>{`Fecha: ${e.appointment.date} Hora: ${e.appointment.time}`}</h3>
+          <h3>{`Doctor: ${e.appointment.doctor.Person.name} ${e.appointment.doctor.Person.lastName}`}</h3>
+          <h3>{`Especialidad: ${e.appointment.specialty.name}`}</h3>
+        </div>
+        <div className="border-2 border-[var(--primary)]">
+          {loading ? (
+            <p>Cargando datos...</p>
+          ) : (
+            e.detail && (
+              <AppForm
+                form={Forms.viewProcedures()}
+                loadedData={JSON.parse(e.detail)}
+                loading={loading}
+              />
+            )
+          )}
+        </div>
+      </div>
+    ));
+    return list;
   };
 
   return (
     <div className="justify-center flex flex-col">
       <AppForm
-            form={Forms.consultProcedures()}
-            onSubmit={(e) => consultProcedures(e)}
-            loading={loading}
-          />
+        form={Forms.consultProcedures()}
+        onSubmit={(e) => consultProcedures(e)}
+        loading={loading}
+      />
+      <ModalComponent
+        show={showModal}
+        size="3xl"
+        onClose={() => setShowModal(false)}
+        header={`Historia Odontologica`}
+        body={<BodyModalComponent />}
+        footer={""}
+      />
     </div>
   );
 }

@@ -23,7 +23,7 @@ function SideBar() {
         <div className="h-3/4">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
-              {infoMenu.map((e) => (
+              {infoMenu().map((e) => (
                 <Sidebar.Item
                   className="hover:bg-[var(--primary)] hover:text-white ease-in-out transition-all duration-100 hover:cursor-pointer"
                   key={e.name}

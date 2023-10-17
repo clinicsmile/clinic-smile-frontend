@@ -28,10 +28,12 @@ function Users() {
   };
 
   useEffect(() => {
+    setUser([]); 
     getUsers();
-  }, []);
+}, [filterRolId]);
 
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const [searchTerm,setSearchTerm] = useState("");
 
   const handleToggleModal = (type = "", user = {}) => {
     setCurrentType(type);
@@ -239,13 +241,16 @@ function Users() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
-                  <Button size="xs" className="bg-[var(--primary)]">
-                    Buscar
+                  <Button
+
+                  >
+                  pajaro desgraciado
                   </Button>
+
                 </div>
               </div>
 
-              <div className="overflow-y-scroll">
+              <div className="">
                 {loadingPage ? (
                   <SpinnerComponent />
                 ) : (
@@ -260,9 +265,9 @@ function Users() {
                       <Table.HeadCell>Acciones</Table.HeadCell>
                     </Table.Head>
 
-                    <Table.Body className="divide-y">
+                    <Table.Body className="overflow-y-scroll">
                       {users.filter((user) =>(filterRolId === null || user.rolId === filterRolId) &&
-                            (searchTerm === "" ||user.document.toLowerCase().includes(searchTerm.toLowerCase()))).map((e) => (
+                            (searchTerm !== "" && user.document.toLowerCase().includes(searchTerm.toLowerCase()))).map((e) => (
                           <Table.Row
                             key={e.rolId}
                             className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
@@ -294,6 +299,7 @@ function Users() {
                                   color="failure"
                                   className="mx-2"
                                   onClick={() => setOpenModal("pop-up")}
+                                  
                                 >
                                   Eliminar
                                 </Button>

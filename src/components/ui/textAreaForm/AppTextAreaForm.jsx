@@ -13,6 +13,7 @@ export default ({ label, textarea,value }) => {
         rows={4}
         defaultValue={value}
         disabled={textarea.disabled}
+        readOnly={textarea.readOnly}
       />
     </div>
   );

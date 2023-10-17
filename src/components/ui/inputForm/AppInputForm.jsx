@@ -15,6 +15,7 @@ export default ({ label, input, value }) => {
         pattern={input.pattern}
         title={input.title}
         disabled={input.disabled}
+        readOnly={input.readOnly}
       />
     </div>
   );
