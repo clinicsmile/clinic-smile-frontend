@@ -49,7 +49,7 @@ function CreateAppoimentNoAuth() {
             <img src="./logo.svg" className="max-w-xs" />
           </div>
           <div className="h-4/5 overflow-y-scroll overflow-x-hidden flex-col items-center">
-            {form ? (
+            {/* {form ? (
               <AppForm
                 form={form}
                 onSubmit={(e) => createAppoinment(e)}
@@ -63,7 +63,8 @@ function CreateAppoimentNoAuth() {
               type={"secondaryClass"}
               customClass={"w-full"}
               action={() => navigate("/login")}
-            />
+            /> */}
+            hola mundo
           </div>
         </div>
       </div>
