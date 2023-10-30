@@ -171,7 +171,7 @@ function ListAppoimentsAll() {
                   </Modal.Body>
                 </Modal>
 
-                {!e.doctor && (
+                {!e.doctor && e.status !== "Cancelada" && (
                   <Button
                     size="xs"
                     pill

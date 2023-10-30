@@ -11,9 +11,10 @@ import {
 
 const Forms = {};
 
-Forms.registerFormAdmin = () => {
+Forms.registerFormAdmin = async () => {
+  const basic = await basicFields();
   return {
-    fields: [...basicFields, ...authFields],
+    fields: [...basic, ...authFields],
     buttons: [
       {
         type: "primaryClass",
@@ -23,9 +24,11 @@ Forms.registerFormAdmin = () => {
     ],
   };
 };
-Forms.registerFormPatient = () => {
+Forms.registerFormPatient = async () => {
+  const basic = await basicFields();
+  const aditional = await aditionalFieldsPatient();
   return {
-    fields: [...basicFields, ...aditionalFieldsPatient, ...authFields],
+    fields: [...basic, ...aditional, ...authFields],
     buttons: [
       {
         type: "primaryClass",
@@ -36,9 +39,11 @@ Forms.registerFormPatient = () => {
   };
 };
 
-Forms.registerFormDoctor = () => {
+Forms.registerFormDoctor = async () => {
+  const basic = await basicFields();
+  const aditional = await aditionalFieldsDoctor();
   return {
-    fields: [...basicFields, ...aditionalFieldsDoctor, ...authFields],
+    fields: [...basic, ...aditional, ...authFields],
     buttons: [
       {
         type: "primaryClass",
@@ -104,12 +109,13 @@ Forms.login = {
   ],
 };
 
-Forms.editProfilePatient = () => {
-  basicFields[0].select.disabled = true;
-  basicFields[1].input.disabled = true;
+Forms.editProfilePatient = async () => {
+  const basic = await basicFields();
+  basic[0].select.disabled = true;
+  basic[1].input.disabled = true;
 
   return {
-    fields: [...basicFields],
+    fields: [...basic],
     buttons: [
       {
         type: "primaryClass",
@@ -120,16 +126,18 @@ Forms.editProfilePatient = () => {
   };
 };
 
-Forms.editProfileDoctor = () => {
-  basicFields[0].select.disabled = true;
-  basicFields[1].input.disabled = true;
-  aditionalFieldsDoctor[0].select.disabled = true;
-  aditionalFieldsDoctor[1].input.disabled = true;
-  aditionalFieldsDoctor[2].input.disabled = true;
-  aditionalFieldsDoctor[3].select.disabled = true;
-  aditionalFieldsDoctor[4].input.disabled = true;
+Forms.editProfileDoctor = async () => {
+  const basic = await basicFields();
+  const aditional = await aditionalFieldsDoctor();
+  basic[0].select.disabled = true;
+  basic[1].input.disabled = true;
+  aditional[0].select.disabled = true;
+  aditional[1].input.disabled = true;
+  aditional[2].input.disabled = true;
+  aditional[3].select.disabled = true;
+  aditional[4].input.disabled = true;
   return {
-    fields: [...basicFields, ...aditionalFieldsDoctor],
+    fields: [...basic, ...aditional],
     buttons: [
       {
         type: "primaryClass",
@@ -140,9 +148,11 @@ Forms.editProfileDoctor = () => {
   };
 };
 
-Forms.editPatient = () => {
+Forms.editPatient = async () => {
+  const basic = await basicFields();
+  const aditional = await aditionalFieldsPatient();
   return {
-    fields: [...basicFields, ...aditionalFieldsPatient],
+    fields: [...basic, ...aditional],
     buttons: [
       {
         type: "primaryClass",
@@ -153,9 +163,10 @@ Forms.editPatient = () => {
   };
 };
 
-Forms.editAdmin = () => {
+Forms.editAdmin = async () => {
+  const basic = await basicFields();
   return {
-    fields: [...basicFields],
+    fields: [...basic],
     buttons: [
       {
         type: "primaryClass",
@@ -166,15 +177,18 @@ Forms.editAdmin = () => {
   };
 };
 
-Forms.rolField = () => {
+Forms.rolField = async () => {
+  const data = await rolField();
   return {
-    fields: [...rolField],
+    fields: [...data],
   };
 };
 
-Forms.editDoctor = () => {
+Forms.editDoctor = async () => {
+  const basic = await basicFields();
+  const aditional = await aditionalFieldsDoctor();
   return {
-    fields: [...basicFields, ...aditionalFieldsDoctor],
+    fields: [...basic, ...aditional],
     buttons: [
       {
         type: "primaryClass",
@@ -246,9 +260,10 @@ Forms.viewProcedures = () => {
   return { fields: [...modifiedForm] };
 };
 
-Forms.createAppoimentProcedure = () => {
+Forms.createAppoimentProcedure = async () => {
+  const fields = await appointmentBasicFields();
   return {
-    fields: [...appointmentBasicFields],
+    fields: [...fields],
     buttons: [
       {
         type: "primaryClass",

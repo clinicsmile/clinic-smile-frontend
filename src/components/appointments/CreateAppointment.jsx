@@ -10,7 +10,7 @@ import {
 } from "../../data/form/appointments";
 import { create } from "../../services/appointments";
 
-const CreateAppointment = ({onComplete}) => {
+const CreateAppointment = ({ onComplete }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,18 +19,24 @@ const CreateAppointment = ({onComplete}) => {
   useEffect(() => {
     let person = JSON.parse(localStorage.getItem("user"))?.Person;
     setCurrentUser(person);
-    let forms = {
-      0: createNoAuthForm,
-      1: createFormAdmin,
-      3: createFormPacientAuth,
+    const getForms = async () => {
+      const noAuth = await createNoAuthForm();
+      const formAdmin = await createFormAdmin();
+      const formPatient = await createFormPacientAuth();
+      const forms = {
+        0: noAuth,
+        1: formAdmin,
+        3: formPatient,
+      };
+      setCurrentForm(forms[person.rolId || 0]);
     };
-    setCurrentForm(forms[person.rolId || 0]);
+    getForms();
   }, []);
 
   const handleCreate = async (formData) => {
     formData.status = currentUser?.rolId !== 1 ? "Pendiente" : "En proceso";
-    if(currentUser?.rolId == 3) {
-      formData.PersonDocument = currentUser.document
+    if (currentUser?.rolId == 3) {
+      formData.PersonDocument = currentUser.document;
     }
     setLoading(true);
 
@@ -43,7 +49,7 @@ const CreateAppointment = ({onComplete}) => {
         showConfirmButton: false,
       });
       setShowModal(!showModal);
-      onComplete && onComplete()
+      onComplete && onComplete();
     } catch (error) {
       console.log(error);
     } finally {
@@ -64,12 +70,14 @@ const CreateAppointment = ({onComplete}) => {
         onClose={() => setShowModal(!showModal)}
         header={`Crear cita - ${currentUser?.name}`}
         body={
-          <AppForm
-            form={currentForm}
-            onSubmit={(e) => handleCreate(e)}
-            loading={loading}
-            loadedData={currentUser || undefined}
-          />
+          currentForm && (
+            <AppForm
+              form={currentForm}
+              onSubmit={(e) => handleCreate(e)}
+              loading={loading}
+              loadedData={currentUser || undefined}
+            />
+          )
         }
         footer={""}
       />

@@ -1,13 +1,28 @@
 import { services } from "../../services/services";
 const list = {};
-list.documentTypes = await services.Appselect("documentTypes");
-list.genders = await services.Appselect("genders");
-list.rolList = await services.Appselect("rolList");
 
-list.specialties = await services.Appselect("specialties");
-list.academicLevels = await services.Appselect("academicLevels");
+list.documentTypes = async () => {
+  return await services.Appselect("documentTypes");
+};
+list.genders = async () => {
+  return await services.Appselect("genders");
+};
 
-list.bloodTypes = await services.Appselect("bloodTypes");
+list.rolList = async () => {
+  return await services.Appselect("rolList");
+};
+
+list.specialties = async () => {
+  return await services.Appselect("specialties");
+};
+
+list.academicLevels = async () => {
+  return await services.Appselect("academicLevels");
+};
+
+list.bloodTypes = async () => {
+  return await services.Appselect("bloodTypes");
+};
 
 const date18Validation = () => {
   let minDate = new Date();
@@ -15,23 +30,25 @@ const date18Validation = () => {
   return minDate.toISOString().split("T")[0];
 };
 
-const rolField = [
-  {
-    label: {
-      name: "Rol",
-      htmlFor: "rolId",
+const rolField = async () => {
+  return [
+    {
+      label: {
+        name: "Rol",
+        htmlFor: "rolId",
+      },
+      select: {
+        id: "rolId",
+        name: "rolId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        items: await list.rolList(),
+        onChangeAction: true,
+      },
     },
-    select: {
-      id: "rolId",
-      name: "rolId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      items: list.rolList,
-      onChangeAction: true,
-    },
-  },
-];
+  ];
+};
 
 const authFields = [
   {
@@ -62,323 +79,330 @@ const authFields = [
   },
 ];
 
-const basicFields = [
-  {
-    label: {
-      name: "Tipo de Documento",
-      htmlFor: "documentTypeId",
+const basicFields = async () => {
+  return [
+    {
+      label: {
+        name: "Tipo de Documento",
+        htmlFor: "documentTypeId",
+      },
+      select: {
+        id: "documentTypeId",
+        name: "documentTypeId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+        items: await list.documentTypes(),
+      },
     },
-    select: {
-      id: "documentTypeId",
-      name: "documentTypeId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
-      items: list.documentTypes,
+    {
+      label: {
+        name: "Documento",
+        htmlFor: "document",
+      },
+      input: {
+        id: "document",
+        name: "document",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Documento",
-      htmlFor: "document",
+    {
+      label: {
+        name: "Nombre",
+        htmlFor: "name",
+      },
+      input: {
+        id: "name",
+        name: "name",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-    input: {
-      id: "document",
-      name: "document",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
+    {
+      label: {
+        name: "Apellido",
+        htmlFor: "lastName",
+      },
+      input: {
+        id: "lastName",
+        name: "lastName",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Nombre",
-      htmlFor: "name",
+    {
+      label: {
+        name: "Fecha de Nacimiento",
+        htmlFor: "birthDate",
+      },
+      date: {
+        id: "birthDate",
+        name: "birthDate",
+        type: "date",
+        required: true,
+        placeholder: "",
+        disabled: false,
+        min: false,
+        max: true,
+        maxValue: date18Validation(),
+      },
     },
-    input: {
-      id: "name",
-      name: "name",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
+    {
+      label: {
+        name: "Genero",
+        htmlFor: "genderId",
+      },
+      select: {
+        id: "genderId",
+        name: "genderId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        items: await list.genders(),
+        disabled: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Apellido",
-      htmlFor: "lastName",
+    {
+      label: {
+        name: "Celular o Telefono",
+        htmlFor: "cellPhone",
+      },
+      input: {
+        id: "cellPhone",
+        name: "cellPhone",
+        type: "tel",
+        required: true,
+        placeholder: "",
+        pattern: "[3]{1}[0-4]{2}[0-9]{3}[0-9]{4}|[3]{1}[0-9]{2}[0-9]{4}",
+        disabled: false,
+      },
     },
-    input: {
-      id: "lastName",
-      name: "lastName",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
+    {
+      label: {
+        name: "Correo",
+        htmlFor: "email",
+      },
+      input: {
+        id: "email",
+        name: "email",
+        type: "email",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Fecha de Nacimiento",
-      htmlFor: "birthDate",
+    {
+      label: {
+        name: "Direccion",
+        htmlFor: "address",
+      },
+      input: {
+        id: "address",
+        name: "address",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-    date: {
-      id: "birthDate",
-      name: "birthDate",
-      type: "date",
-      required: true,
-      placeholder: "",
-      disabled: false,
-      min: false,
-      max: true,
-      maxValue: date18Validation(),
-    },
-  },
-  {
-    label: {
-      name: "Genero",
-      htmlFor: "genderId",
-    },
-    select: {
-      id: "genderId",
-      name: "genderId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      items: list.genders,
-      disabled: false,
-    },
-  },
+  ];
+};
 
-  {
-    label: {
-      name: "Celular o Telefono",
-      htmlFor: "cellPhone",
+const aditionalFieldsDoctor = async () => {
+  return [
+    {
+      label: {
+        name: "Nivel Academino",
+        htmlFor: "academicLevelId",
+      },
+      select: {
+        id: "academicLevelId",
+        name: "academicLevelId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+        items: await list.academicLevels(),
+      },
     },
-    input: {
-      id: "cellPhone",
-      name: "cellPhone",
-      type: "tel",
-      required: true,
-      placeholder: "",
-      pattern: "[3]{1}[0-4]{2}[0-9]{3}[0-9]{4}|[3]{1}[0-9]{2}[0-9]{4}",
-      disabled: false,
+    {
+      label: {
+        name: "Título Universitario",
+        htmlFor: "academicTitle",
+      },
+      input: {
+        id: "academicTitle",
+        name: "academicTitle",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Correo",
-      htmlFor: "email",
+    {
+      label: {
+        name: "Universidad",
+        htmlFor: "university",
+      },
+      input: {
+        id: "university",
+        name: "university",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-    input: {
-      id: "email",
-      name: "email",
-      type: "email",
-      required: true,
-      placeholder: "",
-      disabled: false,
+    {
+      label: {
+        name: "Especialidad",
+        htmlFor: "specialtyId",
+      },
+      select: {
+        id: "specialtyId",
+        name: "specialtyId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+        items: await list.specialties(),
+      },
     },
-  },
-  {
-    label: {
-      name: "Direccion",
-      htmlFor: "address",
+    {
+      label: {
+        name: "Tarjeta Profesional",
+        htmlFor: "profesionalCardNumber",
+      },
+      input: {
+        id: "profesionalCardNumber",
+        name: "profesionalCardNumber",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-    input: {
-      id: "address",
-      name: "address",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-];
+  ];
+};
 
-const aditionalFieldsDoctor = [
-  {
-    label: {
-      name: "Nivel Academino",
-      htmlFor: "academicLevelId",
+const aditionalFieldsPatient = async () => {
+  return [
+    {
+      label: {
+        name: "Tipo de sangre",
+        htmlFor: "bloodTypeId",
+      },
+      select: {
+        id: "bloodTypeId",
+        name: "bloodTypeId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        items: await list.bloodTypes(),
+        disabled: false,
+      },
     },
-    select: {
-      id: "academicLevelId",
-      name: "academicLevelId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
-      items: list.academicLevels,
+    {
+      label: {
+        name: "Alergias",
+        htmlFor: "allergies",
+      },
+      textarea: {
+        id: "allergies",
+        name: "allergies",
+        type: "text-area",
+        required: false,
+        placeholder: "",
+        disabled: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Título Universitario",
-      htmlFor: "academicTitle",
+    {
+      label: {
+        name: "Enfermedades",
+        htmlFor: "diseases",
+      },
+      textarea: {
+        id: "diseases",
+        name: "diseases",
+        type: "text-area",
+        required: false,
+        placeholder: "",
+        disabled: false,
+      },
     },
-    input: {
-      id: "academicTitle",
-      name: "academicTitle",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
+  ];
+};
+const appointmentBasicFields = async () => {
+  return [
+    {
+      label: {
+        name: "Motivo de la consulta",
+        htmlFor: "reason",
+      },
+      textarea: {
+        id: "reason",
+        name: "reason",
+        type: "text-area",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Universidad",
-      htmlFor: "university",
+    {
+      label: {
+        name: "Especialidad",
+        htmlFor: "specialtyId",
+      },
+      select: {
+        id: "specialtyId",
+        name: "specialtyId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+        items: await list.specialties(),
+      },
     },
-    input: {
-      id: "university",
-      name: "university",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
+    {
+      label: {
+        name: "Fecha de la consulta",
+        htmlFor: "date",
+      },
+      date: {
+        id: "date",
+        name: "date",
+        type: "date",
+        required: true,
+        placeholder: "",
+        disabled: false,
+        min: true,
+        max: false,
+      },
     },
-  },
-  {
-    label: {
-      name: "Especialidad",
-      htmlFor: "specialtyId",
+    {
+      label: {
+        name: "Hora de la consulta",
+        htmlFor: "time",
+      },
+      date: {
+        id: "time",
+        name: "time",
+        type: "time",
+        required: true,
+        placeholder: "",
+        disabled: false,
+      },
     },
-    select: {
-      id: "specialtyId",
-      name: "specialtyId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
-      items: list.specialties,
-    },
-  },
-  {
-    label: {
-      name: "Tarjeta Profesional",
-      htmlFor: "profesionalCardNumber",
-    },
-    input: {
-      id: "profesionalCardNumber",
-      name: "profesionalCardNumber",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-];
-
-const aditionalFieldsPatient = [
-  {
-    label: {
-      name: "Tipo de sangre",
-      htmlFor: "bloodTypeId",
-    },
-    select: {
-      id: "bloodTypeId",
-      name: "bloodTypeId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      items: list.bloodTypes,
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Alergias",
-      htmlFor: "allergies",
-    },
-    textarea: {
-      id: "allergies",
-      name: "allergies",
-      type: "text-area",
-      required: false,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Enfermedades",
-      htmlFor: "diseases",
-    },
-    textarea: {
-      id: "diseases",
-      name: "diseases",
-      type: "text-area",
-      required: false,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-];
-const appointmentBasicFields = [
-  {
-    label: {
-      name: "Motivo de la consulta",
-      htmlFor: "reason",
-    },
-    textarea: {
-      id: "reason",
-      name: "reason",
-      type: "text-area",
-      required: true,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-  {
-    label: {
-      name: "Especialidad",
-      htmlFor: "specialtyId",
-    },
-    select: {
-      id: "specialtyId",
-      name: "specialtyId",
-      type: "text",
-      required: true,
-      placeholder: "",
-      disabled: false,
-      items: list.specialties,
-    },
-  },
-  {
-    label: {
-      name: "Fecha de la consulta",
-      htmlFor: "date",
-    },
-    date: {
-      id: "date",
-      name: "date",
-      type: "date",
-      required: true,
-      placeholder: "",
-      disabled: false,
-      min: true,
-      max: false,
-    },
-  },
-  {
-    label: {
-      name: "Hora de la consulta",
-      htmlFor: "time",
-    },
-    date: {
-      id: "time",
-      name: "time",
-      type: "time",
-      required: true,
-      placeholder: "",
-      disabled: false,
-    },
-  },
-];
+  ];
+};
 
 const formFieldsProcedures = [
   {
@@ -1805,7 +1829,6 @@ const formFieldsProcedures = [
       disabled: false,
     },
   },
-  
 ];
 
 const formFieldsConsultProcedures = [

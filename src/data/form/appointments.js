@@ -2,10 +2,14 @@ import { basicFields, appointmentBasicFields } from "./FormFields";
 import { services } from "../../services/services";
 
 const list = {};
-list.specialties = await services.Appselect("specialties");
+list.specialties = async () => {
+  await services.Appselect("specialties");
+};
 
 // TODO -> conectar con el api
-list.doctors = await services.Appselect("doctors");
+list.doctors = async () => {
+  return await services.Appselect("doctors");
+};
 
 // TODO -> conectar con el api
 list.status = [
@@ -15,12 +19,13 @@ list.status = [
 ];
 
 // TODO -> conectar con el api
-list.patients = await services.Appselect("patients");
+list.patients = async () => {
+  return await services.Appselect("patients");
+};
 
-
-const transformBasicFields = () => {
+const transformBasicFields = async () => {
   const inputTypes = ["date", "select", "input", "textarea"];
-  let copyBasicFields = JSON.parse(JSON.stringify(basicFields));
+  let copyBasicFields = JSON.parse(JSON.stringify(await basicFields()));
   copyBasicFields.forEach((field) => {
     const fieldType = Object.keys(field)[1];
     if (inputTypes.includes(fieldType)) {
@@ -30,22 +35,25 @@ const transformBasicFields = () => {
   return copyBasicFields;
 };
 
-export const doctorSelect = 
-[{
-  label: {
-    name: "Odontólogo",
-    htmlFor: "doctorId",
-  },
-  select: {
-    id: "doctorId",
-    name: "doctorId",
-    type: "text",
-    required: true,
-    placeholder: "",
-    disabled: false,
-    items: list.doctors,
-  },
-}];
+export const doctorSelect = async () => {
+  return [
+    {
+      label: {
+        name: "Odontólogo",
+        htmlFor: "doctorId",
+      },
+      select: {
+        id: "doctorId",
+        name: "doctorId",
+        type: "text",
+        required: true,
+        placeholder: "",
+        disabled: false,
+        items: await list.doctors(),
+      },
+    },
+  ];
+};
 
 export const statusSelect = {
   label: {
@@ -63,139 +71,157 @@ export const statusSelect = {
   },
 };
 
-export const patientSelect = [{
-  label: {
-    name: "Paciente",
-    htmlFor: "PersonDocument",
-  },
-  select: {
-    id: "PersonDocument",
-    name: "PersonDocument",
-    type: "text",
-    required: true,
-    placeholder: "",
-    disabled: false,
-    items: list.patients,
-  },
-}];
-
-export const createFormAdmin = {
-  fields: [
-    ...patientSelect,
-    ...appointmentBasicFields,
-    ...doctorSelect
-  ],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Aceptar",
-      action: "createAppointmentAction",
-    },
-  ],
-};
-
-export const createFormDoctor = {
-  fields: [...patientSelect, ...appointmentBasicFields, statusSelect],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Crear Cita",
-      action: "createAppointmentAction",
-    },
-  ],
-};
-
-// formulario para pacientes autenticados
-export const createFormPacientAuth = {
-  fields: [...transformBasicFields(), ...appointmentBasicFields],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Aceptar",
-      action: "createAppointmentAction",
-    },
-  ],
-};
-
-// formulario para pacientes no autenticados
-export const createNoAuthForm = {
-  fields: [...basicFields, ...appointmentBasicFields],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Crear Cita",
-      action: "createAppointmentAction",
-    },
-  ],
-};
-
-export const editForm = {
-  fields: [
+export const patientSelect = async () => {
+  return [
     {
       label: {
-        name: "Motivo de la consulta",
-        htmlFor: "reason",
-      },
-      textarea: {
-        id: "reason",
-        name: "reason",
-        type: "text-area",
-        required: true,
-        placeholder: "",
-        disabled: false,
-      },
-    },
-    {
-      label: {
-        name: "Especialidad",
-        htmlFor: "specialtyId",
+        name: "Paciente",
+        htmlFor: "PersonDocument",
       },
       select: {
-        id: "specialtyId",
-        name: "specialtyId",
+        id: "PersonDocument",
+        name: "PersonDocument",
         type: "text",
         required: true,
         placeholder: "",
         disabled: false,
-        items: list.specialties,
+        items: await list.patients(),
       },
     },
-    {
-      label: {
-        name: "Fecha de la consulta",
-        htmlFor: "date",
+  ];
+};
+
+export const createFormAdmin = async () => {
+  const basic = await appointmentBasicFields();
+  const patient = await patientSelect();
+  const doctors = await doctorSelect();
+  return {
+    fields: [...patient, ...basic, ...doctors],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Aceptar",
+        action: "createAppointmentAction",
       },
-      date: {
-        id: "date",
-        name: "date",
-        type: "date",
-        required: true,
-        placeholder: "",
-        disabled: false,
-        min: true,
-        max: false,
+    ],
+  };
+};
+
+export const createFormDoctor = async () => {
+  const basic = await appointmentBasicFields();
+  const patient = await patientSelect();
+  return {
+    fields: [...patient, ...basic, statusSelect],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Crear Cita",
+        action: "createAppointmentAction",
       },
-    },
-    {
-      label: {
-        name: "Hora de la consulta",
-        htmlFor: "time",
+    ],
+  };
+};
+
+// formulario para pacientes autenticados
+export const createFormPacientAuth = async () => {
+  const basic = await appointmentBasicFields();
+  const transform = await transformBasicFields();
+  return {
+    fields: [...transform, ...basic],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Aceptar",
+        action: "createAppointmentAction",
       },
-      date: {
-        id: "time",
-        name: "time",
-        type: "time",
-        required: true,
-        placeholder: "",
-        disabled: false,
+    ],
+  };
+};
+
+// formulario para pacientes no autenticados
+export const createNoAuthForm = async () => {
+  const basic = await appointmentBasicFields();
+  return {
+    fields: [...basic, ...basic],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Crear Cita",
+        action: "createAppointmentAction",
       },
-    },
-  ],
-  buttons: [
-    {
-      type: "primaryClass",
-      title: "Editar Cita",
-      action: "editAppointmentAction",
-    },
-  ],
+    ],
+  };
+};
+
+export const editForm = async () => {
+  return {
+    fields: [
+      {
+        label: {
+          name: "Motivo de la consulta",
+          htmlFor: "reason",
+        },
+        textarea: {
+          id: "reason",
+          name: "reason",
+          type: "text-area",
+          required: true,
+          placeholder: "",
+          disabled: false,
+        },
+      },
+      {
+        label: {
+          name: "Especialidad",
+          htmlFor: "specialtyId",
+        },
+        select: {
+          id: "specialtyId",
+          name: "specialtyId",
+          type: "text",
+          required: true,
+          placeholder: "",
+          disabled: false,
+          items: await list.specialties(),
+        },
+      },
+      {
+        label: {
+          name: "Fecha de la consulta",
+          htmlFor: "date",
+        },
+        date: {
+          id: "date",
+          name: "date",
+          type: "date",
+          required: true,
+          placeholder: "",
+          disabled: false,
+          min: true,
+          max: false,
+        },
+      },
+      {
+        label: {
+          name: "Hora de la consulta",
+          htmlFor: "time",
+        },
+        date: {
+          id: "time",
+          name: "time",
+          type: "time",
+          required: true,
+          placeholder: "",
+          disabled: false,
+        },
+      },
+    ],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Editar Cita",
+        action: "editAppointmentAction",
+      },
+    ],
+  };
 };

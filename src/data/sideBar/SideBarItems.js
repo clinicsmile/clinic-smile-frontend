@@ -77,11 +77,6 @@ const infoMenu = () => {
           icon: LiaCalendarDaySolid,
         },
         {
-          path: "/medicalRecords",
-          name: "Historias clínicas",
-          icon: LiaArchiveSolid,
-        },
-        {
           path: "/logout",
           name: "Cerrar Sesion",
           icon: LiaSignOutAltSolid,

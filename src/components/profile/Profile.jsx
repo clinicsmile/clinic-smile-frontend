@@ -7,6 +7,23 @@ import { services } from "../../services/services";
 const AppProfile = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [form, setForm] = useState(null);
+
+  useEffect(() => {
+    ObtenerFormulario();
+  }, [user]);
+
+  const ObtenerFormulario = async () => {
+    let data = null;
+    if (user.rolId == 2) {
+      data = await Forms.editProfileDoctor();
+    } else {
+      data = await Forms.editProfilePatient();
+    }
+    console.log(data);
+    setForm(data);
+    return data;
+  };
 
   const getUser = async () => {
     try {
@@ -46,30 +63,19 @@ const AppProfile = () => {
   const toUpdate = async (formData) => {
     setLoading(true);
     try {
+      console.log(formData);
       await update(formData);
       getUser();
-      // location.reload();
     } finally {
       setLoading(false);
     }
   };
-  // Verificar si 'user' es null antes de renderizar
-  if (user === null) {
-    return null;
-  }
 
-  return user.rolId == 2 ? (
-    <AppForm
-      form={Forms.editProfileDoctor()}
-      loadedData={user}
-      onSubmit={(e) => toUpdate(e)}
-    />
-  ) : (
-    <AppForm
-      form={Forms.editProfilePatient()}
-      loadedData={user}
-      onSubmit={(e) => toUpdate(e)}
-    />
+  return (
+    form &&
+    user && (
+      <AppForm form={form} loadedData={user} onSubmit={(e) => toUpdate(e)} />
+    )
   );
 };
 

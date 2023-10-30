@@ -4,7 +4,7 @@ export default ({ items, label, select, value, onChange }) => {
   const handleChange = (event) => {
     onChange(event.target.value);
   };
-
+  console.log(items);
   return (
     <div>
       <div className="mb-2 block">

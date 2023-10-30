@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { Forms } from "../../data/form/Forms";
@@ -7,6 +7,18 @@ import { services } from "../../services/services";
 function Register() {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState(null);
+
+  useEffect(() => {
+    ObtenerFormulario();
+  }, []);
+
+  const ObtenerFormulario = async () => {
+    const data = await Forms.registerFormPatient();
+    console.log(data);
+    setForm(data);
+    return data;
+  };
 
   const toRegister = async (formData) => {
     setLoading(true);
@@ -29,11 +41,15 @@ function Register() {
             <img src="./logo.svg" />
           </div>
           <div className="h-4/5 overflow-y-scroll overflow-x-hidden">
-            <AppForm
-              form={Forms.registerFormPatient()}
-              onSubmit={(e) => toRegister(e)}
-              loading={loading}
-            />
+            {form ? (
+              <AppForm
+                form={form}
+                onSubmit={(e) => toRegister(e)}
+                loading={loading}
+              />
+            ) : (
+              "Cargando Formulario..."
+            )}
           </div>
         </div>
       </div>

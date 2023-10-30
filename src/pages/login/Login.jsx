@@ -43,7 +43,7 @@ function Login() {
       .then(async (value) => {
         console.log(value);
         switch (value) {
-          case 400: {
+          case 401: {
             Swal.fire({
               position: "center",
               icon: "error",

@@ -17,7 +17,7 @@ function Users() {
   const onPageChange = (page) => setCurrentPage(page);
 
   const [showModal, setShowModal] = useState(false);
-  const [currentForm, setCurrentForm] = useState(Forms.rolField());
+  const [currentForm, setCurrentForm] = useState(null);
   const [currentType, setCurrentType] = useState(null);
   const [rolId, setRolId] = useState(null);
   const [filterRolId, setFilterRolId] = useState(null);
@@ -38,21 +38,21 @@ function Users() {
     setTexto("");
   };
 
-  const handleToggleModal = (type = "", user = {}) => {
+  const handleToggleModal = async (type = "", user = {}) => {
     setCurrentType(type);
     setShowModal(!showModal);
     let formToChange = {};
 
     if (type === "create") {
       setCurrentUser({});
-      formToChange = Forms.rolField();
+      formToChange = await Forms.rolField();
     } else if (type === "edit" && user) {
       if (user.rolId == 2) {
-        formToChange = Forms.editDoctor();
+        formToChange = await Forms.editDoctor();
       } else if (user.rolId == 1) {
-        formToChange = Forms.editAdmin();
+        formToChange = await Forms.editAdmin();
       } else {
-        formToChange = Forms.editPatient();
+        formToChange = await Forms.editPatient();
       }
     }
     setCurrentForm(formToChange);
@@ -79,6 +79,7 @@ function Users() {
   };
 
   const edit = async (formData) => {
+    console.log(formData);
     setLoading(true);
     try {
       let { message } = await services.edit(formData);
@@ -136,35 +137,46 @@ function Users() {
     }
   };
 
-  const handleSelectChange = (value) => {
+  const handleSelectChange = async (value) => {
     console.log(value);
+    const registerFormAdmin = await Forms.registerFormAdmin();
+    const registerFormDoctor = await Forms.registerFormDoctor();
+    const registerFormPatient = await Forms.registerFormPatient();
+
     const forms = {
-      1: Forms.registerFormAdmin,
-      2: Forms.registerFormDoctor,
-      3: Forms.registerFormPatient,
+      1: registerFormAdmin,
+      2: registerFormDoctor,
+      3: registerFormPatient,
     };
-    const form = forms[value] || Forms.editAdmin();
+    const form = forms[value] || (await Forms.editAdmin());
     setCurrentForm(form);
     setRolId(value);
   };
 
   const BodyModalComponent = () => {
     const types = {
-      create: (
+      create: currentForm ? (
         <AppForm
           form={currentForm}
           onSubmit={(e) => register(e)}
           loading={loading}
           onSelectChange={handleSelectChange}
         />
+      ) : (
+        "Cargando formulario..."
       ),
-      edit: (
+      edit: currentForm ? (
         <AppForm
           form={currentForm}
-          onSubmit={(e) => edit(e)}
+          onSubmit={(e) => {
+            e.rolId = currentUser.rolId;
+            edit(e);
+          }}
           loading={loading}
           loadedData={currentUser}
         />
+      ) : (
+        "Cargando Formulario..."
       ),
     };
 
@@ -317,6 +329,7 @@ function Users() {
                                   color="warning"
                                   className="mx-2"
                                   onClick={() => {
+                                    console.log(e);
                                     setCurrentUser(e);
                                     handleToggleModal("edit", e);
                                   }}
