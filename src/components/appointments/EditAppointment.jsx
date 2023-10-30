@@ -20,12 +20,18 @@ const EditAppointment = ({ appointment, onComplete }) => {
 
   useEffect(() => {
     let person = JSON.parse(localStorage.getItem("user"))?.Person;
-    let forms = {
-      0: createNoAuthForm,
-      1: createFormAdmin,
-      3: createFormPacientAuth,
+    const getForms = async () => {
+      const noAuth = await createNoAuthForm();
+      const formAdmin = await createFormAdmin();
+      const formPatient = await createFormPacientAuth();
+      const forms = {
+        0: noAuth,
+        1: formAdmin,
+        3: formPatient,
+      };
+      setCurrentForm(forms[person.rolId || 0]);
     };
-    setCurrentForm(forms[person.rolId || 0]);
+    getForms();
   }, []);
 
   const handleEdit = async (formData) => {
@@ -40,7 +46,7 @@ const EditAppointment = ({ appointment, onComplete }) => {
         showConfirmButton: false,
       });
       setShowModal(!showModal);
-      onComplete && onComplete()
+      onComplete && onComplete();
     } catch (error) {
       console.log(error);
     } finally {
@@ -50,20 +56,30 @@ const EditAppointment = ({ appointment, onComplete }) => {
 
   return (
     <>
-       <Button size="xs" pill color="warning" className="mx-2" onClick={() => setShowModal(!showModal)}>
-          Editar
-       </Button>
+      <Button
+        size="xs"
+        pill
+        color="warning"
+        className="mx-2"
+        onClick={() => setShowModal(!showModal)}
+      >
+        Editar
+      </Button>
       <ModalComponent
         show={showModal}
         onClose={() => setShowModal(!showModal)}
         header={`Editar cita`}
         body={
-          <AppForm
-            form={currentForm}
-            onSubmit={(e) => handleEdit(e)}
-            loading={loading}
-            loadedData={appointment}
-          />
+          currentForm ? (
+            <AppForm
+              form={currentForm}
+              onSubmit={(e) => handleEdit(e)}
+              loading={loading}
+              loadedData={appointment}
+            />
+          ) : (
+            "Cargando Formulario..."
+          )
         }
         footer={""}
       />

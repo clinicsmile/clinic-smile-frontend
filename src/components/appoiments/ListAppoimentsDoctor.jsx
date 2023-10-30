@@ -63,11 +63,11 @@ function ListAppoimentsDoctor() {
     }
   };
 
-  const BodyModalComponent = () => {
+  const BodyModalComponent = async () => {
     if (secondForm) {
       return (
         <AppForm
-          form={Forms.createAppoimentProcedure()}
+          form={await Forms.createAppoimentProcedure()}
           onSubmit={(e) =>
             createAppointment({
               PersonDocument: patient.PersonDocument,
