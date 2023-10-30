@@ -67,7 +67,7 @@ function ListAppoimentsDoctor() {
     if (secondForm) {
       return (
         <AppForm
-          form={await Forms.createAppoimentProcedure()}
+          form={ Forms.createAppoimentProcedure()}
           onSubmit={(e) =>
             createAppointment({
               PersonDocument: patient.PersonDocument,
