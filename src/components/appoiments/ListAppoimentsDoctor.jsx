@@ -12,7 +12,7 @@ function ListAppoimentsDoctor() {
   const [showModal, setShowModal] = useState(false);
   const [patient, setPatient] = useState(false);
   const [secondForm, setSecondForm] = useState(false);
-
+  const [form, setForm] = useState(null);
   const handleToggleModal = (form) => {
     setPatient(form);
     setShowModal(true);
@@ -21,6 +21,10 @@ function ListAppoimentsDoctor() {
   useEffect(() => {
     getAppoiments();
   }, []);
+
+  useEffect(() => {
+    getForm();
+  }, [secondForm]);
 
   const getAppoiments = async () => {
     try {
@@ -63,11 +67,20 @@ function ListAppoimentsDoctor() {
     }
   };
 
-  const BodyModalComponent = async () => {
+  const getForm = async () => {
+    if (secondForm) {
+      const data = await Forms.createAppoimentProcedure();
+      setForm(data);
+    } else {
+      const data = await Forms.CreateProcedure();
+      setForm(data);
+    }
+  };
+  const BodyModalComponent = () => {
     if (secondForm) {
       return (
         <AppForm
-          form={ Forms.createAppoimentProcedure()}
+          form={form}
           onSubmit={(e) =>
             createAppointment({
               PersonDocument: patient.PersonDocument,
@@ -82,7 +95,7 @@ function ListAppoimentsDoctor() {
     } else {
       return (
         <AppForm
-          form={Forms.CreateProcedure()}
+          form={form}
           onSubmit={(e) =>
             registerProcedure({ DatosCita: patient, Procedimiento: e })
           }
