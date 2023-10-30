@@ -1,15 +1,34 @@
-import { post, put} from "../api/apiService";
+import { Logout } from "../pages";
+import { post, put } from "../api/apiService";
 
 const create = async (data) => {
-  return await post("appoiments", data);
+  try {
+    return await post("appoiments", data);
+  } catch (error) {
+    window.localStorage.clear();
+    Logout();
+    throw new error();
+  }
 };
 
 const createNoAuth = async (data) => {
-  return await post("appointments/create-no-auth", data);
+  try {
+    return await post("appointments/create-no-auth", data);
+  } catch (error) {
+    window.localStorage.clear();
+    Logout();
+    throw new error();
+  }
 };
 
 const update = async (data, id) => {
-  return await put(`appoiment/${id}`, data);
+  try {
+    return await put(`appoiment/${id}`, data);
+  } catch (error) {
+    window.localStorage.clear();
+    Logout();
+    throw new error();
+  }
 };
 
 export { create, update, createNoAuth };

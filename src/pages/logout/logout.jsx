@@ -5,7 +5,7 @@ function Logout() {
     services.logOut(JSON.parse(window.localStorage.getItem("user")).username);
   }
   window.localStorage.clear();
-  location.href = "/login";
+  location.href = "/";
 }
 
 export default Logout;

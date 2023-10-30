@@ -96,6 +96,7 @@ services.usersList = async () => {
   try {
     return await get(`/users`);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -105,6 +106,7 @@ services.getBrand = async (location) => {
   try {
     return await post(`/getBrand`, location);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -114,6 +116,7 @@ services.register = async (formData) => {
   try {
     return await post(`/register`, formData);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -123,6 +126,7 @@ services.edit = async (formData) => {
   try {
     return await put(`/user/${formData.document}`, formData);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -163,6 +167,7 @@ services.getCurrentProfile = async () => {
       `/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
     );
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -172,6 +177,7 @@ services.updateProfile = async (formData) => {
   try {
     return await put(`/profile/${formData.document}`, formData);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -181,6 +187,7 @@ services.deleteUser = async (formData) => {
   try {
     await Delete(`/user/${formData.document}`);
   } catch (error) {
+    window.localStorage.clear();
     throw error;
   }
 };
@@ -191,6 +198,7 @@ services.getDoctorAppoiments = async () => {
       `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
     );
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -204,6 +212,7 @@ services.getPatientAppoiments = async () => {
       }`
     );
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -213,6 +222,7 @@ services.getAllAppoiments = async () => {
   try {
     return await get(`/appoiments`);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -222,6 +232,7 @@ services.getPendingAppoiments = async () => {
   try {
     return await get(`/appoimentsPending`);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -231,6 +242,7 @@ services.getDoctors = async () => {
   try {
     return await get("/doctors");
   } catch (error) {
+    window.localStorage.clear();
     throw error;
   }
 };
@@ -239,6 +251,7 @@ services.assignDoctor = async (id, Doctor, estado) => {
   try {
     return await put(`/appoiment/${id}`, { doctorId: Doctor, status: estado });
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -248,6 +261,7 @@ services.cancelAppoiment = async (formData) => {
   try {
     return await put(`/cancelAppoiment/${formData.id}`);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -257,6 +271,7 @@ services.registerProcedure = async (formdata) => {
   try {
     return await post("/registerProcedure", formdata);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
@@ -266,10 +281,10 @@ services.consultPatientProcedures = async (data) => {
   try {
     return await get(`toListAllRegister/${data.document}`);
   } catch (error) {
+    window.localStorage.clear();
     Logout();
     throw error;
   }
-  c;
 };
 
 export { services };
