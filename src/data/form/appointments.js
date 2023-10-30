@@ -140,9 +140,10 @@ export const createFormPacientAuth = async () => {
 
 // formulario para pacientes no autenticados
 export const createNoAuthForm = async () => {
-  const basic = await appointmentBasicFields();
+  const apoimentbasic = await appointmentBasicFields();
+  const basic = await basicFields();
   return {
-    fields: [...basic, ...basic],
+    fields: [...basic, ...apoimentbasic],
     buttons: [
       {
         type: "primaryClass",
