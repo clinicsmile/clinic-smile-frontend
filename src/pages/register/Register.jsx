@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AppForm } from "../../components/form/AppForm";
 import { Forms } from "../../data/form/Forms";
 import { services } from "../../services/services";
+import Swal from "sweetalert2";
 
 function Register() {
   let navigate = useNavigate();
@@ -25,7 +26,8 @@ function Register() {
     try {
       formData.rolId = "3";
       await services.register(formData);
-      navigate("/login");
+      Swal.fire({ title: "Usuario Registrado con exito", icon: "success" });
+      navigate("/");
     } catch (error) {
       console.log(error);
     } finally {
