@@ -296,7 +296,6 @@ function Users() {
                       <Table.HeadCell>Celular</Table.HeadCell>
                       <Table.HeadCell>Correo</Table.HeadCell>
                       <Table.HeadCell>Rol</Table.HeadCell>
-                      <Table.HeadCell>Estado</Table.HeadCell>
                       <Table.HeadCell>Acciones</Table.HeadCell>
                     </Table.Head>
 
@@ -322,9 +321,7 @@ function Users() {
                             <Table.Cell>{e.cellPhone}</Table.Cell>
                             <Table.Cell>{e.email}</Table.Cell>
                             <Table.Cell>{getRol(e.rolId)}</Table.Cell>
-                            <Table.Cell>
-                              {e.state}
-                            </Table.Cell>
+                            <Table.Cell>{e.state}</Table.Cell>
                             <Table.Cell>
                               <div className="flex text-center justify-center">
                                 <Button
@@ -340,17 +337,16 @@ function Users() {
                                 >
                                   Editar
                                 </Button>
-                                {e.state == 1 && (
-                                  <Button
-                                    size="xs"
-                                    pill
-                                    color="failure"
-                                    className="mx-2"
-                                    onClick={() => setOpenModal("pop-up")}
-                                  >
-                                    Inactivar
-                                  </Button>
-                                )}
+
+                                <Button
+                                  size="xs"
+                                  pill
+                                  color="failure"
+                                  className="mx-2"
+                                  onClick={() => setOpenModal("pop-up")}
+                                >
+                                  Inactivar
+                                </Button>
 
                                 <Modal //este modal es el de eliminar
                                   show={openModal === "pop-up"}
