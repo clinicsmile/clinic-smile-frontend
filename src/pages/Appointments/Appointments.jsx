@@ -37,7 +37,7 @@ function Appointments() {
     <>
       <div>
         <div className="flex w-sceen h-screen items-center">
-          <div className="w-full h-4/5 m-6 bg-white rounded-3xl">
+          <div className="w-full h-4/5 m-6 bg-white rounded-3xl overflow-y-auto">
             <div className="flex">
               <div className="h-1/6 p-4 w-3/5 m-auto justify-center items-center flex">
                 <span className="text-4xl">Citas odontológicas</span>

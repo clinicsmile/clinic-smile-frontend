@@ -41,10 +41,29 @@ function ListAppoimentsDoctor() {
       getAppoiments();
     }
   };
-  const registerProcedure = async (formdata) => {
-    console.log(formdata);
+
+  const convertToFormData = (data) => {
+    let formData = new FormData();
+    for (const key in data) {
+      console.log(key, data[key]);
+      formData.append(key, JSON.stringify(data[key]));
+    }
+    return formData;
+  }
+
+  const registerProcedure = async (data) => {
     try {
-      await services.registerProcedure(formdata);
+      let response = await services.registerProcedure(data);
+      console.log(response);
+
+      // let formData = new FormData();
+      let formData = {id: response.id, media: data.Procedimiento["media"]};
+      // formData.append("media", data.Procedimiento["media"]);
+      // formData.append("id", response.id);
+      console.log(formData);
+
+      await services.uploadImageProcedure(formData);
+
       Swal.fire({
         title: "Procedimiento registrado correctamente",
         icon: "success",
@@ -60,7 +79,7 @@ function ListAppoimentsDoctor() {
       });
     }
     getAppoiments();
-    if (formdata.Procedimiento["SI-PlanTratamiento"]) {
+    if (data.Procedimiento["SI-PlanTratamiento"]) {
       setSecondForm(true);
     } else {
       setShowModal(!showModal);
