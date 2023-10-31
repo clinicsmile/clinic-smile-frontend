@@ -323,7 +323,7 @@ function Users() {
                             <Table.Cell>{e.email}</Table.Cell>
                             <Table.Cell>{getRol(e.rolId)}</Table.Cell>
                             <Table.Cell>
-                              {e.state == 1 ? "Activo" : "Inactivo"}
+                              {e.state}
                             </Table.Cell>
                             <Table.Cell>
                               <div className="flex text-center justify-center">
