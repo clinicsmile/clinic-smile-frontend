@@ -321,7 +321,6 @@ function Users() {
                             <Table.Cell>{e.cellPhone}</Table.Cell>
                             <Table.Cell>{e.email}</Table.Cell>
                             <Table.Cell>{getRol(e.rolId)}</Table.Cell>
-                            <Table.Cell>{e.state}</Table.Cell>
                             <Table.Cell>
                               <div className="flex text-center justify-center">
                                 <Button
