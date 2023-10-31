@@ -1,4 +1,4 @@
-import { get, post, put, Delete } from "../api/apiService";
+import { get, post, put, Delete, postMultipart } from "../api/apiService";
 import { Logout } from "../pages";
 const services = {};
 
@@ -82,7 +82,7 @@ services.Appselect = async (name) => {
       response = await get(`/doctors`);
       options = response.map((element) => ({
         option: {
-          name: `${element?.Person.name} ${element?.Person.lastName}`,
+          name: `${element?.Person?.name} ${element?.Person?.lastName}`,
           value: element.id,
         },
       }));
@@ -268,12 +268,26 @@ services.cancelAppoiment = async (formData) => {
 };
 
 services.registerProcedure = async (formdata) => {
+  console.log("services FormData", formdata);
   try {
     return await post("/registerProcedure", formdata);
   } catch (error) {
-    window.localStorage.clear();
-    Logout();
-    throw error;
+    console.log(error)
+    // window.localStorage.clear();
+    // Logout();
+    // throw error;
+  }
+};
+
+services.uploadImageProcedure = async (formdata) => {
+  console.log("services FormData", formdata);
+  try {
+    return await post("/uploadImage", formdata);
+  } catch (error) {
+    console.log(error)
+    // window.localStorage.clear();
+    // Logout();
+    // throw error;
   }
 };
 

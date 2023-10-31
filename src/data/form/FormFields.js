@@ -1829,6 +1829,19 @@ const formFieldsProcedures = [
       disabled: false,
     },
   },
+  {
+    label: {
+      name: "Adjuntar imagen del procedimiento",
+      htmlFor: "media",
+    },
+    input: {
+      id: "media",
+      name: "media",
+      type: "file",
+      required: false,
+      placeholder: "",
+    },
+  },
 ];
 
 const formFieldsConsultProcedures = [

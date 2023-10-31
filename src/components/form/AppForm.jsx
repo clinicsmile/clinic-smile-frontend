@@ -40,13 +40,35 @@ function AppForm({
   //   // );
   // }, []);
 
-  const handleSubmit = (e) => {
+  const toBase64 = (file, callback) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      callback(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log("Error: ", error);
+    };
+  };
+
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      toBase64(file, (base64) => {
+        resolve(base64);
+      });
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const target = e.target;
     let formData = {};
-    form.fields.forEach((f) => {
+    form.fields.forEach(async (f) => {
       f.input
-        ? (formData[f.input.name] = target[f.input.name].value)
+        ? (formData[f.input.name] =
+            f.input.type != "file"
+              ? target[f.input.name].value
+              : await convertToBase64(target[f.input.name].files[0]))
         : f.select
         ? (formData[f.select.name] = target[f.select.name].value)
         : f.textarea
@@ -64,12 +86,19 @@ function AppForm({
     <>
       {form.fields.map((field, index) =>
         field.input ? (
-          <AppInputForm
-            value={field.input.value}
-            key={"" + field.label + index}
-            label={field.label}
-            input={field.input}
-          />
+          field.input.type != "file" ? (
+            <AppInputForm
+              value={field.input.value}
+              key={"" + field.label + index}
+              label={field.label}
+              input={field.input}
+            />
+          ) : (
+            <>
+              <span>Imagen del procedimiento</span>
+              <img src={field.input.value} className="w-full" alt="Sin imagen" />
+            </>
+          )
         ) : field.select ? (
           <AppSelectForm
             key={field.select.name + index}
