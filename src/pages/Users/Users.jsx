@@ -163,7 +163,7 @@ function Users() {
           onSelectChange={handleSelectChange}
         />
       ) : (
-        "Cargando formulario..."
+        <div>Cargando Formulario...</div>
       ),
       edit: currentForm ? (
         <AppForm
@@ -176,11 +176,11 @@ function Users() {
           loadedData={currentUser}
         />
       ) : (
-        "Cargando Formulario..."
+        <div>Cargando Formulario...</div>
       ),
     };
 
-    return types[currentType] || <></>;
+    return types[currentType] || <div></div>;
   };
 
   // TODO: sacarlos del API

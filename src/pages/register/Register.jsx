@@ -50,7 +50,7 @@ function Register() {
                 loading={loading}
               />
             ) : (
-              "Cargando Formulario..."
+              <div>Cargando Formulario...</div>
             )}
           </div>
         </div>
