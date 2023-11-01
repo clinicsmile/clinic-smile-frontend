@@ -97,7 +97,7 @@ function ListAppoimentsPatient() {
                   </Button>
                 )}
                 {e.status === "Pendiente" && (
-                  <>
+                  <div>
                     <EditAppointment
                       appointment={{ ...e.Person, ...e }}
                       onComplete={() => getAppoiments()}
@@ -114,7 +114,7 @@ function ListAppoimentsPatient() {
                     >
                       Cancelar
                     </Button>
-                  </>
+                  </div>
                 )}
 
                 <Modal //este modal es el de cancelar

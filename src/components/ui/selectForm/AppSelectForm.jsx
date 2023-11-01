@@ -15,9 +15,11 @@ export default ({ items, label, select, value, onChange }) => {
         defaultValue={value}
         disabled={select.disabled}
         onChange={select.onChangeAction ? handleChange : undefined}
+        key={select.id}
+        
       >
         {items.map((e) => (
-          <option key={e.option.name} value={e.option.value}>
+          <option  value={e.option.value}>
             {e.option.name}
           </option>
         ))}

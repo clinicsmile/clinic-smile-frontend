@@ -34,7 +34,7 @@ function Appointments() {
   }
 
   return (
-    <>
+    <div>
       <div>
         <div className="flex w-sceen h-screen items-center">
           <div className="w-full h-4/5 m-6 bg-white rounded-3xl overflow-y-auto">
@@ -52,7 +52,7 @@ function Appointments() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -58,7 +58,7 @@ const CreateAppointment = ({ onComplete }) => {
   };
 
   return currentUser?.rolId != 2 ? (
-    <>
+    <div>
       <AppButton
         title="Crear cita"
         type="primaryClass"
@@ -81,9 +81,9 @@ const CreateAppointment = ({ onComplete }) => {
         }
         footer={""}
       />
-    </>
+    </div>
   ) : (
-    <></>
+    <div></div>
   );
 };
 

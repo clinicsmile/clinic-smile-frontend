@@ -56,7 +56,8 @@ function CreateAppoimentNoAuth() {
                 loading={loading}
               />
             ) : (
-              "Cargando Formulario..."
+              <div>Cargando Formulario...</div>
+              
             )}
             <AppButton
               title={"Regresar al inicio"}

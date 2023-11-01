@@ -83,7 +83,7 @@ function AppForm({
   };
 
   const Form = () => (
-    <>
+    <div>
       {form.fields.map((field, index) =>
         field.input ? (
           field.input.type != "file" ? (
@@ -94,10 +94,10 @@ function AppForm({
               input={field.input}
             />
           ) : (
-            <>
+            <div>
               <span>Imagen del procedimiento</span>
               <img src={field.input.value} className="w-full" alt="Sin imagen" />
-            </>
+            </div>
           )
         ) : field.select ? (
           <AppSelectForm
@@ -142,7 +142,7 @@ function AppForm({
           loading={loading}
         />
       ))}
-    </>
+    </div>
   );
 
   return (

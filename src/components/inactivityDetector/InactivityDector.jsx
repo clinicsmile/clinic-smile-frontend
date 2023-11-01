@@ -30,7 +30,7 @@ const InactivityDetector = () => {
     };
   }, [getElapsedTime, reset, showLogout]);
 
-  return <>{showLogout && <Logout />}</>;
+  return <div>{showLogout && <Logout />}</div>;
 };
 
 export { InactivityDetector };

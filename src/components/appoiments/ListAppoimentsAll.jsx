@@ -120,7 +120,7 @@ function ListAppoimentsAll() {
             <Table.Cell>
               <div className="flex text-center justify-center">
                 {(e.status === "En proceso" || e.status === "Pendiente") && (
-                  <>
+                  <div>
                     <EditAppointment appointment={e} />
 
                     <Button
@@ -135,7 +135,7 @@ function ListAppoimentsAll() {
                     >
                       Cancelar
                     </Button>
-                  </>
+                  </div>
                 )}
                 <Modal //este modal es el de cancelar
                   show={openModal === "pop-up"}

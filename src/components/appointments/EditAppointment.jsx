@@ -55,7 +55,7 @@ const EditAppointment = ({ appointment, onComplete }) => {
   };
 
   return (
-    <>
+    <div>
       <Button
         size="xs"
         pill
@@ -83,7 +83,7 @@ const EditAppointment = ({ appointment, onComplete }) => {
         }
         footer={""}
       />
-    </>
+    </div>
   );
 };
 
