@@ -214,6 +214,8 @@ export const editForm = async () => {
           required: true,
           placeholder: "",
           disabled: false,
+          maxValue:"17:00",
+          minValue:"07:00"
         },
       },
     ],
