@@ -47,13 +47,13 @@ function GetProcedures() {
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => toPDF()}>Descargar PDF</button>
 
         </div>
-        <div>
+        <div ref={targetRef}>
           {procedures.map((e) => {
             let detail = JSON.parse(e.detail);
             let data = {...detail}
             data.media = e.media;
             return (
-              <div key={e.id} className="mb-14" ref={targetRef}>
+              <div key={e.id} className="mb-14" >
                 <div>
                   <h3>{`Fecha: ${e.appointment.date} Hora: ${e.appointment.time}`}</h3>
                   <h3>{`Doctor: ${e.appointment.doctor.Person.name} ${e.appointment.doctor.Person.lastName}`}</h3>

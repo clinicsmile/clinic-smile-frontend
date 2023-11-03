@@ -84,9 +84,16 @@ function AppForm({
 
   const Form = () => (
     <div>
-      {form.fields.map((field, index) =>
-        field.input ? (
+      {form.fields.map((field, index) => {
+        return field.input ? (
           field.input.type != "file" ? (
+            <AppInputForm
+              value={field.input.value}
+              key={"" + field.label + index}
+              label={field.label}
+              input={field.input}
+            />
+          ) : !field.input.value ? (
             <AppInputForm
               value={field.input.value}
               key={"" + field.label + index}
@@ -130,8 +137,8 @@ function AppForm({
           />
         ) : (
           <Checkbox label={field.label} items={field.checkbox.items}></Checkbox>
-        )
-      )}
+        );
+      })}
 
       {form.buttons?.map((button, index) => (
         <AppButton
