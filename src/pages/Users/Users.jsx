@@ -194,6 +194,17 @@ function Users() {
     );
   };
 
+  const toReactivate = async (formData) => {
+    await services.reactivateUser(formData);
+    await Swal.fire({
+      title: "Usuario reactivado con exito",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+    getUsers();
+  };
+
   if (validate) {
     return (
       <>
@@ -303,15 +314,29 @@ function Users() {
                                   Editar
                                 </Button>
 
-                                <Button
-                                  size="xs"
-                                  pill
-                                  color="failure"
-                                  className="mx-2"
-                                  onClick={() => setOpenModal("pop-up")}
-                                >
-                                  Inactivar
-                                </Button>
+                                {e.state === true && (
+                                  <Button
+                                    size="xs"
+                                    pill
+                                    color="failure"
+                                    className="mx-2"
+                                    onClick={() => setOpenModal("pop-up")}
+                                  >
+                                    Inactivar
+                                  </Button>
+                                )}
+
+                                {e.state === false && (
+                                  <Button
+                                    size="xs"
+                                    pill
+                                    color="success"
+                                    className="mx-2"
+                                    onClick={() => setOpenModal("reactivar")}
+                                  >
+                                    Activar
+                                  </Button>
+                                )}
 
                                 <Modal //este modal es el de eliminar
                                   show={openModal === "pop-up"}
@@ -333,6 +358,42 @@ function Users() {
                                           onClick={() => {
                                             setOpenModal(undefined);
                                             toDelete(e);
+                                          }}
+                                        >
+                                          Si, continuar
+                                        </Button>
+                                        <Button
+                                          color="gray"
+                                          onClick={() =>
+                                            setOpenModal(undefined)
+                                          }
+                                        >
+                                          No, cancelar
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </Modal.Body>
+                                </Modal>
+                                <Modal //este modal es el de eliminar
+                                  show={openModal === "reactivar"}
+                                  size="md"
+                                  popup
+                                  onClose={() => setOpenModal(undefined)}
+                                >
+                                  <Modal.Header />
+                                  <Modal.Body>
+                                    <div className="text-center">
+                                      <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                        ¿Esta seguro que desea reactivar el
+                                        usuario?
+                                      </h3>
+                                      <div className="flex justify-center gap-4">
+                                        <Button
+                                          color="success"
+                                          onClick={() => {
+                                            setOpenModal(undefined);
+                                            toReactivate(e);
                                           }}
                                         >
                                           Si, continuar

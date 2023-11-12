@@ -303,4 +303,14 @@ services.consultPatientProcedures = async (data) => {
   }
 };
 
+services.reactivateUser = async (formData) => {
+  try {
+    return await put(`/reactivateUser/${formData.document}`);
+  } catch (error) {
+    window.localStorage.clear();
+    Logout();
+    throw error;
+  }
+};
+
 export { services };
