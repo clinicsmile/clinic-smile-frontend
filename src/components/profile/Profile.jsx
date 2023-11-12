@@ -71,11 +71,12 @@ const AppProfile = () => {
     }
   };
 
-  return (
-    form &&
-    user && (
-      <AppForm form={form} loadedData={user} onSubmit={(e) => toUpdate(e)} />
-    )
+  return form && user ? (
+    <AppForm form={form} loadedData={user} onSubmit={(e) => toUpdate(e)} />
+  ) : (
+    <div className="flex h-full">
+      <h1 className="m-auto">Cargando informacion...</h1>
+    </div>
   );
 };
 

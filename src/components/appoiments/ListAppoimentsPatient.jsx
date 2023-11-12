@@ -81,32 +81,13 @@ function ListAppoimentsPatient() {
             <Table.Cell>{e.specialty.name}</Table.Cell>
             <Table.Cell>{e.status}</Table.Cell>
             <Table.Cell>
-              <div className="flex text-center justify-center">
-                {e.status === "En proceso" && (
-                  <Button
-                    size="xs"
-                    pill
-                    color="failure"
-                    className="mx-2"
-                    onClick={() => {
-                      setOpenModal("pop-up");
-                      setCurrentRegister(e);
-                    }}
-                  >
-                    Cancelar
-                  </Button>
-                )}
-                {e.status === "Pendiente" && (
-                  <div>
-                    <EditAppointment
-                      appointment={{ ...e.Person, ...e }}
-                      onComplete={() => getAppoiments()}
-                    />
+              {e.status === "En proceso" && (
+                <div className="grid grid-cols-1">
+                  <div className="col-span-1 my-auto">
                     <Button
                       size="xs"
                       pill
                       color="failure"
-                      className="mx-2"
                       onClick={() => {
                         setOpenModal("pop-up");
                         setCurrentRegister(e);
@@ -115,42 +96,62 @@ function ListAppoimentsPatient() {
                       Cancelar
                     </Button>
                   </div>
-                )}
+                </div>
+              )}
+              {e.status === "Pendiente" && (
+                <div className="grid xl:grid-cols-2 grid-cols-1">
+                  <EditAppointment
+                    appointment={{ ...e.Person, ...e }}
+                    onComplete={() => getAppoiments()}
+                  />
+                  <Button
+                    size="xs"
+                    pill
+                    color="failure"
+                    className="my-auto"
+                    onClick={() => {
+                      setOpenModal("pop-up");
+                      setCurrentRegister(e);
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                </div>
+              )}
 
-                <Modal //este modal es el de cancelar
-                  show={openModal === "pop-up"}
-                  size="md"
-                  popup
-                  onClose={() => setOpenModal(undefined)}
-                >
-                  <Modal.Header />
-                  <Modal.Body>
-                    <div className="text-center">
-                      <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        ¿Está seguro que quiere eliminar este registro?
-                      </h3>
-                      <div className="flex justify-center gap-4">
-                        <Button
-                          color="failure"
-                          onClick={() => {
-                            setOpenModal(undefined);
-                            toDelete(currentRegister);
-                          }}
-                        >
-                          Si, continuar
-                        </Button>
-                        <Button
-                          color="gray"
-                          onClick={() => setOpenModal(undefined)}
-                        >
-                          No, cancelar
-                        </Button>
-                      </div>
+              <Modal //este modal es el de cancelar
+                show={openModal === "pop-up"}
+                size="md"
+                popup
+                onClose={() => setOpenModal(undefined)}
+              >
+                <Modal.Header />
+                <Modal.Body>
+                  <div className="text-center">
+                    <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                    <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                      ¿Está seguro que quiere eliminar este registro?
+                    </h3>
+                    <div className="flex justify-center gap-4">
+                      <Button
+                        color="failure"
+                        onClick={() => {
+                          setOpenModal(undefined);
+                          toDelete(currentRegister);
+                        }}
+                      >
+                        Si, continuar
+                      </Button>
+                      <Button
+                        color="gray"
+                        onClick={() => setOpenModal(undefined)}
+                      >
+                        No, cancelar
+                      </Button>
                     </div>
-                  </Modal.Body>
-                </Modal>
-              </div>
+                  </div>
+                </Modal.Body>
+              </Modal>
             </Table.Cell>
           </Table.Row>
         ))}

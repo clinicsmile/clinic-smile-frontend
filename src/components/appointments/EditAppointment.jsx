@@ -60,7 +60,6 @@ const EditAppointment = ({ appointment, onComplete }) => {
         size="xs"
         pill
         color="warning"
-        className="w-fit-content"
         onClick={() => setShowModal(!showModal)}
       >
         Editar
