@@ -1,7 +1,7 @@
 import { SideBar } from "../sidebar/SideBar";
 const LayoutWrapper = ({ children }) => (
-  <div className={"flex flex-row"}>
-    <div className="hidden sm:block">
+  <div className={"flex"}>
+    <div>
       <SideBar />
     </div>
     <main className="w-full">{children}</main>

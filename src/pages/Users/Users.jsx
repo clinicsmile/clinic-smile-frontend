@@ -20,23 +20,12 @@ function Users() {
   const [currentForm, setCurrentForm] = useState(null);
   const [currentType, setCurrentType] = useState(null);
   const [rolId, setRolId] = useState(null);
-  const [filterRolId, setFilterRolId] = useState(null);
+  const [filterRolId, setFilterRolId] = useState(0);
   const [users, setUser] = useState([]);
 
-  const applyFilter = (rolId) => {
-    setFilterRolId(rolId);
-  };
-
   useEffect(() => {
-    setUser([]);
     getUsers();
   }, [filterRolId]);
-
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const limpiarCampo = () => {
-    setTexto("");
-  };
 
   const handleToggleModal = async (type = "", user = {}) => {
     setCurrentType(type);
@@ -123,7 +112,7 @@ function Users() {
   const getUsers = async () => {
     setLoadingPage(true);
     try {
-      const res = await services.usersList();
+      const res = await services.usersList({ rolId: filterRolId });
       setUser(res);
     } catch (error) {
       await Swal.fire({
@@ -240,14 +229,14 @@ function Users() {
                   <Button
                     size="xs"
                     className="bg-[var(--primary)]"
-                    onClick={() => applyFilter(null)}
+                    onClick={() => setFilterRolId(0)}
                   >
                     Mostrar Todos
                   </Button>
                   <Button
                     size="xs"
                     className="bg-[var(--primary)]"
-                    onClick={() => applyFilter(1)}
+                    onClick={() => setFilterRolId(1)}
                   >
                     Administrador
                   </Button>
@@ -255,7 +244,7 @@ function Users() {
                   <Button
                     size="xs"
                     className="bg-[var(--primary)]"
-                    onClick={() => applyFilter(2)}
+                    onClick={() => setFilterRolId(2)}
                   >
                     Doctores
                   </Button>
@@ -263,25 +252,11 @@ function Users() {
                   <Button
                     size="xs"
                     className="bg-[var(--primary)]"
-                    onClick={() => applyFilter(3)}
+                    onClick={() => setFilterRolId(3)}
                   >
                     Pacientes
                   </Button>
                 </div>
-                {/* <div className="w-1/2 text-right flex text-center justify-center gap-3.5">
-                  <TextInput
-                    sizing="sm"
-                    type="text"
-                    placeholder="Buscar por numero de documento"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <Button
-                  onClick= {limpiarCampo}>
-                  pajaro desgraciado
-                  </Button>
-
-                </div> */}
               </div>
 
               <div className="">
@@ -300,17 +275,8 @@ function Users() {
                     </Table.Head>
 
                     <Table.Body className="overflow-y-scroll">
-                      {users
-                        .filter(
-                          (user) =>
-                            (filterRolId === null ||
-                              user.rolId === filterRolId) &&
-                            (searchTerm === "" ||
-                              user.document
-                                .toLowerCase()
-                                .includes(searchTerm.toLowerCase()))
-                        )
-                        .map((e) => (
+                      {users.length > 0 ? (
+                        users.map((e) => (
                           <Table.Row
                             key={e.rolId}
                             className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
@@ -386,7 +352,12 @@ function Users() {
                               </div>
                             </Table.Cell>
                           </Table.Row>
-                        ))}
+                        ))
+                      ) : (
+                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center">
+                          <Table.Cell colSpan={7}>Sin resultados</Table.Cell>
+                        </Table.Row>
+                      )}
                     </Table.Body>
                   </Table>
                 )}

@@ -1,8 +1,12 @@
 import { services } from "../../services/services";
 function Logout() {
-  document.cookie = document.cookie + ";max-age=0";
+  const Logout = async () => {
+    await services.logOut(
+      JSON.parse(window.localStorage.getItem("user")).username
+    );
+  };
   if (window.localStorage.getItem("user")) {
-    services.logOut(JSON.parse(window.localStorage.getItem("user")).username);
+    Logout();
   }
   window.localStorage.clear();
   location.href = "/";

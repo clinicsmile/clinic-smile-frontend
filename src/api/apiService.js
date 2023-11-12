@@ -6,7 +6,7 @@ let setToken = () => {
   const user = window.localStorage.getItem("user");
   console.log(user);
   fetch.defaults.headers.common["Authorization"] = user
-    ? `${document.cookie.replace("token=", "")}`
+    ? `${window.localStorage.getItem("token")}`
     : "";
 };
 
@@ -14,7 +14,7 @@ let setTokenMultipart = () => {
   const user = window.localStorage.getItem("user");
   console.log(user);
   fetchMultipart.defaults.headers.common["Authorization"] = user
-    ? `${document.cookie.replace("token=", "")}`
+    ? `${window.localStorage.getItem("token")}`
     : "";
 };
 

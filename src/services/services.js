@@ -92,10 +92,11 @@ services.Appselect = async (name) => {
   return options;
 };
 
-services.usersList = async () => {
+services.usersList = async ({ rolId = 0 }) => {
   try {
-    return await get(`/users`);
+    return await get(`/users/${rolId}`);
   } catch (error) {
+    console.log(error);
     window.localStorage.clear();
     Logout();
     throw error;
@@ -141,7 +142,8 @@ services.login = async (formData, newSession) => {
       )}`,
     });
     if (response.ok) {
-      document.cookie = `token=${response.token}; path=/; samesite=strict`;
+      window.localStorage.setItem("token", response.token);
+      // document.cookie = `token=${response.token}; path=/; samesite=strict`;
       window.localStorage.setItem("user", JSON.stringify(response.user));
       console.log(response);
       return true;
@@ -272,7 +274,7 @@ services.registerProcedure = async (formdata) => {
   try {
     return await post("/registerProcedure", formdata);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     // window.localStorage.clear();
     // Logout();
     // throw error;
@@ -284,7 +286,7 @@ services.uploadImageProcedure = async (formdata) => {
   try {
     return await post("/uploadImage", formdata);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     // window.localStorage.clear();
     // Logout();
     // throw error;

@@ -55,12 +55,12 @@ const EditAppointment = ({ appointment, onComplete }) => {
   };
 
   return (
-    <div>
+    <div className="col-span-1 mx-auto py-1">
       <Button
         size="xs"
         pill
         color="warning"
-        className="mx-2"
+        className="w-fit-content"
         onClick={() => setShowModal(!showModal)}
       >
         Editar

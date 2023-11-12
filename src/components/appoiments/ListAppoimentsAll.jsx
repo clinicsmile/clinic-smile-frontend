@@ -101,93 +101,101 @@ function ListAppoimentsAll() {
       </Table.Head>
 
       <Table.Body className="divide-y">
-        {appoiments.map((e) => (
-          <Table.Row
-            key={e.document}
-            className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
-          >
-            <Table.Cell>{e.date}</Table.Cell>
-            <Table.Cell>{e.time}</Table.Cell>
-            <Table.Cell>{e.reason}</Table.Cell>
-            <Table.Cell>{`${e.Person?.name} ${e.Person?.lastName}`}</Table.Cell>
-            <Table.Cell>
-              {e.doctor
-                ? `${e.doctor?.Person?.name} ${e.doctor?.Person?.lastName}`
-                : "Sin Asignar"}
-            </Table.Cell>
-            <Table.Cell>{e.specialty?.name}</Table.Cell>
-            <Table.Cell>{e.status}</Table.Cell>
-            <Table.Cell>
-              <div className="flex text-center justify-center">
-                {(e.status === "En proceso" || e.status === "Pendiente") && (
-                  <div>
-                    <EditAppointment appointment={e} />
+        {appoiments.length > 0 ? (
+          appoiments.map((e) => (
+            <Table.Row
+              key={e.document}
+              className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
+            >
+              <Table.Cell>{e.date}</Table.Cell>
+              <Table.Cell>{e.time}</Table.Cell>
+              <Table.Cell>{e.reason}</Table.Cell>
+              <Table.Cell>{`${e.Person?.name} ${e.Person?.lastName}`}</Table.Cell>
+              <Table.Cell>
+                {e.doctor
+                  ? `${e.doctor?.Person?.name} ${e.doctor?.Person?.lastName}`
+                  : "Sin Asignar"}
+              </Table.Cell>
+              <Table.Cell>{e.specialty?.name}</Table.Cell>
+              <Table.Cell>{e.status}</Table.Cell>
+              <Table.Cell>
+                <div>
+                  {(e.status === "En proceso" || e.status === "Pendiente") && (
+                    <div className={`grid xl:grid-cols-2 grid-cols-1 `}>
 
-                    <Button
-                      size="xs"
-                      pill
-                      color="failure"
-                      className="mx-2"
-                      onClick={() => {
-                        setOpenModal("pop-up");
-                        setCurrentRegister(e);
-                      }}
-                    >
-                      Cancelar
-                    </Button>
-                  </div>
-                )}
-                <Modal //este modal es el de cancelar
-                  show={openModal === "pop-up"}
-                  size="md"
-                  popup
-                  onClose={() => setOpenModal(undefined)}
-                >
-                  <Modal.Header />
-                  <Modal.Body>
-                    <div className="text-center">
-                      <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        ¿Está seguro que quiere eliminar este registro?
-                      </h3>
-                      <div className="flex justify-center gap-4">
+                      <EditAppointment appointment={e} />
+
+                      <div className="col-span-1  py-1 mx-auto ">
                         <Button
+                          size="xs"
+                          pill
                           color="failure"
                           onClick={() => {
-                            setOpenModal(undefined);
-                            toDelete(currentRegister);
+                            setOpenModal("pop-up");
+                            setCurrentRegister(e);
                           }}
                         >
-                          Si, continuar
-                        </Button>
-                        <Button
-                          color="gray"
-                          onClick={() => setOpenModal(undefined)}
-                        >
-                          No, cancelar
+                          Cancelar
                         </Button>
                       </div>
                     </div>
-                  </Modal.Body>
-                </Modal>
-
-                {!e.doctor && e.status !== "Cancelada" && (
-                  <Button
-                    size="xs"
-                    pill
-                    color="success"
-                    className="mx-2"
-                    onClick={() => {
-                      assignDoctor(e);
-                    }}
+                  )}
+                  <Modal //este modal es el de cancelar
+                    show={openModal === "pop-up"}
+                    size="md"
+                    popup
+                    onClose={() => setOpenModal(undefined)}
                   >
-                    Asignar
-                  </Button>
-                )}
-              </div>
-            </Table.Cell>
+                    <Modal.Header />
+                    <Modal.Body>
+                      <div className="text-center">
+                        <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                          ¿Está seguro que quiere eliminar este registro?
+                        </h3>
+                        <div className="flex justify-center gap-4">
+                          <Button
+                            color="failure"
+                            onClick={() => {
+                              setOpenModal(undefined);
+                              toDelete(currentRegister);
+                            }}
+                          >
+                            Si, continuar
+                          </Button>
+                          <Button
+                            color="gray"
+                            onClick={() => setOpenModal(undefined)}
+                          >
+                            No, cancelar
+                          </Button>
+                        </div>
+                      </div>
+                    </Modal.Body>
+                  </Modal>
+
+                  {!e.doctor && e.status !== "Cancelada" && (
+                    <Button
+                      size="xs"
+                      pill
+                      color="success"
+                      className="mx-2"
+                      onClick={() => {
+                        assignDoctor(e);
+                      }}
+                    >
+                      Asignar
+                    </Button>
+                  )}
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          ))
+        ) : (
+          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center">
+            <Table.Cell colSpan={8}>Sin Resultados</Table.Cell>
           </Table.Row>
-        ))}
+        )}
       </Table.Body>
     </Table>
   );
