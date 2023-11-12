@@ -134,6 +134,7 @@ function AppForm({
             max={!!field.date?.max}
             minValue={field.date?.minValue}
             maxValue={field.date?.maxValue}
+            
           />
         ) : (
           <Checkbox label={field.label} items={field.checkbox.items}></Checkbox>

@@ -214,6 +214,7 @@ export const editForm = async () => {
           required: true,
           placeholder: "",
           disabled: false,
+          pattern: "(0[7-9]|1[0-6]):[0-5][0-9]"
         },
       },
     ],

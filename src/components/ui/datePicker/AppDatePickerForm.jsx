@@ -38,6 +38,7 @@ export default ({
           max={max ? maxValue : undefined}
           min={min ? minValue : undefined}
           readOnly={date.readOnly}
+          pattern={date.pattern}
         />
       </div>
     </div>
