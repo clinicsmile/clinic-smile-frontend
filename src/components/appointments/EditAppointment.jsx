@@ -35,6 +35,20 @@ const EditAppointment = ({ appointment, onComplete }) => {
   }, []);
 
   const handleEdit = async (formData) => {
+    console.log(formData);
+    //validar time para que sea de 7 a 5
+    const hora = formData.time.split(":");
+    if (parseInt(hora[0]) < 7 || parseInt(hora[0]) > 16) {
+      Swal.fire({
+        title: "La hora no es valida",
+        text: "Horario de atencion de 7:00 A.M. a 05:00 P.M.",
+        position: "center",
+        icon: "error",
+        showConfirmButton: true,
+      });
+      return;
+    }
+    
     setLoading(true);
 
     try {
