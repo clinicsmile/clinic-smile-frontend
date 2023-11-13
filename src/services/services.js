@@ -197,7 +197,9 @@ services.deleteUser = async (formData) => {
 services.getDoctorAppoiments = async () => {
   try {
     return await get(
-      `/appoiments/doctor/${JSON.parse(window.localStorage.getItem("user")).id}`
+      `/appoiments/doctor/${
+        JSON.parse(window.localStorage.getItem("user")).doctorId
+      }`
     );
   } catch (error) {
     window.localStorage.clear();
