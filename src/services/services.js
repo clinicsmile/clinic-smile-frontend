@@ -305,7 +305,7 @@ services.consultPatientProcedures = async (data) => {
 
 services.reactivateUser = async (formData) => {
   try {
-    return await put(`/reactivateUser/${formData.document}`);
+    return await put(`/reactivateUser/${formData.id}`);
   } catch (error) {
     window.localStorage.clear();
     Logout();
