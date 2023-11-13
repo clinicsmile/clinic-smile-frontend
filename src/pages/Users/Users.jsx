@@ -71,10 +71,19 @@ function Users() {
     console.log(formData);
     setLoading(true);
     try {
-      let { message } = await services.edit(formData);
+      let response = await services.edit(formData);
+      if (response.error) {
+        Swal.fire({
+          title: response.error,
+          icon: "error",
+          showConfirmButton: true,
+        });
+        return;
+      }
+      console.log(response);
       setShowModal(!showModal);
       Swal.fire({
-        title: message,
+        title: response.message,
         icon: "success",
         timer: 1500,
         showConfirmButton: false,
