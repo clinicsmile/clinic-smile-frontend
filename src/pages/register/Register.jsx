@@ -25,7 +25,15 @@ function Register() {
     setLoading(true);
     try {
       formData.rolId = "3";
-      await services.register(formData);
+      let response = await services.register(formData);
+      if (response.error) {
+        Swal.fire({
+          title: response.error,
+          icon: "error",
+          showConfirmButton: true,
+        });
+        return;
+      }
       Swal.fire({ title: "Usuario Registrado con exito", icon: "success" });
       navigate("/");
     } catch (error) {
