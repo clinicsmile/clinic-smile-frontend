@@ -30,6 +30,12 @@ const date18Validation = () => {
   return minDate.toISOString().split("T")[0];
 };
 
+const dateMinValidation = () => {
+  let minDate = new Date();
+  minDate.setFullYear(new Date().getFullYear() - 110);
+  return minDate.toISOString().split("T")[0];
+};
+
 const rolField = async () => {
   return [
     {
@@ -153,6 +159,7 @@ const basicFields = async () => {
         min: false,
         max: true,
         maxValue: date18Validation(),
+        minValue: dateMinValidation(),
       },
     },
     {
