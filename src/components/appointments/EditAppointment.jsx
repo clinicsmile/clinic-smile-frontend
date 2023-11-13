@@ -10,6 +10,7 @@ import {
   createFormDoctor,
   createFormPacientAuth,
   createNoAuthForm,
+  editFormAdmin,
 } from "../../data/form/appointments";
 import { update } from "../../services/appointments";
 
@@ -22,7 +23,7 @@ const EditAppointment = ({ appointment, onComplete }) => {
     let person = JSON.parse(localStorage.getItem("user"))?.Person;
     const getForms = async () => {
       const noAuth = await createNoAuthForm();
-      const formAdmin = await createFormAdmin();
+      const formAdmin = await editFormAdmin();
       const formPatient = await createFormPacientAuth();
       const forms = {
         0: noAuth,
@@ -48,7 +49,7 @@ const EditAppointment = ({ appointment, onComplete }) => {
       });
       return;
     }
-    
+
     setLoading(true);
 
     try {

@@ -107,6 +107,24 @@ export const createFormAdmin = async () => {
   };
 };
 
+export const editFormAdmin = async () => {
+  const basic = await appointmentBasicFields();
+  let patient = await patientSelect();
+  patient[0].select.disabled = true;
+  const doctors = await doctorSelect();
+  console.log(patient);
+  return {
+    fields: [...patient, ...basic, ...doctors],
+    buttons: [
+      {
+        type: "primaryClass",
+        title: "Aceptar",
+        action: "createAppointmentAction",
+      },
+    ],
+  };
+};
+
 export const createFormDoctor = async () => {
   const basic = await appointmentBasicFields();
   const patient = await patientSelect();
