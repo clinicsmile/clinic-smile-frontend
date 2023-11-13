@@ -179,6 +179,8 @@ Forms.editAdmin = async () => {
 
 Forms.rolField = async () => {
   const data = await rolField();
+  console.log(data);
+  data[0].select.items.unshift({ option: { name: "Seleccione un rol", value: null } });
   return {
     fields: [...data],
   };

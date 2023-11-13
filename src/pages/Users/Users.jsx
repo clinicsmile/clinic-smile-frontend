@@ -217,236 +217,250 @@ function Users() {
 
   if (validate) {
     return (
-      <>
-        <div className="flex h-screen items-center ">
-          <div className="w-full h-5/6 m-6 bg-white rounded-3xl p-6">
-            <div className="justify-between flex">
-              <h1 className="text-4xl text-center w-1/2 my-3">
-                Gestión de usuarios
-              </h1>
-
-              <Button
-                pill
-                color="warning"
-                className="mx-auto w-32"
-                onClick={() => handleToggleModal("create")}
-              >
-                Crear
-              </Button>
-
-              <ModalComponent
-                show={showModal}
-                onClose={() => setShowModal(!showModal)}
-                header={`${
-                  currentType == "create" ? "Crear" : "Editar"
-                } Usuario`}
-                body={<BodyModalComponent />}
-                footer={""}
-              />
-            </div>
-            <div>
-              <div className="flex justify-between my-4">
-                <div className="w-1/2 flex text-center gap-3.5 justify-center">
+      <div>
+        <div className="h-screen flex">
+          <div className="w-5/6 h-5/6 bg-white rounded-3xl text-center m-auto overflow-auto">
+            <div className="m-auto p-6">
+              <div className="p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
+                <div className="m-auto my-3 ">
+                  <h1 className="font-serif text-4xl text-center grid-cols-1 border-b-2 border-b-[--primary] pb-3">
+                    Gestión de usuarios
+                  </h1>
+                </div>
+                <div className="m-auto">
                   <Button
-                    size="xs"
-                    className="bg-[var(--primary)]"
-                    onClick={() => setFilterRolId(0)}
+                    pill
+                    color="warning"
+                    className="w-32 sm:mt-3 md:mt-3"
+                    onClick={() => handleToggleModal("create")}
                   >
-                    Mostrar Todos
-                  </Button>
-                  <Button
-                    size="xs"
-                    className="bg-[var(--primary)]"
-                    onClick={() => setFilterRolId(1)}
-                  >
-                    Administrador
-                  </Button>
-
-                  <Button
-                    size="xs"
-                    className="bg-[var(--primary)]"
-                    onClick={() => setFilterRolId(2)}
-                  >
-                    Doctores
-                  </Button>
-
-                  <Button
-                    size="xs"
-                    className="bg-[var(--primary)]"
-                    onClick={() => setFilterRolId(3)}
-                  >
-                    Pacientes
+                    Crear
                   </Button>
                 </div>
-              </div>
 
-              <div className="">
+                <ModalComponent
+                  show={showModal}
+                  onClose={() => setShowModal(!showModal)}
+                  header={`${
+                    currentType == "create" ? "Crear" : "Editar"
+                  } Usuario`}
+                  body={<BodyModalComponent />}
+                  footer={""}
+                />
+              </div>
+              <div className="grid grid-cols-2  lg:grid-cols-4 gap-2 lg:w-1/2 xl:w-1/2 mx-auto my-3">
+                <Button
+                  size="xs"
+                  className="bg-[var(--primary)]"
+                  onClick={() => setFilterRolId(0)}
+                >
+                  Mostrar Todos
+                </Button>
+                <Button
+                  size="xs"
+                  className="bg-[var(--primary)]"
+                  onClick={() => setFilterRolId(1)}
+                >
+                  Administrador
+                </Button>
+
+                <Button
+                  size="xs"
+                  className="bg-[var(--primary)]"
+                  onClick={() => setFilterRolId(2)}
+                >
+                  Doctores
+                </Button>
+
+                <Button
+                  size="xs"
+                  className="bg-[var(--primary)]"
+                  onClick={() => setFilterRolId(3)}
+                >
+                  Pacientes
+                </Button>
+              </div>
+              <div className=" m-3">
                 {loadingPage ? (
                   <SpinnerComponent />
                 ) : (
-                  <Table>
-                    <Table.Head className="text-center">
-                      <Table.HeadCell>Id</Table.HeadCell>
-                      <Table.HeadCell>Documento</Table.HeadCell>
-                      <Table.HeadCell>Nombre</Table.HeadCell>
-                      <Table.HeadCell>Apellido</Table.HeadCell>
-                      <Table.HeadCell>Celular</Table.HeadCell>
-                      <Table.HeadCell>Correo</Table.HeadCell>
-                      <Table.HeadCell>Rol</Table.HeadCell>
-                      <Table.HeadCell>Acciones</Table.HeadCell>
-                    </Table.Head>
+                  <div className="overflow-y-auto">
+                    <Table className="text-center p-6">
+                      <Table.Head>
+                        <Table.HeadCell className="bg-[--primary] text-white">
+                          Documento
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-[--primary] text-white">
+                          Nombre
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-[--primary] text-white">
+                          Apellido
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-[--primary] text-white">
+                          Celular
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-[--primary] text-white">
+                          Correo
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-[--primary] text-white">
+                          Rol
+                        </Table.HeadCell>
+                        <Table.HeadCell className="bg-[--primary] text-white">
+                          Acciones
+                        </Table.HeadCell>
+                      </Table.Head>
 
-                    <Table.Body className="overflow-y-scroll">
-                      {users.length > 0 ? (
-                        users.map((e) => (
-                          <Table.Row
-                            key={e.id}
-                            className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
-                          >
-                            <Table.Cell>{e.id}</Table.Cell>
-                            <Table.Cell>{e.document}</Table.Cell>
-                            <Table.Cell>{e.name}</Table.Cell>
-                            <Table.Cell>{e.lastName}</Table.Cell>
-                            <Table.Cell>{e.cellPhone}</Table.Cell>
-                            <Table.Cell>{e.email}</Table.Cell>
-                            <Table.Cell>{getRol(e.rolId)}</Table.Cell>
-                            <Table.Cell>
-                              <div className="flex text-center justify-center">
-                                <Button
-                                  size="xs"
-                                  pill
-                                  color="warning"
-                                  className="mx-2"
-                                  onClick={() => {
-                                    console.log(e);
-                                    setCurrentUser(e);
-                                    handleToggleModal("edit", e);
-                                  }}
-                                >
-                                  Editar
-                                </Button>
-
-                                {e.state === true && (
+                      <Table.Body className="overflow-y-scroll">
+                        {users.length > 0 ? (
+                          users.map((e) => (
+                            <Table.Row
+                              key={e.id}
+                              className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
+                            >
+                              <Table.Cell>{e.document}</Table.Cell>
+                              <Table.Cell>{e.name}</Table.Cell>
+                              <Table.Cell>{e.lastName}</Table.Cell>
+                              <Table.Cell>{e.cellPhone}</Table.Cell>
+                              <Table.Cell>{e.email}</Table.Cell>
+                              <Table.Cell>{getRol(e.rolId)}</Table.Cell>
+                              <Table.Cell>
+                                <div className="flex text-center justify-center">
                                   <Button
                                     size="xs"
                                     pill
-                                    color="failure"
+                                    color="warning"
                                     className="mx-2"
                                     onClick={() => {
                                       console.log(e);
                                       setCurrentUser(e);
-                                      setOpenModal("pop-up");
+                                      handleToggleModal("edit", e);
                                     }}
                                   >
-                                    Inactivar
+                                    Editar
                                   </Button>
-                                )}
 
-                                {e.state === false && (
-                                  <Button
-                                    size="xs"
-                                    pill
-                                    color="success"
-                                    className="mx-2"
-                                    onClick={() => {
-                                      console.log(e);
-                                      setCurrentUser(e);
-                                      setOpenModal("reactivar");
-                                    }}
+                                  {e.state === true && (
+                                    <Button
+                                      size="xs"
+                                      pill
+                                      color="failure"
+                                      className="mx-2"
+                                      onClick={() => {
+                                        console.log(e);
+                                        setCurrentUser(e);
+                                        setOpenModal("pop-up");
+                                      }}
+                                    >
+                                      Inactivar
+                                    </Button>
+                                  )}
+
+                                  {e.state === false && (
+                                    <Button
+                                      size="xs"
+                                      pill
+                                      color="success"
+                                      className="mx-2"
+                                      onClick={() => {
+                                        console.log(e);
+                                        setCurrentUser(e);
+                                        setOpenModal("reactivar");
+                                      }}
+                                    >
+                                      Activar
+                                    </Button>
+                                  )}
+
+                                  <Modal //este modal es el de eliminar
+                                    show={openModal === "pop-up"}
+                                    size="md"
+                                    popup
+                                    onClose={() => setOpenModal(undefined)}
                                   >
-                                    Activar
-                                  </Button>
-                                )}
-
-                                <Modal //este modal es el de eliminar
-                                  show={openModal === "pop-up"}
-                                  size="md"
-                                  popup
-                                  onClose={() => setOpenModal(undefined)}
-                                >
-                                  <Modal.Header />
-                                  <Modal.Body>
-                                    <div className="text-center">
-                                      <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                        ¿Está seguro que quiere Inactivar este
-                                        registro?
-                                      </h3>
-                                      <div className="flex justify-center gap-4">
-                                        <Button
-                                          color="failure"
-                                          onClick={() => {
-                                            setOpenModal(undefined);
-                                            toDelete(e);
-                                          }}
-                                        >
-                                          Si, continuar
-                                        </Button>
-                                        <Button
-                                          color="gray"
-                                          onClick={() =>
-                                            setOpenModal(undefined)
-                                          }
-                                        >
-                                          No, cancelar
-                                        </Button>
+                                    <Modal.Header />
+                                    <Modal.Body>
+                                      <div className="text-center">
+                                        <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                          ¿Está seguro que quiere Inactivar este
+                                          registro?
+                                        </h3>
+                                        <div className="flex justify-center gap-4">
+                                          <Button
+                                            color="failure"
+                                            onClick={() => {
+                                              setOpenModal(undefined);
+                                              toDelete(e);
+                                            }}
+                                          >
+                                            Si, continuar
+                                          </Button>
+                                          <Button
+                                            color="gray"
+                                            onClick={() =>
+                                              setOpenModal(undefined)
+                                            }
+                                          >
+                                            No, cancelar
+                                          </Button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Modal.Body>
-                                </Modal>
-                                <Modal //este modal es el de eliminar
-                                  show={openModal === "reactivar"}
-                                  size="md"
-                                  popup
-                                  onClose={() => setOpenModal(undefined)}
-                                >
-                                  <Modal.Header />
-                                  <Modal.Body>
-                                    <div className="text-center">
-                                      <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                        ¿Esta seguro que desea reactivar el
-                                        usuario?
-                                      </h3>
-                                      <div className="flex justify-center gap-4">
-                                        <Button
-                                          color="success"
-                                          onClick={() => {
-                                            setOpenModal(undefined);
-                                            toReactivate(e);
-                                          }}
-                                        >
-                                          Si, continuar
-                                        </Button>
-                                        <Button
-                                          color="gray"
-                                          onClick={() =>
-                                            setOpenModal(undefined)
-                                          }
-                                        >
-                                          No, cancelar
-                                        </Button>
+                                    </Modal.Body>
+                                  </Modal>
+                                  <Modal //este modal es el de eliminar
+                                    show={openModal === "reactivar"}
+                                    size="md"
+                                    popup
+                                    onClose={() => setOpenModal(undefined)}
+                                  >
+                                    <Modal.Header />
+                                    <Modal.Body>
+                                      <div className="text-center">
+                                        <LiaExclamationCircleSolid className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                          ¿Esta seguro que desea reactivar el
+                                          usuario?
+                                        </h3>
+                                        <div className="flex justify-center gap-4">
+                                          <Button
+                                            color="success"
+                                            onClick={() => {
+                                              setOpenModal(undefined);
+                                              toReactivate(e);
+                                            }}
+                                          >
+                                            Si, continuar
+                                          </Button>
+                                          <Button
+                                            color="gray"
+                                            onClick={() =>
+                                              setOpenModal(undefined)
+                                            }
+                                          >
+                                            No, cancelar
+                                          </Button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Modal.Body>
-                                </Modal>
-                              </div>
-                            </Table.Cell>
+                                    </Modal.Body>
+                                  </Modal>
+                                </div>
+                              </Table.Cell>
+                            </Table.Row>
+                          ))
+                        ) : (
+                          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center">
+                            <Table.Cell colSpan={7}>Sin resultados</Table.Cell>
                           </Table.Row>
-                        ))
-                      ) : (
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center">
-                          <Table.Cell colSpan={7}>Sin resultados</Table.Cell>
-                        </Table.Row>
-                      )}
-                    </Table.Body>
-                  </Table>
+                        )}
+                      </Table.Body>
+                    </Table>
+                  </div>
                 )}
               </div>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   } else {
     location.href = "/login";
