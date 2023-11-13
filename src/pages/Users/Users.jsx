@@ -101,7 +101,7 @@ function Users() {
       .deleteUser(formData)
       .then(async () => {
         await Swal.fire({
-          title: "Usuario eliminado con exito",
+          title: "Usuario Inactivado con exito",
           icon: "success",
           timer: 1500,
           showConfirmButton: false,
@@ -110,7 +110,7 @@ function Users() {
       })
       .catch(async () => {
         await Swal.fire({
-          title: "Ocurrio un error al eliminar el usuario",
+          title: "Ocurrio un error al Inactivar el usuario",
           icon: "error",
           timer: 1500,
           showConfirmButton: false,
