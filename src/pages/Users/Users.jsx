@@ -298,10 +298,7 @@ function Users() {
                     <Table.Body className="overflow-y-scroll">
                       {users.length > 0 ? (
                         users.map((e) => (
-                          <Table.Row
-                            key={e.rolId}
-                            className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
-                          >
+                          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center">
                             <Table.Cell>{e.document}</Table.Cell>
                             <Table.Cell>{e.name}</Table.Cell>
                             <Table.Cell>{e.lastName}</Table.Cell>
