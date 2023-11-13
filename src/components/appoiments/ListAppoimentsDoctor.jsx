@@ -49,7 +49,7 @@ function ListAppoimentsDoctor() {
       formData.append(key, JSON.stringify(data[key]));
     }
     return formData;
-  }
+  };
 
   const registerProcedure = async (data) => {
     try {
@@ -57,7 +57,7 @@ function ListAppoimentsDoctor() {
       console.log(response);
 
       // let formData = new FormData();
-      let formData = {id: response.id, media: data.Procedimiento["media"]};
+      let formData = { id: response.id, media: data.Procedimiento["media"] };
       // formData.append("media", data.Procedimiento["media"]);
       // formData.append("id", response.id);
       console.log(formData);
@@ -102,7 +102,7 @@ function ListAppoimentsDoctor() {
           form={form}
           onSubmit={(e) =>
             createAppointment({
-              PersonDocument: patient.PersonDocument,
+              PersonId: patient.PersonId,
               doctorId: JSON.parse(window.localStorage.getItem("user")).id,
               ...e,
               status: "En proceso",
@@ -125,6 +125,18 @@ function ListAppoimentsDoctor() {
   };
 
   const createAppointment = async (formData) => {
+    const hora = formData.time.split(":");
+    if (parseInt(hora[0]) < 7 || parseInt(hora[0]) > 16) {
+      Swal.fire({
+        title: "La hora no es valida",
+        text: "Horario de atencion de 7:00 A.M. a 05:00 P.M.",
+        position: "center",
+        icon: "error",
+        showConfirmButton: true,
+      });
+      return;
+    }
+
     try {
       let { message } = create(formData);
       Swal.fire({
