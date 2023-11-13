@@ -156,7 +156,7 @@ const basicFields = async () => {
         required: true,
         placeholder: "",
         disabled: false,
-        min: false,
+        min: true,
         max: true,
         maxValue: date18Validation(),
         minValue: dateMinValidation(),
