@@ -36,7 +36,7 @@ function ListAppoimentsAll() {
     console.log(list);
     return `<select id="SelectDoctor" class="form-select">${list.map(
       (element) =>
-        `<option value="${element.id}">${element.Person?.name} ${element.Person.lastName}</option>`
+        `<option value="${element.doctorId}">${element.Person?.name} ${element.Person.lastName}</option>`
     )}</select>`;
   };
 
