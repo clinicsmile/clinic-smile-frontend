@@ -122,7 +122,6 @@ function ListAppoimentsAll() {
                 <div>
                   {(e.status === "En proceso" || e.status === "Pendiente") && (
                     <div className={`grid xl:grid-cols-2 grid-cols-1 `}>
-
                       <EditAppointment appointment={e} />
 
                       <div className="col-span-1  py-1 mx-auto ">
