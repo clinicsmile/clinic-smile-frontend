@@ -76,11 +76,11 @@ export const patientSelect = async () => {
     {
       label: {
         name: "Paciente",
-        htmlFor: "PersonDocument",
+        htmlFor: "PersonId",
       },
       select: {
-        id: "PersonDocument",
-        name: "PersonDocument",
+        id: "PersonId",
+        name: "PersonId",
         type: "text",
         required: true,
         placeholder: "",
