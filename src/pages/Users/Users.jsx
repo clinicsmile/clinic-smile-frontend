@@ -98,7 +98,7 @@ function Users() {
 
   const toDelete = async (formData) => {
     await services
-      .deleteUser(formData)
+      .deleteUser(currentUser)
       .then(async () => {
         await Swal.fire({
           title: "Usuario Inactivado con exito",
@@ -205,7 +205,7 @@ function Users() {
   };
 
   const toReactivate = async (formData) => {
-    await services.reactivateUser(formData);
+    await services.reactivateUser(currentUser);
     await Swal.fire({
       title: "Usuario reactivado con exito",
       icon: "success",
@@ -330,7 +330,11 @@ function Users() {
                                     pill
                                     color="failure"
                                     className="mx-2"
-                                    onClick={() => setOpenModal("pop-up")}
+                                    onClick={() => {
+                                      console.log(e);
+                                      setCurrentUser(e);
+                                      setOpenModal("pop-up");
+                                    }}
                                   >
                                     Inactivar
                                   </Button>
@@ -342,7 +346,11 @@ function Users() {
                                     pill
                                     color="success"
                                     className="mx-2"
-                                    onClick={() => setOpenModal("reactivar")}
+                                    onClick={() => {
+                                      console.log(e);
+                                      setCurrentUser(e);
+                                      setOpenModal("reactivar");
+                                    }}
                                   >
                                     Activar
                                   </Button>
