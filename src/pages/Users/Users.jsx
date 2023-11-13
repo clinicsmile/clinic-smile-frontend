@@ -204,7 +204,7 @@ function Users() {
     );
   };
 
-  const toReactivate = async (formData) => {
+  const toReactivate = async () => {
     await services.reactivateUser(currentUser);
     await Swal.fire({
       title: "Usuario reactivado con exito",
@@ -286,6 +286,7 @@ function Users() {
                 ) : (
                   <Table>
                     <Table.Head className="text-center">
+                      <Table.HeadCell>Id</Table.HeadCell>
                       <Table.HeadCell>Documento</Table.HeadCell>
                       <Table.HeadCell>Nombre</Table.HeadCell>
                       <Table.HeadCell>Apellido</Table.HeadCell>
@@ -298,7 +299,11 @@ function Users() {
                     <Table.Body className="overflow-y-scroll">
                       {users.length > 0 ? (
                         users.map((e) => (
-                          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center">
+                          <Table.Row
+                            key={e.id}
+                            className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
+                          >
+                            <Table.Cell>{e.id}</Table.Cell>
                             <Table.Cell>{e.document}</Table.Cell>
                             <Table.Cell>{e.name}</Table.Cell>
                             <Table.Cell>{e.lastName}</Table.Cell>
