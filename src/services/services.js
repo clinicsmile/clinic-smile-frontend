@@ -166,7 +166,7 @@ services.logOut = async (username) => {
 services.getCurrentProfile = async () => {
   try {
     return await get(
-      `/user/${JSON.parse(window.localStorage.getItem("user")).PersonDocument}`
+      `/user/${JSON.parse(window.localStorage.getItem("user")).PersonId}`
     );
   } catch (error) {
     window.localStorage.clear();
