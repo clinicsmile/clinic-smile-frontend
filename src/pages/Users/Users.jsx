@@ -159,6 +159,7 @@ function Users() {
           form={currentForm}
           onSubmit={(e) => {
             e.rolId = currentUser.rolId;
+            e.id = currentUser.id;
             edit(e);
           }}
           loading={loading}

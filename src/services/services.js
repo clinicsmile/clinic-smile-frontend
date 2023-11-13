@@ -125,7 +125,7 @@ services.register = async (formData) => {
 
 services.edit = async (formData) => {
   try {
-    return await put(`/user/${formData.document}`, formData);
+    return await put(`/user/${formData.id}`, formData);
   } catch (error) {
     window.localStorage.clear();
     Logout();
@@ -187,7 +187,7 @@ services.updateProfile = async (formData) => {
 
 services.deleteUser = async (formData) => {
   try {
-    await Delete(`/user/${formData.document}`);
+    await Delete(`/user/${formData.id}`);
   } catch (error) {
     window.localStorage.clear();
     throw error;
