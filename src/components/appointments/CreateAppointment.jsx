@@ -49,9 +49,11 @@ const CreateAppointment = ({ onComplete }) => {
     }
 
     formData.status = currentUser?.rolId !== 1 ? "Pendiente" : "En proceso";
+    formData.PersonId = currentUser.id;
     if (currentUser?.rolId == 3) {
       formData.PersonId = currentUser.id;
     }
+
     setLoading(true);
 
     try {
