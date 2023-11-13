@@ -210,7 +210,7 @@ services.getPatientAppoiments = async () => {
   try {
     return await get(
       `/appoiments/paciente/${
-        JSON.parse(window.localStorage.getItem("user")).PersonDocument
+        JSON.parse(window.localStorage.getItem("user")).PersonId
       }`
     );
   } catch (error) {
