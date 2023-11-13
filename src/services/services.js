@@ -83,7 +83,7 @@ services.Appselect = async (name) => {
       options = response.map((element) => ({
         option: {
           name: `${element?.Person?.name} ${element?.Person?.lastName}`,
-          value: element.id,
+          value: element.doctorId,
         },
       }));
       break;
