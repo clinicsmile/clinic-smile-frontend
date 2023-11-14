@@ -170,7 +170,7 @@ function ListAppoimentsDoctor() {
       <Table.Body className="divide-y">
         {appoiments.map((e) => (
           <Table.Row
-            key={e.document}
+            key={e.id}
             className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
           >
             <Table.Cell>{e.date}</Table.Cell>

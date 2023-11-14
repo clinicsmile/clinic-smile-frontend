@@ -8,6 +8,7 @@ import { services } from "../../services/services";
 import Swal from "sweetalert2";
 import ModalComponent from "../../components/modal/Modal";
 
+
 function Users() {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -219,9 +220,11 @@ function Users() {
     return (
       <div>
         <div className="h-screen flex">
-          <div className="w-5/6 h-5/6 bg-white rounded-3xl text-center m-auto overflow-auto shadow-black shadow-2xl">
+          <div className="w-5/6 h-5/6 bg-white rounded-3xl text-center m-auto shadow-black shadow-2xl">
             <div className="m-auto p-6 ">
+
               <div className="p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 ">
+
                 <div className="m-auto my-3 ">
                   <h1 className="font-serif text-4xl text-center grid-cols-1 border-b-2 border-b-[--primary] pb-3">
                     Gestión de usuarios
@@ -248,6 +251,7 @@ function Users() {
                   footer={""}
                 />
               </div>
+
               <div className="grid grid-cols-2  lg:grid-cols-4 gap-2 lg:w-1/2 xl:w-1/2 mx-auto my-3">
                 <Button
                   size="xs"
@@ -280,13 +284,13 @@ function Users() {
                   Pacientes
                 </Button>
               </div>
+
               <div className="m-3">
                 {loadingPage ? (
                   <SpinnerComponent />
                 ) : (
                   <div
-                    style={{ overflow: "auto", maxHeight: "400px" }}
-                    className="px-3"
+                    className="px-3 responsive-div"
                   >
                     <Table className="text-center p-6">
                       <Table.Head>
@@ -313,7 +317,7 @@ function Users() {
                         </Table.HeadCell>
                       </Table.Head>
 
-                      <Table.Body className="overflow-y-scroll">
+                      <Table.Body>
                         {users.length > 0 ? (
                           users.map((e) => (
                             <Table.Row
