@@ -36,17 +36,19 @@ function Appointments() {
   return (
     <div>
       <div>
-        <div className="flex w-sceen h-screen items-center">
-          <div className="w-full h-4/5 m-6 bg-white rounded-3xl overflow-y-auto">
-            <div className="flex">
+        <div className="flex w-sceen h-screen items-center ">
+          <div className="w-5/6 h-5/6  bg-white rounded-3xl text-center m-auto overflow-y-auto shadow-black shadow-2xl ">
+            <div className="flex grid  md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
               <div className="h-1/6 p-4 w-3/5 m-auto justify-center items-center flex">
-                <span className="text-4xl">Citas odontológicas</span>
+                <h1 className="font-serif text-4xl text-center grid-cols-1 border-b-2 border-b-[--primary] pb-3">
+                  Citas Odontológicas
+                </h1>
               </div>
-              <div className="w-2/5 mx-auto">
+              <div className="w-2/5 mx-auto  ">
                 <CreateAppointment />
               </div>
             </div>
-            <div className="justify-center mt-4 px-7">
+            <div className="justify-center mt-4 px-7 overflow-y-scroll h-4/5 pb-3">
               {RenderComponent()}
             </div>
           </div>
