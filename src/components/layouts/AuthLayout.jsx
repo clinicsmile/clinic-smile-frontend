@@ -1,10 +1,10 @@
 import { SideBar } from "../sidebar/SideBar";
 const LayoutWrapper = ({ children }) => (
-  <div className="flex">
-    <div className="">
+  <div className="flex w-screen h-screen">
+    <div className="w-2/12">
       <SideBar />
     </div>
-    <main className="w-full">{children}</main>
+    <main className="w-10/12">{children}</main>
   </div>
 );
 

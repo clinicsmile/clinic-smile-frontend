@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function SideBar() {
   const [logo, setLogo] = useState("./logo.svg");
-  const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 768);
+  const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 1200);
   useEffect(() => {
     const brand = JSON.parse(window.localStorage.getItem("brand"));
     if (brand?.logo) {
@@ -15,7 +15,7 @@ function SideBar() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsCollapsed(window.innerWidth < 768);
+      setIsCollapsed(window.innerWidth < 1200);
     };
 
     window.addEventListener('resize', handleResize);
@@ -27,7 +27,7 @@ function SideBar() {
   }, []);
   let navigate = useNavigate();
   return (
-    <Sidebar collapsed={isCollapsed} className="w-full flex items-center">
+    <Sidebar collapsed={isCollapsed} className=" shadow-black shadow-2xl">
       <div className="h-4/5 align-middle">
         <div className="w-auto my-5 h-1/4">
           <img src={logo} />
