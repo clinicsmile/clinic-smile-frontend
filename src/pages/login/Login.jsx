@@ -5,29 +5,21 @@ import { Forms } from "../../data/form/Forms";
 import { services } from "../../services/services";
 import Swal from "sweetalert2";
 
+import { useBrand } from "../../hooks/useBrand";
+
 function Login() {
   let navigate = useNavigate();
   const url = window.location.href;
-
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState("./logo.svg");
-
-  function setColors(brand) {
-    document
-      .querySelector("body")
-      .style.setProperty("--primary", brand.primaryColor);
-    document
-      .querySelector("body")
-      .style.setProperty("--secondary", brand.secundaryColor);
-  }
+  const { updateBrand } = useBrand();
 
   useEffect(() => {
     async function getConfigBrand() {
       try {
         let data = { location: "localhost" };
         const response = await services.getBrand(data);
-        setColors(response);
-        console.log(response);
+        updateBrand(response)
         setLogo(response.logo);
         window.localStorage.setItem("brand", JSON.stringify(response));
       } catch (error) {
