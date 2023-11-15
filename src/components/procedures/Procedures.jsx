@@ -35,6 +35,7 @@ function GetProcedures() {
 
   const consultProcedures = (formData) => {
     setForm(formData);
+    console.log(formData);
     setShowModal(true);
   };
 
@@ -42,7 +43,6 @@ function GetProcedures() {
     return (
       <div className="w-full flex flex-col items-center justify-center">
         <div>
-          <h2 className="text-center font-bold">CITAS</h2>
           <button
             className="bg-blue-500 hover:bg-blue-700 mb-6 mt-6 text-white font-bold py-2 px-4 rounded"
             onClick={() => toPDF()}
@@ -52,8 +52,30 @@ function GetProcedures() {
         </div>
         <div
           ref={targetRef}
-          className="w-full flex flex-col items-center justify-center m-auto"
+          className="w-full flex flex-col items-center justify-center"
         >
+          <div className="w-full h-[150px] mb-6 flex justify-between border-4 items-center ">
+            <div className=" flex border-r-4 pr-4 h-full items-center justify-center">
+              <img
+                src="/src/assets/ClinicSmile.png"
+                className="w-[200px]"
+              ></img>
+            </div>
+
+            <div className="flex flex-col ">
+              <span className="text-center">
+                Historia clínica paciente
+              </span>
+              <span className="text-center">{form.document}</span>
+            </div>
+
+            <div className="flex items-center justify-center border-l-4 px-4 h-full">
+              <span className="text-center self-center">
+                {new Intl.DateTimeFormat("es").format(Date.now())}
+              </span>
+            </div>
+          </div>
+
           {procedures.map((e) => {
             let detail = JSON.parse(e.detail);
             let data = { ...detail };
@@ -61,7 +83,7 @@ function GetProcedures() {
             return (
               <div
                 key={e.id}
-                className=" mb-14 items-center justify-center"
+                className="w-full mb-14 items-center justify-center"
               >
                 <div className="flex flex-col items-center justify-center">
                   <h3>{`Fecha: ${e.appointment.date} Hora: ${e.appointment.time}`}</h3>
@@ -100,7 +122,7 @@ function GetProcedures() {
         show={showModal}
         size="6xl"
         onClose={() => setShowModal(false)}
-        header={`Historia Odontologica`}
+        header={''}
         body={<BodyModalComponent />}
         footer={""}
       />
