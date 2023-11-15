@@ -9,6 +9,7 @@ import {
   Appointments,
   CreateAppoimentNoAuth,
   MedicalRecords,
+  Config
 } from "./pages";
 
 import AuthLayout from "./components/layouts/AuthLayout";
@@ -32,6 +33,7 @@ function App() {
               <Route path="/users" element={<Users />} />
               <Route path="/appointments" element={<Appointments />} />
               <Route path="/medicalRecords" element={<MedicalRecords />} />
+              <Route path="/config" element={<Config />} />
               <Route path="/logout" element={<Logout />} />
             </Route>
 

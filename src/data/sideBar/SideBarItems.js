@@ -5,6 +5,7 @@ import {
   LiaArchiveSolid,
   LiaSignOutAltSolid,
 } from "react-icons/lia";
+import { CiSettings } from "react-icons/ci";
 
 const infoMenu = () => {
   const rol = JSON.parse(window.localStorage.getItem("user")).Person.rolId;
@@ -31,7 +32,11 @@ const infoMenu = () => {
           name: "Historias clínicas",
           icon: LiaArchiveSolid,
         },
-
+        {
+          path: "/config",
+          name: "Configuración",
+          icon: CiSettings,
+        },
         {
           path: "/logout",
           name: "Cerrar Sesion",
