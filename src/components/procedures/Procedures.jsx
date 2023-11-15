@@ -39,27 +39,36 @@ function GetProcedures() {
   };
 
   const BodyModalComponent = () => {
-    console.log(procedures);
     return (
-      <div>
+      <div className="w-full flex flex-col items-center justify-center">
         <div>
           <h2 className="text-center font-bold">CITAS</h2>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => toPDF()}>Descargar PDF</button>
-
+          <button
+            className="bg-blue-500 hover:bg-blue-700 mb-6 mt-6 text-white font-bold py-2 px-4 rounded"
+            onClick={() => toPDF()}
+          >
+            Descargar PDF
+          </button>
         </div>
-        <div ref={targetRef}>
+        <div
+          ref={targetRef}
+          className="w-full flex flex-col items-center justify-center m-auto"
+        >
           {procedures.map((e) => {
             let detail = JSON.parse(e.detail);
-            let data = {...detail}
+            let data = { ...detail };
             data.media = e.media;
             return (
-              <div key={e.id} className="mb-14" >
-                <div>
+              <div
+                key={e.id}
+                className=" mb-14 items-center justify-center"
+              >
+                <div className="flex flex-col items-center justify-center">
                   <h3>{`Fecha: ${e.appointment.date} Hora: ${e.appointment.time}`}</h3>
                   <h3>{`Doctor: ${e.appointment.doctor.Person.name} ${e.appointment.doctor.Person.lastName}`}</h3>
                   <h3>{`Especialidad: ${e.appointment.specialty.name}`}</h3>
                 </div>
-                <div className="border-2 border-[var(--primary)]">
+                <div className="flex flex-col items-center justify-center">
                   {loading ? (
                     <p>Cargando datos...</p>
                   ) : (
@@ -81,7 +90,7 @@ function GetProcedures() {
   };
 
   return (
-    <div className="justify-center flex flex-col">
+    <div className="items-center justify-center">
       <AppForm
         form={Forms.consultProcedures()}
         onSubmit={(e) => consultProcedures(e)}
@@ -89,7 +98,7 @@ function GetProcedures() {
       />
       <ModalComponent
         show={showModal}
-        size="3xl"
+        size="6xl"
         onClose={() => setShowModal(false)}
         header={`Historia Odontologica`}
         body={<BodyModalComponent />}
