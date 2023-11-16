@@ -326,4 +326,18 @@ services.updateBrand = async (formData) => {
   }
 };
 
+services.updateLogo = async (formData) => {
+  console.log(formData);
+  try {
+    return await put(`/updateLogo/1`, formData);
+  } catch (error) {
+    console.log(error);
+    // window.localStorage.clear();
+    Logout();
+    throw error;
+  }
+};
+
+
+
 export { services };
