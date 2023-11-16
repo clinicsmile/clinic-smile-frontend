@@ -27,7 +27,7 @@ function ListAppoimentsPending() {
   const assignDoctor = async (cita) => {
     try {
       let doctor = JSON.parse(localStorage.getItem("user"));
-      await services.assignDoctor(cita.id, doctor.id, "En proceso");
+      await services.assignDoctor(cita.id, doctor.doctorId, "En proceso");
       Swal.fire({
         title: "Cita tomada correctamente",
         icon: "success",

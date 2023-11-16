@@ -13,6 +13,7 @@ function GetProcedures() {
   const [procedures, setProcedures] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({});
+  const [logo, setLogo] = useState(null);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -38,7 +39,13 @@ function GetProcedures() {
   //  // setShowModal(true);
   // };
 
+  useEffect(() => {
+    const brand = JSON.parse(window.localStorage.getItem("brand"));
+    setLogo(brand.logo);
+  }, []);
+
   const consultProcedures = async (formData) => {
+    setForm(formData);
     try {
       setLoading(true);
       const response = await services.consultPatientProcedures(formData);
@@ -79,8 +86,8 @@ function GetProcedures() {
           <div className="w-full h-[150px] mb-6 flex justify-between border-4 items-center ">
             <div className=" flex border-r-4 pr-4 h-full items-center justify-center">
               <img
-                src="/src/assets/ClinicSmile.png"
-                className="w-[200px]"
+                src={logo || '/src/assets/ClinicSmile.png'}
+                className="w-[150px]"
               ></img>
             </div>
 
