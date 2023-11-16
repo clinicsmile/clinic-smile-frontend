@@ -9,6 +9,7 @@ import {
   Appointments,
   CreateAppoimentNoAuth,
   MedicalRecords,
+  Logs,
   Config
 } from "./pages";
 
@@ -34,6 +35,7 @@ function App() {
               <Route path="/appointments" element={<Appointments />} />
               <Route path="/medicalRecords" element={<MedicalRecords />} />
               <Route path="/config" element={<Config />} />
+              <Route path="logs" element={<Logs />} />
               <Route path="/logout" element={<Logout />} />
             </Route>
 

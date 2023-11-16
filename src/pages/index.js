@@ -7,6 +7,7 @@ import Logout from "./logout/logout.jsx";
 import Appointments from "./Appointments/Appointments.jsx";
 import CreateAppoimentNoAuth from "./appointment/create-no-auth.jsx";
 import MedicalRecords from "./medicalRecords/MedicalRecords.jsx";
+import Logs from "./logs/Logs.jsx";
 import Config from "./config/Config.jsx";
 
 export {
@@ -19,5 +20,6 @@ export {
   CreateAppoimentNoAuth,
   Appointments,
   MedicalRecords,
+  Logs,
   Config,
 };

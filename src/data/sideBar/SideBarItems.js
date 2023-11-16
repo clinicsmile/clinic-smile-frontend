@@ -4,6 +4,7 @@ import {
   LiaCalendarDaySolid,
   LiaArchiveSolid,
   LiaSignOutAltSolid,
+  LiaComment,
 } from "react-icons/lia";
 import { CiSettings } from "react-icons/ci";
 
@@ -38,10 +39,15 @@ const infoMenu = () => {
           icon: CiSettings,
         },
         {
+          path: "/logs",
+          name: "Logs",
+          icon: LiaComment,
+        },
+        {
           path: "/logout",
           name: "Cerrar Sesion",
           icon: LiaSignOutAltSolid,
-        },
+        },        
       ];
     }
     case 2: {
