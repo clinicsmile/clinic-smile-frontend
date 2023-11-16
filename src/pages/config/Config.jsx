@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AppButton from "../../components/ui/button/AppButton";
 import { useBrand } from "../../hooks/useBrand";
+import { services } from "../../services/services";
 
 function Config() {
   const [colors, setColors] = useState({});
@@ -30,6 +31,7 @@ function Config() {
     brand.secundaryColor = colors.secondaryColor;
     window.localStorage.setItem("brand", JSON.stringify(brand));
     updateBrand();
+    services.updateBrand(brand);
     // Connect with API
     setLoading(false);
   };
@@ -37,13 +39,18 @@ function Config() {
   return (
     <div className="h-screen flex">
       <div className="w-5/6 h-5/6 bg-white rounded-3xl text-center m-auto shadow-black shadow-2xl flex">
-        <div className="flex flex-col m-auto p-6">
-          <span className="font-bold text-2xl">Configuración de marca</span>
-          <span>Logo actual</span>
-          <div className="my-5 h-1/4 border-2 border-cyan-600 p-2 rounded-md">
-            <img src={logo} />
+        <div className="h-full m-auto p-6">
+          <div className="h-1/6">
+            <span className="font-serif text-4xl text-center grid-cols-1 border-b-2 border-b-[--primary] pb-3">
+              Configuración de marca
+            </span>
           </div>
-          <div className="flex justify-between">
+
+          <div className="h-3/6 border-2 border-cyan-600 p-2 rounded-md flex">
+            <img src={logo} height={100} className="h-full mx-auto" />
+          </div>
+
+          <div className="flex h-1/6 justify-between">
             <div className="flex flex-col justify-center items-center">
               <span>Color primario</span>
               <input
@@ -63,12 +70,14 @@ function Config() {
               />
             </div>
           </div>
-          <AppButton
-            title={"Guardar Colores"}
-            type={"primaryClass"}
-            loading={loading}
-            action={() => saveColors()}
-          />
+          <div className="h-1/6">
+            <AppButton
+              title={"Guardar Colores"}
+              type={"primaryClass"}
+              loading={loading}
+              action={() => saveColors()}
+            />
+          </div>
         </div>
       </div>
     </div>

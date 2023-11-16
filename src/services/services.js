@@ -105,7 +105,7 @@ services.usersList = async ({ rolId = 0 }) => {
 
 services.getBrand = async (location) => {
   try {
-    return await post(`/getBrand`, location);
+    return await get(`/getBrand/1`);
   } catch (error) {
     window.localStorage.clear();
     Logout();
@@ -308,6 +308,17 @@ services.consultPatientProcedures = async (data) => {
 services.reactivateUser = async (formData) => {
   try {
     return await put(`/reactivateUser/${formData.id}`);
+  } catch (error) {
+    window.localStorage.clear();
+    Logout();
+    throw error;
+  }
+};
+
+services.updateBrand = async (formData) => {
+  console.log(formData);
+  try {
+    return await put(`/updateBrand/1`, formData);
   } catch (error) {
     window.localStorage.clear();
     Logout();

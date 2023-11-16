@@ -122,7 +122,7 @@ function ListAppoimentsAll() {
                 <div className="grid xl:grid-cols-2 grid-cols-1 gap-2">
                   {(e.status === "En proceso" || e.status === "Pendiente") && (
                     <div className="grid xl:grid-cols-2 col-span-2 gap-2">
-                      <EditAppointment appointment={e} />
+                      <EditAppointment appointment={e} onComplete={getAppoiments} />
 
                       <div className="col-span-1  py-1 mx-auto ">
                         <Button

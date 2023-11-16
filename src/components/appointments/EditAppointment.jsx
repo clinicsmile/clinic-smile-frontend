@@ -61,10 +61,10 @@ const EditAppointment = ({ appointment, onComplete }) => {
         showConfirmButton: false,
       });
       setShowModal(!showModal);
-      onComplete && onComplete();
     } catch (error) {
       console.log(error);
     } finally {
+      onComplete && onComplete();
       setLoading(false);
     }
   };
