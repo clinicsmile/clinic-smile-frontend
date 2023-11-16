@@ -5,11 +5,30 @@ import { createNoAuthForm } from "../../data/form/appointments";
 import { createNoAuth } from "../../services/appointments";
 import AppButton from "../../components/ui/button/AppButton";
 import Swal from "sweetalert2";
+import { useBrand } from "../../hooks/useBrand";
+import { services } from "../../services/services";
 
 function CreateAppoimentNoAuth() {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(null);
+  const [logo, setLogo] = useState("./logo.svg");
+  const { updateBrand } = useBrand();
+
+  useEffect(() => {
+    async function getConfigBrand() {
+      try {
+        let data = { location: "localhost" };
+        const response = await services.getBrand(data);
+        updateBrand(response);
+        setLogo(response.logo);
+        window.localStorage.setItem("brand", JSON.stringify(response));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getConfigBrand();
+  }, []);
 
   useEffect(() => {
     ObtenerFormulario();
@@ -60,7 +79,7 @@ function CreateAppoimentNoAuth() {
       <div className="m-auto md:w-4/5 lg:w-1/4 sm:w-1/2 h-5/6 p-1 rounded-lg bg-white shadow-2xl columns-1">
         <div className="h-full">
           <div className="flex h-1/5 justify-center pb-3">
-            <img src="./logo.svg" className="max-w-xs" />
+            <img src={logo} className="max-w-xs" />
           </div>
           <div className="h-4/5 overflow-y-scroll overflow-x-hidden flex-col items-center">
             {form ? (
