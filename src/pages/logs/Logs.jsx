@@ -1,6 +1,7 @@
 import { validate } from "../../middlewares/validateLogin";
 import { Table, Spinner } from "flowbite-react";
 import { useState, useEffect } from "react";
+import { services } from "../../services/services";
 
 const SpinnerComponent = () => {
   return (
@@ -18,6 +19,19 @@ function Logs() {
   const [loadingPage, setLoadingPage] = useState(false);
   const [logs, setLongs] = useState([]);
 
+  useEffect(() => {
+    getlogs();
+  }, []);
+  const getlogs = async () => {
+    setLoadingPage(true);
+    await services
+      .getLogs()
+      .then((value) => {
+        setLongs(value);
+      })
+      .finally(setLoadingPage(false));
+  };
+
   if (validate) {
     return (
       <div>
@@ -34,7 +48,7 @@ function Logs() {
                   <SpinnerComponent />
                 ) : (
                   <div className="px-3 responsive-div">
-                    <Table className="text-center w-full">
+                    <Table hoverable striped>
                       <Table.Head>
                         <Table.HeadCell className="bg-[--primary] text-white">
                           Fecha
@@ -52,15 +66,28 @@ function Logs() {
 
                       <Table.Body>
                         {logs.length > 0 ? (
-                          logs.map((e) => (
-                            <Table.Row
-                              key={e.id}
-                              className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
-                            >
-                              <Table.Cell>{e.date}</Table.Cell>
-                              <Table.Cell>{e.name}</Table.Cell>
-                            </Table.Row>
-                          ))
+                          logs.map((e) => {
+                            const detalle = JSON.parse(e.detalle);
+                            return (
+                              <Table.Row
+                                key={e.id}
+                                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                              >
+                                <Table.Cell>{e.createdAt}</Table.Cell>
+                                <Table.Cell>{e.usuario}</Table.Cell>
+                                <Table.Cell>{e.accion}</Table.Cell>
+                                <Table.Cell>
+                                  {Object.entries(detalle).map(
+                                    ([key, value], index) => (
+                                      <div key={index}>
+                                        <strong>{key}:</strong> {value}
+                                      </div>
+                                    )
+                                  )}
+                                </Table.Cell>
+                              </Table.Row>
+                            );
+                          })
                         ) : (
                           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center">
                             <Table.Cell colSpan={7}>Sin resultados</Table.Cell>

@@ -45,7 +45,6 @@ function ListAppoimentsDoctor() {
   const convertToFormData = (data) => {
     let formData = new FormData();
     for (const key in data) {
-      console.log(key, data[key]);
       formData.append(key, JSON.stringify(data[key]));
     }
     return formData;
@@ -54,13 +53,11 @@ function ListAppoimentsDoctor() {
   const registerProcedure = async (data) => {
     try {
       let response = await services.registerProcedure(data);
-      console.log(response);
 
       // let formData = new FormData();
       let formData = { id: response.id, media: data.Procedimiento["media"] };
       // formData.append("media", data.Procedimiento["media"]);
       // formData.append("id", response.id);
-      console.log(formData);
 
       await services.uploadImageProcedure(formData);
 
@@ -152,11 +149,10 @@ function ListAppoimentsDoctor() {
     } finally {
       setLoading(false);
     }
-    console.log(formData);
   };
 
   return (
-    <Table className="text-center p-6">
+    <Table hoverable striped className="text-center p-6">
       <Table.Head >
         <Table.HeadCell className="bg-[--primary] text-white">Fecha</Table.HeadCell>
         <Table.HeadCell className="bg-[--primary] text-white">Hora</Table.HeadCell>

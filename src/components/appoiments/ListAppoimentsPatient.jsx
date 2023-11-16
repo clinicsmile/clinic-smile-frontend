@@ -30,7 +30,6 @@ function ListAppoimentsPatient() {
   };
 
   const toDelete = async (formData) => {
-    console.log(formData);
     await services
       .cancelAppoiment(formData)
       .then(async () => {
@@ -53,7 +52,7 @@ function ListAppoimentsPatient() {
   };
 
   return (
-    <Table className="text-center p-6">
+    <Table hoverable striped className="text-center p-6">
       <Table.Head >
         <Table.HeadCell className="bg-[--primary] text-white">Fecha</Table.HeadCell>
         <Table.HeadCell className="bg-[--primary] text-white">Hora</Table.HeadCell>

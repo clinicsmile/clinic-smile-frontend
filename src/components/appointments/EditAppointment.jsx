@@ -36,7 +36,6 @@ const EditAppointment = ({ appointment, onComplete }) => {
   }, []);
 
   const handleEdit = async (formData) => {
-    console.log(formData);
     //validar time para que sea de 7 a 5
     const hora = formData.time.split(":");
     if (parseInt(hora[0]) < 7 || parseInt(hora[0]) > 16) {

@@ -18,7 +18,6 @@ function ListAppoimentsAll() {
   const getAppoiments = async () => {
     try {
       const res = await services.getAllAppoiments();
-      console.log(res);
       setAppoiments(res);
     } catch (error) {
       console.log(error);
@@ -88,16 +87,32 @@ function ListAppoimentsAll() {
   };
 
   return (
-    <Table className="text-center p-6">
+    <Table hoverable striped className="text-center p-6">
       <Table.Head>
-        <Table.HeadCell className="bg-[--primary] text-white">Fecha</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white">Hora</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white">Razon</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white">Nombre del paciente</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white">Nombre del Doctor</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white">Especialidad</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white">Estado</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white">Acciones</Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Fecha
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Hora
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Razon
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Nombre del paciente
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Nombre del Doctor
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Especialidad
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Estado
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Acciones
+        </Table.HeadCell>
       </Table.Head>
 
       <Table.Body className="divide-y">
@@ -122,7 +137,10 @@ function ListAppoimentsAll() {
                 <div className="grid xl:grid-cols-2 grid-cols-1 gap-2">
                   {(e.status === "En proceso" || e.status === "Pendiente") && (
                     <div className="grid xl:grid-cols-2 col-span-2 gap-2">
-                      <EditAppointment appointment={e} onComplete={getAppoiments} />
+                      <EditAppointment
+                        appointment={e}
+                        onComplete={getAppoiments}
+                      />
 
                       <div className="col-span-1  py-1 mx-auto ">
                         <Button

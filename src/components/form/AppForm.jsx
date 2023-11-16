@@ -103,7 +103,11 @@ function AppForm({
           ) : (
             <div>
               <span>Imagen del procedimiento</span>
-              <img src={field.input.value} className="w-full" alt="Sin imagen" />
+              <img
+                src={field.input.value}
+                className="w-full"
+                alt="Sin imagen"
+              />
             </div>
           )
         ) : field.select ? (
@@ -134,7 +138,6 @@ function AppForm({
             max={!!field.date?.max}
             minValue={field.date?.minValue}
             maxValue={field.date?.maxValue}
-            
           />
         ) : (
           <Checkbox label={field.label} items={field.checkbox.items}></Checkbox>

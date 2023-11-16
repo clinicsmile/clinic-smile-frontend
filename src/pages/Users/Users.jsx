@@ -51,13 +51,22 @@ function Users() {
     setLoading(true);
     formData.rolId = rolId;
     try {
-      let { message } = await services.register(formData);
+      let response = await services.register(formData);
+      if (response.error) {
+        Swal.fire({
+          title: response.error,
+          icon: "error",
+          showConfirmButton: true,
+        });
+        return;
+      }
       Swal.fire({
-        title: message,
+        title: response.message,
         icon: "success",
         timer: 1500,
         showConfirmButton: false,
       });
+
       setShowModal(!showModal);
       getUsers();
     } catch (error) {
@@ -287,7 +296,7 @@ function Users() {
                   <SpinnerComponent />
                 ) : (
                   <div className="px-3 responsive-div">
-                    <Table className="text-center p-6">
+                    <Table hoverable striped className="text-center p-6">
                       <Table.Head>
                         <Table.HeadCell className="bg-[--primary] text-white">
                           Documento

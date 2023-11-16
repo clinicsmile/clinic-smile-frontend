@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 function SideBar() {
   const location = useLocation();
-  console.log(location);
   const [logo, setLogo] = useState("./logo.svg");
   const [isCollapsed, setIsCollapsed] = useState(window.innerWidth < 1200);
   useEffect(() => {

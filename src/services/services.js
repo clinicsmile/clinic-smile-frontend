@@ -326,4 +326,14 @@ services.updateBrand = async (formData) => {
   }
 };
 
+services.getLogs = async () => {
+  try {
+    return await get(`/logs`);
+  } catch (error) {
+    window.localStorage.clear();
+    Logout();
+    throw error;
+  }
+};
+
 export { services };

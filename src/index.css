@@ -6,8 +6,8 @@
 
 
 :root {
-  --primary: #0569a0;
-  --secondary: #034a72;
+  --primary: white;
+  --secondary: white;
 }
 
 html,
@@ -44,7 +44,7 @@ body {
   overflow: auto;
 }
 
-@media (min-height: 901px)  {
+@media (min-height: 901px) {
   .responsive-div {
     max-height: 600px;
   }
@@ -80,7 +80,7 @@ body {
   }
 }
 
-@media (max-height: 400px) or (max-width: 500px){
+@media (max-height: 400px) or (max-width: 500px) {
   .responsive-div {
     max-height: 300px;
   }

@@ -47,7 +47,7 @@ function ListAppoimentsPending() {
   };
 
   return (
-    <Table>
+    <Table hoverable striped>
       <Table.Head className="text-center">
         <Table.HeadCell className="bg-[--primary] text-white" >Fecha</Table.HeadCell>
         <Table.HeadCell className="bg-[--primary] text-white" >Hora</Table.HeadCell>
