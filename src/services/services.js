@@ -342,7 +342,7 @@ services.updateLogo = async (formData) => {
     return await put(`/updateLogo/1`, formData);
   } catch (error) {
     console.log(error);
-    // window.localStorage.clear();
+    window.localStorage.clear();
     Logout();
     throw error;
   }
