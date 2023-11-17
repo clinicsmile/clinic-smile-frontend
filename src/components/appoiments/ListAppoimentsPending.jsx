@@ -44,18 +44,33 @@ function ListAppoimentsPending() {
         showConfirmButton: false,
       });
     }
+    location.reload();
   };
 
   return (
     <Table hoverable striped>
       <Table.Head className="text-center">
-        <Table.HeadCell className="bg-[--primary] text-white" >Fecha</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white" >Hora</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white" >Razon</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white" >Nombre del paciente</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white" >Especialidad</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white" >Estado</Table.HeadCell>
-        <Table.HeadCell className="bg-[--primary] text-white" >Acciones</Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Fecha
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Hora
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Razon
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Nombre del paciente
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Especialidad
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Estado
+        </Table.HeadCell>
+        <Table.HeadCell className="bg-[--primary] text-white">
+          Acciones
+        </Table.HeadCell>
       </Table.Head>
 
       <Table.Body className="divide-y">
@@ -63,7 +78,7 @@ function ListAppoimentsPending() {
           <Table.Row
             key={e.document}
             className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center"
-          >            
+          >
             <Table.Cell>{e.date}</Table.Cell>
             <Table.Cell>{e.time}</Table.Cell>
             <Table.Cell>{e.reason}</Table.Cell>
