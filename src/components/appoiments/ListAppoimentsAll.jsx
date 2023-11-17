@@ -136,7 +136,7 @@ function ListAppoimentsAll() {
               <Table.Cell>
                 <div className="grid xl:grid-cols-2 grid-cols-1 gap-2">
                   {(e.status === "En proceso" || e.status === "Pendiente") && (
-                    <div className="grid xl:grid-cols-2 col-span-2 gap-2">
+                    <div className="grid">
                       <EditAppointment
                         appointment={e}
                         onComplete={getAppoiments}
