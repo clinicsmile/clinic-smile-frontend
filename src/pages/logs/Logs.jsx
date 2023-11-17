@@ -22,14 +22,17 @@ function Logs() {
   useEffect(() => {
     getlogs();
   }, []);
+
   const getlogs = async () => {
     setLoadingPage(true);
-    await services
-      .getLogs()
-      .then((value) => {
-        setLongs(value);
-      })
-      .finally(setLoadingPage(false));
+    try {
+      const data = await services.getLogs();
+      setLongs(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingPage(false);
+    }
   };
 
   if (validate) {
@@ -80,7 +83,10 @@ function Logs() {
                                   {Object.entries(detalle).map(
                                     ([key, value], index) => (
                                       <div key={index}>
-                                        <strong>{key}:</strong> {value}
+                                        <strong>{key}:</strong>{" "}
+                                        {typeof value === "object"
+                                          ? JSON.stringify(value)
+                                          : value}
                                       </div>
                                     )
                                   )}
